@@ -1,0 +1,130 @@
+/* Main Stylesheet */
+@import url('variables.css');
+@import url('utilities.css');
+@import url('components.css');
+@import url('responsive.css');
+
+/* Dropdown Navigation */
+.has-dropdown {
+    position: relative;
+    padding-bottom: 20px;
+    /* Bridge for hover */
+    margin-bottom: -20px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: -20px;
+    background-color: var(--color-white);
+    min-width: 260px;
+    box-shadow: var(--shadow-xl);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all var(--transition-base);
+    border: 1px solid var(--color-gray-100);
+    z-index: 1000;
+}
+
+.has-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-gray-700);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.dropdown-link:hover {
+    background-color: var(--color-gray-50);
+    color: var(--color-primary);
+}
+
+.dropdown-link i {
+    color: var(--color-gray-400);
+    transition: color var(--transition-fast);
+}
+
+.dropdown-link:hover i {
+    color: var(--color-primary);
+}
+
+/* Base Resets */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family-body);
+    color: var(--color-gray-900);
+    background-color: var(--color-white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-family-heading);
+    line-height: 1.25;
+    margin-bottom: var(--space-4);
+    color: var(--color-gray-900);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-fast);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+/* Base Container */
+.container {
+    width: 100%;
+    max-width: var(--container-xl);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+}
+
+/* Utility for hidden elements (screen readers) */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

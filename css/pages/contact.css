@@ -1,0 +1,187 @@
+/* Contact Page Styles */
+
+/* Contact Hero (Simplified) */
+.contact-hero {
+    background-color: var(--color-gray-900);
+    color: var(--color-white);
+    padding: var(--space-20) 0 var(--space-12);
+    text-align: center;
+}
+
+.contact-hero h1 {
+    color: var(--color-white);
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-4);
+}
+
+.contact-hero p {
+    color: var(--color-gray-400);
+    font-size: var(--font-size-lg);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Contact Methods */
+.contact-methods {
+    margin-bottom: var(--space-12);
+}
+
+.method-card {
+    text-align: center;
+    padding: var(--space-6);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+    transition: var(--transition-base);
+}
+
+.method-card:hover {
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.method-icon {
+    width: 48px;
+    height: 48px;
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* FAQ Styles */
+.faq-item {
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    padding: var(--space-6) 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-question:hover {
+    color: var(--color-primary);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding-right: var(--space-8);
+}
+
+.faq-answer p {
+    padding-bottom: var(--space-6);
+    color: var(--color-gray-600);
+    line-height: 1.6;
+}
+
+.faq-icon {
+    transition: transform 0.3s ease;
+    color: var(--color-gray-400);
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(180deg);
+    color: var(--color-primary);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 300px;
+    /* Sufficient for typical answer length */
+}
+
+/* Form Styles */
+.contact-form-container {
+    background-color: var(--color-white);
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-gray-100);
+}
+
+.form-group {
+    margin-bottom: var(--space-6);
+}
+
+.form-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: var(--space-2);
+    color: var(--color-gray-700);
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-base);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+    /* using light primary for focus ring - wait, --color-primary-light is #42a5f5, we might want opacity */
+    box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.3);
+}
+
+textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Calendar Section */
+.calendar-container {
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* FAQ */
+.faq-item {
+    border-bottom: 1px solid var(--color-gray-200);
+    padding: var(--space-6) 0;
+}
+
+.faq-question {
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-2);
+    color: var(--color-gray-900);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-answer {
+    color: var(--color-gray-600);
+    max-width: 90%;
+}

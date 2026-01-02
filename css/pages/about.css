@@ -1,0 +1,144 @@
+/* About Page Styles */
+
+/* About Hero */
+.about-hero {
+    background-color: var(--color-gray-50);
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-12);
+}
+
+.about-hero-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+/* My Story */
+.story-content {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-700);
+    line-height: 1.8;
+}
+
+.story-content p {
+    margin-bottom: var(--space-6);
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--space-8) 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 24px;
+    width: 2px;
+    background-color: var(--color-gray-200);
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 64px;
+    margin-bottom: var(--space-12);
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    background-color: var(--color-white);
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    font-size: var(--font-size-xs);
+}
+
+.timeline-marker.promotion {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
+.timeline-content {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-100);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+}
+
+.timeline-content:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateX(4px);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.timeline-role {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-gray-900);
+}
+
+.timeline-company {
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.timeline-duration {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    background: var(--color-gray-50);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+}
+
+/* Awards */
+.award-card {
+    text-align: center;
+    padding: var(--space-8);
+    border: 1px solid var(--color-gray-100);
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-base);
+}
+
+.award-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary-light);
+}
+
+.award-icon {
+    width: 64px;
+    height: 64px;
+    background-color: var(--color-gray-50);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+    color: var(--color-primary);
+}

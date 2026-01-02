@@ -1,0 +1,117 @@
+/* Responsive Adjustments */
+
+@media (max-width: 1024px) {
+    :root {
+        --font-size-6xl: 3rem;
+        --font-size-5xl: 2.5rem;
+    }
+
+    .container {
+        padding-left: var(--space-6);
+        padding-right: var(--space-6);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --font-size-6xl: 2.5rem;
+        --section-padding: var(--space-12);
+    }
+
+    .grid-2,
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-header .container {
+        flex-wrap: wrap;
+    }
+}
+
+/* Mobile Menu Overlay Styles */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: var(--color-white);
+    z-index: 999;
+    padding: var(--space-8);
+    display: none;
+    flex-direction: column;
+    gap: var(--space-6);
+    overflow-y: auto;
+    border-top: 1px solid var(--color-gray-100);
+}
+
+.mobile-menu-overlay.active {
+    display: flex;
+}
+
+.mobile-nav-link {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.mobile-nav-link.active {
+    color: var(--color-primary);
+}
+
+.mobile-dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    cursor: pointer;
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.mobile-dropdown-header .chevron-icon {
+    transition: transform var(--transition-base);
+}
+
+.mobile-dropdown-content {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-left: var(--space-4);
+    margin-top: var(--space-4);
+    padding-bottom: var(--space-2);
+}
+
+.mobile-dropdown.open .mobile-dropdown-content {
+    display: flex;
+}
+
+.mobile-dropdown.open .chevron-icon {
+    transform: rotate(180deg);
+}
+
+.mobile-sub-link {
+    color: var(--color-gray-600);
+    font-size: var(--font-size-base);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.mobile-sub-link:hover {
+    color: var(--color-primary);
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+@media (min-width: 992px) {
+    .mobile-menu-overlay {
+        display: none !important;
+    }
+}

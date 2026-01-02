@@ -1,0 +1,186 @@
+/* Case Studies Page Styles */
+
+/* Case Study Hero */
+.case-studies-hero {
+    background-color: var(--color-gray-900);
+    color: var(--color-white);
+    padding: var(--space-20) 0 var(--space-12);
+    text-align: center;
+}
+
+.case-studies-hero h1 {
+    color: var(--color-white);
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--space-6);
+}
+
+.case-studies-hero p {
+    color: var(--color-gray-400);
+    font-size: var(--font-size-xl);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Featured Case Study */
+.featured-case-study {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    margin-bottom: var(--space-16);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--color-gray-200);
+}
+
+.featured-content {
+    padding: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.featured-image {
+    background-color: var(--color-gray-200);
+    min-height: 400px;
+    position: relative;
+    background-image: url('placeholder-case-study.jpg');
+    /* visual placeholder */
+    background-size: cover;
+    background-position: center;
+}
+
+@media (max-width: 768px) {
+    .featured-case-study {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-image {
+        min-height: 250px;
+        order: -1;
+    }
+}
+
+/* Case Study Card (Grid) */
+.case-study-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-base);
+    border: 1px solid var(--color-gray-100);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.case-study-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-primary-light);
+}
+
+.case-study-image {
+    height: 200px;
+    background-color: var(--color-gray-200);
+    position: relative;
+}
+
+.case-study-content {
+    padding: var(--space-6);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.case-study-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.cs-tag {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+    font-weight: 600;
+    background-color: var(--color-gray-50);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+}
+
+.metric-highlight {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-gray-100);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 600;
+    color: var(--color-success);
+}
+
+/* Detail Page Styles */
+.cs-detail-hero {
+    background-color: var(--color-gray-50);
+    padding: var(--space-20) 0 var(--space-12);
+}
+
+.cs-meta {
+    display: flex;
+    gap: var(--space-8);
+    margin-bottom: var(--space-8);
+    color: var(--color-gray-600);
+    font-size: var(--font-size-sm);
+    border-bottom: 1px solid var(--color-gray-200);
+    padding-bottom: var(--space-8);
+}
+
+.cs-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-12);
+}
+
+.cs-stat-card {
+    background-color: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-gray-100);
+}
+
+.cs-stat-value {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+}
+
+.cs-stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+}
+
+.tech-stack {
+    display: flex;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tech-item {
+    font-weight: 500;
+    color: var(--color-gray-700);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}

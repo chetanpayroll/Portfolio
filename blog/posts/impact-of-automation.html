@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="How simple automation scripts can reduce month-end close time by 50% and eliminate variance.">
+    <title>Impact of Automation on Payroll | Chetan Sharma</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/pages/blog.css">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="site-header"
+        style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--color-gray-100);">
+        <div class="container d-flex justify-between align-center" style="height: 80px;">
+            <a href="../../index.html" class="logo"
+                style="font-family: var(--font-family-heading); font-weight: 700; font-size: 1.5rem; color: var(--color-primary-dark);">
+                <span class="text-primary">GMP</span>Payroll
+            </a>
+
+            <nav class="desktop-nav d-none d-lg-flex">
+                <ul class="d-flex gap-8 align-center">
+                    <li><a href="../../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../../about.html" class="nav-link">About</a></li>
+                    <li class="has-dropdown">
+                        <a href="../../services.html" class="nav-link">Services</a>
+                    </li>
+                    <li><a href="../../case-studies.html" class="nav-link">Case Studies</a></li>
+                    <li><a href="../../experience.html" class="nav-link">Experience</a></li>
+                    <li><a href="../../blog.html" class="nav-link"
+                            style="color: var(--color-primary); font-weight: 600;">Blog</a></li>
+                    <li><a href="../../contact.html" class="btn btn-primary">Contact</a></li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle d-lg-none" aria-label="Toggle menu"
+                style="background: none; border: none; cursor: pointer;">
+                <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+
+        <article>
+            <div class="article-header">
+                <div class="container">
+                    <a href="../../blog.html"
+                        style="color: var(--color-gray-600); display: inline-flex; align-items: center; margin-bottom: var(--space-6); font-size: var(--font-size-sm);"><i
+                            data-lucide="arrow-left" style="width: 16px; margin-right: 8px;"></i> Back to Blog</a>
+                    <div class="post-meta" style="justify-content: center;">
+                        <span class="post-category">Technology</span>
+                        <span>•</span>
+                        <span>Sep 28, 2025</span>
+                        <span>•</span>
+                        <span>6 Min Read</span>
+                    </div>
+                    <h1>The Impact of Automation on Accruals</h1>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="article-image"
+                    style="background: linear-gradient(135deg, #d81b60 0%, #ad1457 100%); display: flex; align-items: center; justify-content: center;">
+                    <i data-lucide="zap" style="width: 120px; height: 120px; color: rgba(255,255,255,0.7);"></i>
+                </div>
+
+                <div class="article-body">
+                    <p>Month-end close is the most stressful time for any payroll and finance team. The pressure to book
+                        accurate accruals for vacation, bonuses, and severance in a tight 3-day window often leads to
+                        burnout and errors.</p>
+
+                    <p>Many teams rely on massive Excel spreadsheets with fragile formulas to calculate these
+                        liabilities. But there is a better way.</p>
+
+                    <h2>Why Excel Fails at Scale</h2>
+                    <p>Excel is a fantastic tool for ad-hoc analysis, but it is a terrible database. When you have 5,000
+                        employees and 12 months of history, VLOOKUPs start to crash your CPU.</p>
+                    <p>More importantly, Excel lacks audit trails. If someone accidentally deletes a row or overwrites a
+                        formula, there is often no way to know until the auditors ask why the vacation liability dropped
+                        by $500k.</p>
+
+                    <h2>The Google Apps Script Advantage</h2>
+                    <p>For mid-sized enterprises who aren't ready for a full ERP implementation, low-code automation
+                        tools like Google Apps Script/Sheets or Python scripts offer a "sweet spot".</p>
+                    <ul>
+                        <li><strong>Validation on Entry:</strong> Scripts can prevent users from entering invalid data
+                            (e.g., negative leave balances) in real-time.</li>
+                        <li><strong>Automated Calculation:</strong> Instead of dragging formulas, a script runs the
+                            logic in the cloud and writes the static values. This improves performance and prevents
+                            accidental breakage.</li>
+                        <li><strong>Integration:</strong> Scripts can pull data directly from HRIS APIs, eliminating the
+                            manual CSV download/upload step.</li>
+                    </ul>
+
+                    <h2>Case Study: 50% Time Reduction</h2>
+                    <p>I recently deployed a simple vacation accrual engine for a client. It took the daily leave data
+                        from BambooHR, calculated the accrued value based on each employee's latest salary, and
+                        generated a journal entry for NetSuite.</p>
+                    <blockquote>
+                        "The result? The process went from 2 days of manual work to a 10-minute review."
+                    </blockquote>
+
+                    <h3>Start Small</h3>
+                    <p>You don't need to automate everything at once. Pick your most painful manual reconciliation -
+                        likely the one that keeps you late at the office on a Friday - and start there.</p>
+                </div>
+
+                <div class="text-center"
+                    style="margin-top: var(--space-16); padding-top: var(--space-8); border-top: 1px solid var(--color-gray-200);">
+                    <h3>Want to build this?</h3>
+                    <a href="../../contact.html" class="btn btn-primary mt-4">Get the Script</a>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <footer
+        style="background-color: var(--color-gray-900); color: var(--color-gray-400); padding: var(--space-16) 0 var(--space-8);">
+        <div class="container">
+            <div class="d-grid grid-3 gap-8 mb-12">
+                <div>
+                    <a href="../../index.html" class="logo"
+                        style="font-family: var(--font-family-heading); font-weight: 700; font-size: 1.5rem; color: var(--color-white);">
+                        <span class="text-primary">GMP</span>Payroll
+                    </a>
+                    <p style="margin-top: var(--space-4);">Global payroll implementation excellence.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--color-white);">Quick Links</h4>
+                    <ul class="d-flex flex-col gap-4">
+                        <li><a href="../../about.html">About</a></li>
+                        <li><a href="../../services.html">Services</a></li>
+                        <li><a href="../../case-studies.html">Case Studies</a></li>
+                        <li><a href="../../experience.html">Experience</a></li>
+                        <li><a href="../../blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: var(--color-white);">Contact</h4>
+                    <ul class="d-flex flex-col gap-4">
+                        <li><a href="mailto:chetanpayroll@gmail.com">chetanpayroll@gmail.com</a></li>
+                        <li><a href="tel:+918619495587">+91 8619495587</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                style="border-top: 1px solid var(--color-gray-800); padding-top: var(--space-8); text-align: center; font-size: var(--font-size-sm);">
+                &copy; <span class="copyright-year">2026</span> GMPPayroll. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+    <script type="module" src="../../js/utils.js"></script>
+    <script type="module" src="../../js/navigation.js"></script>
+    <script type="module" src="../../js/main.js"></script>
+</body>
+
+</html>
