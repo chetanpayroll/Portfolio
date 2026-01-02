@@ -26,11 +26,9 @@
 <body>
 
     <!-- Navigation -->
-    <header class="site-header"
-        style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--color-gray-100);">
-        <div class="container d-flex justify-between align-center" style="height: 80px;">
-            <a href="../index.html" class="logo"
-                style="font-family: var(--font-family-heading); font-weight: 700; font-size: 1.5rem; color: var(--color-primary-dark);">
+    <header class="site-header">
+        <div class="container d-flex justify-between align-center">
+            <a href="../index.html" class="logo">
                 <span class="text-primary">GMP</span>Payroll
             </a>
 
@@ -38,20 +36,16 @@
                 <ul class="d-flex gap-8 align-center">
                     <li><a href="../index.html" class="nav-link">Home</a></li>
                     <li><a href="../about.html" class="nav-link">About</a></li>
-                    <li class="has-dropdown">
-                        <a href="../services.html" class="nav-link">Services</a>
-                    </li>
-                    <li><a href="../case-studies.html" class="nav-link"
-                            style="color: var(--color-primary); font-weight: 600;">Case Studies</a></li>
-                    <li><a href="../experience.html" class="nav-link">Experience</a></li>
-                    <li><a href="../blog.html" class="nav-link">Blog</a></li>
-                    <li><a href="../contact.html" class="btn btn-primary">Contact</a></li>
+                    <li><a href="../expertise.html" class="nav-link">Expertise</a></li>
+                    <li><a href="../case-studies.html" class="nav-link nav-link-active">Portfolio</a></li>
+                    <li><a href="../experience.html" class="nav-link">Journey</a></li>
+                    <li><a href="../blog.html" class="nav-link">Insights</a></li>
+                    <li><a href="../contact.html" class="btn btn-primary">Connect</a></li>
                 </ul>
             </nav>
 
-            <button class="mobile-menu-toggle d-lg-none" aria-label="Toggle menu"
-                style="background: none; border: none; cursor: pointer;">
-                <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
+            <button class="mobile-menu-toggle d-lg-none" aria-label="Toggle menu">
+                <i data-lucide="menu"></i>
             </button>
         </div>
     </header>
@@ -60,12 +54,10 @@
         <!-- CS Detail Hero -->
         <section class="cs-detail-hero">
             <div class="container text-center">
-                <a href="../case-studies.html"
-                    style="color: var(--color-gray-600); display: inline-flex; align-items: center; margin-bottom: var(--space-4); font-size: var(--font-size-sm);"><i
-                        data-lucide="arrow-left" style="width: 16px; margin-right: 8px;"></i> Back to Case Studies</a>
-                <h1 style="margin-bottom: var(--space-4);">2-Way Validation Automation</h1>
-                <p
-                    style="font-size: var(--font-size-xl); color: var(--color-gray-600); max-width: 800px; margin: 0 auto;">
+                <a href="../case-studies.html" class="detail-hero-back-link"><i data-lucide="arrow-left"></i> Back to
+                    Portfolio</a>
+                <h1 class="mb-4">2-Way Validation Automation</h1>
+                <p class="detail-hero-desc">
                     Building a bespoke validation engine to eliminate manual payroll checking and reduce processing time
                     by 40%.</p>
             </div>
@@ -78,15 +70,15 @@
                 <!-- Meta -->
                 <div class="cs-meta justify-center">
                     <div>
-                        <span style="display: block; font-weight: 700; color: var(--color-gray-900);">Metric</span>
+                        <span>Metric</span>
                         <span>Efficiency</span>
                     </div>
                     <div>
-                        <span style="display: block; font-weight: 700; color: var(--color-gray-900);">Tool Built</span>
+                        <span>Tool Built</span>
                         <span>Google Apps Script</span>
                     </div>
                     <div>
-                        <span style="display: block; font-weight: 700; color: var(--color-gray-900);">Impact</span>
+                        <span>Impact</span>
                         <span>12 Hrs/Week Saved</span>
                     </div>
                 </div>
@@ -109,7 +101,7 @@
 
                 <!-- Executive Summary -->
                 <h2 class="mb-4">Executive Summary</h2>
-                <p class="mb-8" style="color: var(--color-gray-700); line-height: 1.6;">
+                <p class="mb-8 text-gray-700">
                     The client's payroll team was spending 2 full days every month manually cross-checking HRIS data
                     (Workday) against Payroll inputs (ADP) for 500+ employees. This visual "stare-and-compare" method
                     was prone to human error and caused high stress levels during the payroll cutoff window. I automated
@@ -118,11 +110,10 @@
 
                 <!-- Challenge -->
                 <h2 class="mb-4">The Challenge</h2>
-                <p class="mb-4" style="color: var(--color-gray-700);">
+                <p class="mb-4 text-gray-700">
                     The manual process was unsustainable:
                 </p>
-                <ul
-                    style="list-style: disc; padding-left: 20px; color: var(--color-gray-700); margin-bottom: var(--space-8);">
+                <ul class="list-disc">
                     <li><strong>Data Volume:</strong> 500+ rows of data with 30+ columns (salary, bonus, address, tax
                         code, etc.).</li>
                     <li><strong>Format Mismatch:</strong> Workday exported reports in one format, ADP required a
@@ -133,11 +124,10 @@
 
                 <!-- Solution -->
                 <h2 class="mb-4">The Solution</h2>
-                <p class="mb-4" style="color: var(--color-gray-700);">
+                <p class="mb-4 text-gray-700">
                     I developed a "One-Click" Validation Engine using Google Sheets and Apps Script:
                 </p>
-                <ol
-                    style="list-style: decimal; padding-left: 20px; color: var(--color-gray-700); margin-bottom: var(--space-8);">
+                <ol class="list-decimal">
                     <li class="mb-2"><strong>Data Ingestion:</strong> The script automatically pulled the latest reports
                         from specific Google Drive folders where the HRIS team dropped their files.</li>
                     <li class="mb-2"><strong>Normalization:</strong> It mapped columns from both sources to a common
@@ -150,33 +140,33 @@
 
                 <!-- Tech Stack -->
                 <div class="mb-12">
-                    <h3 class="mb-4"
-                        style="font-size: var(--font-size-md); text-transform: uppercase; color: var(--color-gray-500);">
+                    <h3 class="mb-4 tech-stack-title">
                         Tech Stack</h3>
                     <div class="tech-stack">
-                        <div class="tech-item"><i data-lucide="code" style="width: 18px;"></i> JavaScript (Apps Script)
+                        <div class="tech-item"><i data-lucide="code"></i> JavaScript (Apps Script)
                         </div>
-                        <div class="tech-item"><i data-lucide="file-spreadsheet" style="width: 18px;"></i> Google Sheets
+                        <div class="tech-item"><i data-lucide="file-spreadsheet"></i> Google Sheets
                             API</div>
-                        <div class="tech-item"><i data-lucide="file" style="width: 18px;"></i> Drive API</div>
+                        <div class="tech-item"><i data-lucide="file"></i> Drive API</div>
                     </div>
                 </div>
 
                 <!-- Testimonial -->
-                <div class="card bg-light mb-12" style="border-left: 4px solid var(--color-primary);">
-                    <p style="font-style: italic; color: var(--color-gray-700); margin-bottom: var(--space-4);">
+                <div class="card bg-light mb-12 card-quote">
+                    <p>
                         "What used to take us two stressful days now takes 5 minutes. The script catches things we would
                         have definitely missed."
                     </p>
-                    <div style="font-weight: 600; color: var(--color-gray-900);">— Mike T., Payroll Manager</div>
+                    <div class="author">— Mike T., Payroll Manager</div>
                 </div>
 
                 <!-- CTA -->
                 <div class="text-center">
-                    <h3 class="mb-4">Tired of Manual Checking?</h3>
-                    <p class="mb-6" style="color: var(--color-gray-600);">I can build a tool like this for your team in
-                        less than a week.</p>
-                    <a href="../contact.html" class="btn btn-primary">Automate My Process</a>
+                    <h3 class="mb-4">Tired of inefficiency?</h3>
+                    <p class="mb-6 text-gray-600">I can build tools like this to drive
+                        efficiency
+                    </p>
+                    <a href="../contact.html" class="btn btn-primary">Let's Connect</a>
                 </div>
 
             </div>
@@ -184,38 +174,51 @@
 
     </main>
 
-    <footer
-        style="background-color: var(--color-gray-900); color: var(--color-gray-400); padding: var(--space-16) 0 var(--space-8);">
+    <footer class="footer-dark">
         <div class="container">
             <div class="d-grid grid-3 gap-8 mb-12">
+                <!-- Col 1 -->
                 <div>
-                    <a href="../index.html" class="logo"
-                        style="font-family: var(--font-family-heading); font-weight: 700; font-size: 1.5rem; color: var(--color-white);">
+                    <a href="../index.html" class="logo">
                         <span class="text-primary">GMP</span>Payroll
                     </a>
-                    <p style="margin-top: var(--space-4);">Global payroll implementation excellence.</p>
+                    <p class="footer-tagline">Global payroll implementation excellence.</p>
+                    <div class="footer-social-links">
+                        <a href="https://www.linkedin.com/in/chetan-champ/" target="_blank" rel="noopener noreferrer"
+                            class="footer-social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+                    </div>
                 </div>
+                <!-- Col 2 -->
                 <div>
-                    <h4 style="color: var(--color-white);">Quick Links</h4>
+                    <h4 class="footer-heading">Quick Links</h4>
                     <ul class="d-flex flex-col gap-4">
                         <li><a href="../about.html">About</a></li>
-                        <li><a href="../services.html">Services</a></li>
-                        <li><a href="../case-studies.html">Case Studies</a></li>
-                        <li><a href="../experience.html">Experience</a></li>
-                        <li><a href="../blog.html">Blog</a></li>
+                        <li><a href="../expertise.html">Expertise</a></li>
+                        <li><a href="../case-studies.html">Portfolio</a></li>
+                        <li><a href="../experience.html">Journey</a></li>
+                        <li><a href="../blog.html">Insights</a></li>
+                        <li><a href="../contact.html">Connect</a></li>
                     </ul>
                 </div>
+                <!-- Col 3 -->
                 <div>
-                    <h4 style="color: var(--color-white);">Contact</h4>
+                    <h4 class="footer-heading">Contact</h4>
                     <ul class="d-flex flex-col gap-4">
                         <li><a href="mailto:chetanpayroll@gmail.com">chetanpayroll@gmail.com</a></li>
                         <li><a href="tel:+918619495587">+91 8619495587</a></li>
+                        <li><a href="https://www.linkedin.com/in/chetan-champ/" target="_blank"
+                                rel="noopener noreferrer">LinkedIn
+                                Profile</a></li>
                     </ul>
                 </div>
             </div>
-            <div
-                style="border-top: 1px solid var(--color-gray-800); padding-top: var(--space-8); text-align: center; font-size: var(--font-size-sm);">
-                &copy; <span class="copyright-year">2026</span> GMPPayroll. All rights reserved.
+
+            <div class="footer-bottom-flex">
+                <span>&copy; <span class="copyright-year">2026</span> Chetan Sharma. All rights reserved.</span>
+                <div class="footer-legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>

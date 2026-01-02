@@ -2,6 +2,7 @@
 @import url('variables.css');
 @import url('utilities.css');
 @import url('components.css');
+@import url('layout.css');
 @import url('responsive.css');
 
 /* Dropdown Navigation */

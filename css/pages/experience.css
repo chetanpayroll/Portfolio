@@ -3,7 +3,7 @@
 /* Experience Hero */
 .experience-hero {
     background-color: var(--color-gray-50);
-    padding-top: var(--space-24);
+    padding-top: calc(var(--space-20) + var(--space-12));
     padding-bottom: var(--space-12);
     text-align: center;
 }
@@ -71,22 +71,7 @@
     font-weight: 500;
 }
 
-/* Expanded Timeline Styles (building on about.css timeline) */
-/* We can reuse .timeline classes from about.css if we import it or duplicate relevant parts. 
-   Since we want independent page CSS files to be clean, if the styles are identical, 
-   we should have put them in components.css. For now, I will include necessary styles here 
-   or ensure they are loaded. I'll add specific experience page tweaks here. */
-
-.experience-timeline .timeline-item {
-    padding-left: 80px;
-    /* More space for dates on left maybe? Or keep standard */
-}
-
-/* Let's use the same timeline structure as About page but maybe more detailed. 
-   I'll assume key timeline styles are in about.css or I'll copy significant ones here to be safe
-   if about.css isn't loaded on experience page (which it isn't based on my plan).
-*/
-
+/* Timeline Styles */
 .timeline {
     position: relative;
     max-width: 800px;
@@ -165,6 +150,13 @@
     gap: var(--space-4);
 }
 
+.role-achievements-title {
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+    margin-bottom: var(--space-2);
+}
+
 .role-achievements li {
     margin-bottom: var(--space-3);
     padding-left: var(--space-4);
@@ -177,4 +169,43 @@
     position: absolute;
     left: 0;
     font-weight: bold;
+}
+
+/* Looking For Next Section */
+.card-light {
+    background-color: var(--color-gray-50);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+}
+
+.target-list {
+    list-style-type: disc;
+    padding-left: var(--space-4);
+    color: var(--color-gray-700);
+}
+
+/* Experience CTA */
+.experience-cta {
+    background-color: var(--color-gray-900);
+    color: var(--color-white);
+    text-align: center;
+}
+
+.experience-cta h1 {
+    color: var(--color-white);
+    margin-bottom: var(--space-4);
+}
+
+.experience-cta p {
+    font-size: var(--font-size-xl);
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.btn-download {
+    margin-top: var(--space-8);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
 }

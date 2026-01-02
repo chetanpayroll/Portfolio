@@ -3,17 +3,57 @@
 /* About Hero */
 .about-hero {
     background-color: var(--color-gray-50);
-    padding-top: var(--space-24);
+    padding-top: calc(var(--space-20) + var(--space-12));
     padding-bottom: var(--space-12);
 }
 
-.about-hero-image {
+.about-heading {
+    font-size: var(--font-size-5xl);
+}
+
+.about-intro-text {
+    font-size: var(--font-size-xl);
+    color: var(--color-gray-600);
+}
+
+.about-stats-container {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.about-stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.about-stat-number {
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--color-primary);
+}
+
+.about-stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.stat-divider {
+    width: 1px;
+    height: 50px;
+    background-color: var(--color-gray-300);
+}
+
+.about-hero-image-container {
     width: 100%;
-    max-width: 400px;
+    /* max-width set in container/grid usually, but let's keep consistent */
+}
+
+.about-hero-img {
+    width: 100%;
+    height: auto;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xl);
-    margin: 0 auto;
-    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
 }
 
 /* My Story */
@@ -25,6 +65,42 @@
 
 .story-content p {
     margin-bottom: var(--space-6);
+}
+
+/* What I'm Looking For */
+.section-divider {
+    border-top: 1px solid var(--color-gray-100);
+}
+
+.opportunities-box {
+    background-color: var(--color-light);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--color-primary);
+}
+
+.opportunities-intro {
+    font-weight: 600;
+    color: var(--color-primary-dark);
+}
+
+.opportunities-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.opportunity-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.opportunity-icon {
+    color: var(--color-primary);
+    width: 20px;
 }
 
 /* Timeline */
@@ -66,6 +142,11 @@
     justify-content: center;
     color: var(--color-primary);
     font-size: var(--font-size-xs);
+}
+
+.timeline-marker i {
+    width: 16px;
+    height: 16px;
 }
 
 .timeline-marker.promotion {
@@ -116,29 +197,95 @@
     border-radius: var(--radius-full);
 }
 
-/* Awards */
-.award-card {
-    text-align: center;
-    padding: var(--space-8);
-    border: 1px solid var(--color-gray-100);
-    border-radius: var(--radius-lg);
-    transition: transform var(--transition-base);
+.timeline-desc-list {
+    list-style: disc;
+    padding-left: 20px;
+    color: var(--color-gray-600);
 }
 
-.award-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--color-primary-light);
+.timeline-desc-text {
+    color: var(--color-gray-600);
 }
 
-.award-icon {
-    width: 64px;
-    height: 64px;
-    background-color: var(--color-gray-50);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto var(--space-4);
+/* Education & Certifications */
+.education-container {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.education-icon-wrapper {
     color: var(--color-primary);
+    margin-bottom: var(--space-4);
+    display: flex;
+    justify-content: center;
+}
+
+.education-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.education-title {
+    font-size: var(--font-size-lg);
+}
+
+.education-org {
+    color: var(--color-gray-500);
+}
+
+
+/* About CTA */
+.about-cta-section {
+    background-color: var(--color-primary-dark);
+    color: var(--color-white);
+    text-align: center;
+}
+
+.about-cta-container {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-cta-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-primary-light);
+    margin-bottom: var(--space-8);
+}
+
+.btn-white {
+    background-color: var(--color-white);
+    color: var(--color-primary-dark);
+}
+
+/* Footer Overrides (if any specific, or just rely on layout.css) */
+.footer-social-links {
+    margin-top: var(--space-6);
+    display: flex;
+    gap: var(--space-4);
+}
+
+.footer-social-link {
+    color: var(--color-white);
+}
+
+.footer-social-link:hover {
+    color: var(--color-primary);
+}
+
+.footer-bottom-flex {
+    border-top: 1px solid var(--color-gray-800);
+    padding-top: var(--space-8);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-legal-links {
+    display: flex;
+    gap: var(--space-4);
 }

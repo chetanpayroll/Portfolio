@@ -4,7 +4,7 @@
 .contact-hero {
     background-color: var(--color-gray-900);
     color: var(--color-white);
-    padding: var(--space-20) 0 var(--space-12);
+    padding: calc(var(--space-20) + var(--space-12)) 0 var(--space-12);
     text-align: center;
 }
 
@@ -32,6 +32,10 @@
     background-color: var(--color-gray-50);
     border-radius: var(--radius-lg);
     transition: var(--transition-base);
+    display: block;
+    /* Ensure it behaves like a block for padding */
+    text-decoration: none;
+    /* Remove underline from anchor */
 }
 
 .method-card:hover {
@@ -51,6 +55,17 @@
     justify-content: center;
     margin: 0 auto var(--space-4);
     box-shadow: var(--shadow-sm);
+}
+
+.method-card h4 {
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-2);
+    font-weight: 600;
+}
+
+.method-label {
+    color: var(--color-gray-500);
+    font-size: var(--font-size-sm);
 }
 
 
@@ -98,6 +113,7 @@
 .faq-icon {
     transition: transform 0.3s ease;
     color: var(--color-gray-400);
+    width: 20px;
 }
 
 .faq-item.active .faq-icon {
@@ -130,6 +146,10 @@
     color: var(--color-gray-700);
 }
 
+.form-required {
+    color: var(--color-error);
+}
+
 .form-control {
     width: 100%;
     padding: var(--space-3) var(--space-4);
@@ -143,14 +163,16 @@
 .form-control:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px var(--color-primary-light);
-    /* using light primary for focus ring - wait, --color-primary-light is #42a5f5, we might want opacity */
     box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.3);
 }
 
 textarea.form-control {
     min-height: 150px;
     resize: vertical;
+}
+
+.btn-width-full {
+    width: 100%;
 }
 
 /* Calendar Section */
@@ -164,24 +186,35 @@ textarea.form-control {
     justify-content: center;
 }
 
-/* FAQ */
-.faq-item {
-    border-bottom: 1px solid var(--color-gray-200);
-    padding: var(--space-6) 0;
-}
-
-.faq-question {
-    font-weight: 600;
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--space-2);
-    color: var(--color-gray-900);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.faq-answer {
+.calendar-text {
     color: var(--color-gray-600);
-    max-width: 90%;
+}
+
+.calendar-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+}
+
+.calendar-list-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.calendar-icon {
+    color: var(--color-primary);
+    width: 20px;
+}
+
+.btn-calendar {
+    background-color: var(--color-white);
+    color: var(--color-primary-dark);
+    border: 1px solid var(--color-gray-200);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
