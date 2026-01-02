@@ -186,26 +186,43 @@
 
 /* Experience CTA */
 .experience-cta {
-    background-color: var(--color-gray-900);
+    background: linear-gradient(135deg, var(--color-gray-900) 0%, #0c1a3a 100%);
     color: var(--color-white);
     text-align: center;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .experience-cta h1 {
     color: var(--color-white);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-6);
+    font-size: var(--font-size-4xl);
+    letter-spacing: -0.02em;
 }
 
 .experience-cta p {
     font-size: var(--font-size-xl);
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 700px;
-    margin: 0 auto;
+    color: var(--color-gray-300);
+    max-width: 600px;
+    margin: 0 auto var(--space-8);
+    line-height: 1.6;
 }
 
-.btn-download {
-    margin-top: var(--space-8);
+.experience-cta .btn-group {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.experience-cta .btn {
+    min-width: 180px;
+}
+
+.experience-cta .btn-download {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: var(--space-2);
 }
