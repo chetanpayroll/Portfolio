@@ -14,11 +14,12 @@
 }
 
 .hero-title {
-    font-size: var(--font-size-5xl);
+    font-size: clamp(2.25rem, calc(2rem + 2vw), 3.25rem);
     font-weight: 700;
     color: var(--color-gray-900);
     letter-spacing: -0.02em;
     margin-bottom: var(--space-6);
+    line-height: 1.1;
 }
 
 .hero-subtitle {
@@ -245,7 +246,7 @@
 }
 
 .insight-title {
-    font-size: var(--font-size-2xl);
+    font-size: clamp(1.25rem, calc(1.1rem + 0.5vw), 1.5rem);
     margin-bottom: var(--space-4);
     color: var(--color-white);
     font-weight: 700;

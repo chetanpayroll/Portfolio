@@ -115,3 +115,64 @@ body.no-scroll {
         display: none !important;
     }
 }
+
+/* Desktop Fine-tuning (1024px - 1439px) */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+
+    h1,
+    .h1 {
+        font-size: 2.75rem;
+        /* Fixed size for this range */
+    }
+
+    h2,
+    .h2 {
+        font-size: 2rem;
+    }
+
+    p,
+    li {
+        font-size: 1rem;
+    }
+
+    .site-header .container {
+        height: 68px;
+    }
+
+    .desktop-nav ul {
+        gap: 0.25rem;
+    }
+
+    .nav-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Large Desktop (1440px and up) */
+@media screen and (min-width: 1440px) {
+    html {
+        font-size: 16px;
+        /* Standard at larger screens */
+    }
+
+    .site-header .container {
+        height: 76px;
+    }
+
+    .desktop-nav ul {
+        gap: 0.75rem;
+    }
+
+    .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.9375rem;
+    }
+}
+
+/* Extra Large Screens (1920px and up) */
+@media screen and (min-width: 1920px) {
+    html {
+        font-size: 17px;
+    }
+}

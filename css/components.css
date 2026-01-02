@@ -5,12 +5,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-3) var(--space-6);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
     border-radius: var(--radius-md);
-    font-weight: 500;
+    font-weight: 600;
     transition: all var(--transition-base);
     cursor: pointer;
     border: 1px solid transparent;
+    line-height: 1.5;
 }
 
 .btn-primary {
@@ -20,16 +22,20 @@
 
 .btn-primary:hover {
     background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-secondary {
     background-color: transparent;
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    border-color: var(--color-gray-300);
+    color: var(--color-gray-700);
 }
 
 .btn-secondary:hover {
     background-color: var(--color-gray-50);
+    border-color: var(--color-gray-400);
+    color: var(--color-gray-900);
 }
 
 /* Cards */
@@ -38,13 +44,14 @@
     border-radius: var(--radius-lg);
     padding: var(--space-6);
     box-shadow: var(--shadow-sm);
-    transition: box-shadow var(--transition-base), transform var(--transition-base);
-    border: 1px solid var(--color-gray-100);
+    transition: all var(--transition-base);
+    border: 1px solid var(--color-gray-200);
 }
 
 .card:hover {
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--shadow-lg);
     transform: translateY(-4px);
+    border-color: var(--color-primary-light);
 }
 
 /* Badge */
