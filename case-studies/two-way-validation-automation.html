@@ -103,7 +103,8 @@
                 <h2 class="mb-4">Executive Summary</h2>
                 <p class="mb-8 text-gray-700">
                     The client's payroll team was spending 2 full days every month manually cross-checking HRIS data
-                    (Workday) against Payroll inputs (ADP) for 500+ employees. This visual "stare-and-compare" method
+                    (HRIS) against Payroll inputs (Payroll Vendor) for 500+ employees. This visual "stare-and-compare"
+                    method
                     was prone to human error and caused high stress levels during the payroll cutoff window. I automated
                     this entire workflow.
                 </p>
@@ -116,7 +117,7 @@
                 <ul class="list-disc">
                     <li><strong>Data Volume:</strong> 500+ rows of data with 30+ columns (salary, bonus, address, tax
                         code, etc.).</li>
-                    <li><strong>Format Mismatch:</strong> Workday exported reports in one format, ADP required a
+                    <li><strong>Format Mismatch:</strong> HRIS exported reports in one format, Payroll System required a
                         completely different structure.</li>
                     <li><strong>Human Error:</strong> Fatigue led to missed updates, resulting in 3-5 payroll errors per
                         month.</li>
@@ -135,7 +136,7 @@
                     <li class="mb-2"><strong>Logic Engine:</strong> It compared the datasets based on unique Employee
                         IDs.</li>
                     <li class="mb-2"><strong>Exception Reporting:</strong> It generated a color-coded PDF report showing
-                        *only* the discrepancies (e.g., "Salary in Workday is 5000, but in Payroll is 4500").</li>
+                        *only* the discrepancies (e.g., "Salary in HRIS is 5000, but in Payroll is 4500").</li>
                 </ol>
 
                 <!-- Tech Stack -->
