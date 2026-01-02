@@ -222,25 +222,15 @@
                                 </li>
                             </ul>
 
-                            <!-- Google Calendar Appointment Scheduling begin -->
-                            <link href="https://calendar.google.com/calendar/scheduling-button-script.css"
-                                rel="stylesheet">
-                            <script src="https://calendar.google.com/calendar/scheduling-button-script.js"
-                                async></script>
-                            <script>
-                                (function () {
-                                    var target = document.currentScript;
-                                    window.addEventListener('load', function () {
-                                        calendar.schedulingButton.load({
-                                            url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2UtHcZ1j7q2VTp7T8RdCW-cqua9F_feaYKrgzH7m0xBADj2-0I7ahITuhR3c-xMXbt1GBiEkPW?gv=true',
-                                            color: '#039BE5',
-                                            label: 'Book an appointment',
-                                            target,
-                                        });
-                                    });
-                                })();
-                            </script>
-                            <!-- end Google Calendar Appointment Scheduling -->
+                            <!-- Google Calendar Booking Button -->
+                            <div style="margin-top: 1.5rem;">
+                                <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2UtHcZ1j7q2VTp7T8RdCW-cqua9F_feaYKrgzH7m0xBADj2-0I7ahITuhR3c-xMXbt1GBiEkPW?gv=true"
+                                    target="_blank" rel="noopener noreferrer" class="btn btn-primary"
+                                    style="width: 100%; text-align: center; justify-content: center;">
+                                    <i data-lucide="calendar" style="width: 20px; height: 20px; margin-right: 8px;"></i>
+                                    Book an Appointment
+                                </a>
+                            </div>
                         </div>
                     </div>
 
