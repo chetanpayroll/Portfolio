@@ -9,7 +9,7 @@ import { getCurrentYear } from './utils.js';
 // However, modern browsers support type="module". We will assume we add type="module" to script tags.
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('GMPPayroll application initialized');
+    console.log('GMP Payroll application initialized');
 
     // Update Copyright Year
     const yearSpan = document.querySelector('.copyright-year');
