@@ -84,6 +84,7 @@ function createMobileMenu() {
             <a href="${root}expertise.html" class="mobile-nav-link">Expertise</a>
             <a href="${root}case-studies.html" class="mobile-nav-link">Portfolio</a>
             <a href="${root}experience.html" class="mobile-nav-link">Journey</a>
+            <a href="${root}blog/posts/payroll-automation-google-sheets-apps-script.html" class="mobile-nav-link">Automation</a>
             <a href="${root}blog.html" class="mobile-nav-link">Insights</a>
             <a href="${root}contact.html" class="btn btn-primary" style="text-align: center; justify-content: center; margin-top: 1rem;">Connect</a>
         </div>
