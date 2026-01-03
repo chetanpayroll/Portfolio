@@ -3,18 +3,18 @@
     xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>GMP Payroll Insights - Chetan Sharma</title>
-        <link>https://www.gmppayroll.com/blog.html</link>
+        <link>https://chetanpayroll.github.io/Portfolio/blog.html</link>
         <description>Expert insights on global payroll management, compliance, and automation.</description>
         <language>en-us</language>
         <lastBuildDate>Fri, 02 Jan 2026 00:00:00 +0000</lastBuildDate>
-        <atom:link href="https://www.gmppayroll.com/feed.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https://chetanpayroll.github.io/Portfolio/feed.xml" rel="self" type="application/rss+xml"/>
 
         <item>
             <title>Mastering Global Payroll: A Guide for Expansions</title>
-            <link>https://www.gmppayroll.com/blog/posts/mastering-global-payroll.html</link>
+            <link>https://chetanpayroll.github.io/Portfolio/blog/posts/mastering-global-payroll.html</link>
             <description>Entering new markets requires more than just hiring. Learn the critical payroll infrastructure steps needed to ensure compliance from day one.</description>
             <pubDate>Sat, 12 Oct 2025 00:00:00 +0000</pubDate>
-            <guid isPermaLink="true">https://www.gmppayroll.com/blog/posts/mastering-global-payroll.html</guid>
+            <guid isPermaLink="true">https://chetanpayroll.github.io/Portfolio/blog/posts/mastering-global-payroll.html</guid>
         </item>
 
         <!-- Add more items -->
