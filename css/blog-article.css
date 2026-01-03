@@ -17,6 +17,7 @@
 /* Breadcrumb */
 .breadcrumb {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
     font-size: 0.875rem;
@@ -100,6 +101,7 @@
 /* Author Card */
 .author-card {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 16px;
     padding: 20px 24px;
@@ -473,6 +475,7 @@
 .comparison-table-wrapper {
     overflow-x: auto;
     margin: 24px 0;
+    -webkit-overflow-scrolling: touch;
 }
 
 .comparison-table {
@@ -608,6 +611,7 @@
     padding: 20px;
     background: #1e1e1e;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .code-block code {
