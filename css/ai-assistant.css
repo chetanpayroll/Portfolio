@@ -407,3 +407,219 @@
 .hidden {
     display: none !important;
 }
+
+/* ============================================
+   BOOKING WIDGET STYLES
+   ============================================ */
+.booking-widget {
+    margin-top: 12px;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    max-width: 100%;
+}
+
+.booking-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.booking-step {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Date Scroll */
+.date-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    /* Hide scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.date-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.date-card {
+    flex: 0 0 auto;
+    width: 60px;
+    height: 70px;
+    border-radius: 12px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.date-card:hover {
+    border-color: #0d47a1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.date-card.active {
+    background: #0d47a1;
+    border-color: #0d47a1;
+    color: white;
+}
+
+.card-day {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.date-card.active .card-day {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.card-date {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.date-card.active .card-date {
+    color: white;
+}
+
+/* Time Grid */
+.time-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.time-btn {
+    padding: 10px;
+    border-radius: 8px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.time-btn:hover {
+    border-color: #0d47a1;
+    color: #0d47a1;
+    background: #f0f9ff;
+}
+
+/* Booking Form */
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.booking-input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.booking-input:focus {
+    border-color: #0d47a1;
+    box-shadow: 0 0 0 2px rgba(13, 71, 161, 0.1);
+}
+
+.confirm-btn {
+    padding: 10px;
+    border-radius: 8px;
+    background: #0d47a1;
+    color: white;
+    border: none;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: all 0.2s ease;
+}
+
+.confirm-btn:hover {
+    background: #1565c0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(13, 71, 161, 0.2);
+}
+
+/* Navigation */
+.back-link {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.back-link:hover {
+    color: #0f172a;
+    text-decoration: underline;
+}
+
+.selected-date-display {
+    font-size: 13px;
+    color: #0d47a1;
+    font-weight: 500;
+    margin-bottom: 12px !important;
+}
+
+/* Success State */
+.booking-success {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.success-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #dcfce7;
+    color: #16a34a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.booking-success h4 {
+    color: #0f172a;
+    margin: 0 0 8px 0;
+}
+
+.final-slot {
+    color: #0d47a1;
+    font-weight: 600;
+    margin: 4px 0;
+}
+
+.small-note {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 12px !important;
+}

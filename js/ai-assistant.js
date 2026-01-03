@@ -91,12 +91,32 @@ class ProfileAssistant {
     addMessage(content, type) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${type}-message`;
-        messageDiv.innerHTML = `
-            <div class="message-content">
-                <p>${this.formatMessage(content)}</p>
-            </div>
-        `;
-        this.chatMessages.appendChild(messageDiv);
+
+        // Handle Widget Response
+        if (typeof content === 'object' && content.type === 'widget') {
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${this.formatMessage(content.text)}</p>
+                    <div class="widget-container"></div>
+                </div>
+            `;
+            this.chatMessages.appendChild(messageDiv);
+
+            // Render specific widget
+            if (content.widgetType === 'booking') {
+                const container = messageDiv.querySelector('.widget-container');
+                this.renderBookingWidget(container);
+            }
+        } else {
+            // Standard Text Response
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${this.formatMessage(content)}</p>
+                </div>
+            `;
+            this.chatMessages.appendChild(messageDiv);
+        }
+
         this.scrollToBottom();
     }
 
@@ -271,6 +291,17 @@ class ProfileAssistant {
         }
 
         // ============================================
+        // BOOKING / MEETING INTENT
+        // ============================================
+        if (this.matchesAny(q, ['book', 'booking', 'meeting', 'schedule', 'appointment', 'calendar', 'call'])) {
+            return {
+                type: 'widget',
+                widgetType: 'booking',
+                text: 'I can certainly help you schedule a meeting with Chetan. Please select a preferred date below:'
+            };
+        }
+
+        // ============================================
         // DEFAULT / UNRELATED QUESTIONS
         // ============================================
 
@@ -279,6 +310,118 @@ class ProfileAssistant {
 
     matchesAny(text, keywords) {
         return keywords.some(keyword => text.includes(keyword));
+    }
+
+    renderBookingWidget(container) {
+        const today = new Date();
+        const dates = [];
+
+        // Generate next 5 dates - avoiding weekends could be an enhancement, keeping simple for now
+        for (let i = 1; i <= 5; i++) {
+            const d = new Date(today);
+            d.setDate(today.getDate() + i);
+            dates.push({
+                day: d.toLocaleDateString('en-US', { weekday: 'short' }),
+                date: d.getDate(),
+                fullDate: d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) // e.g., Monday, January 12
+            });
+        }
+
+        const widgetId = 'booking-' + Date.now();
+
+        // Initial Date Selection View
+        container.innerHTML = `
+            <div id="${widgetId}" class="booking-widget">
+                <div class="booking-step" id="${widgetId}-step-1">
+                    <p class="booking-title">Select a Date</p>
+                    <div class="date-scroll">
+                        ${dates.map((d, index) => `
+                            <button class="date-card ${index === 0 ? '' : ''}" data-date="${d.fullDate}" onclick="window.handleDateSelect('${widgetId}', '${d.fullDate}', this)">
+                                <span class="card-day">${d.day}</span>
+                                <span class="card-date">${d.date}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="booking-step hidden" id="${widgetId}-step-2">
+                    <button class="back-link" onclick="window.changeStep('${widgetId}', 1)">← Back</button>
+                    <p class="booking-title">Select Time</p>
+                    <p class="selected-date-display"></p>
+                    <div class="time-grid">
+                        <button class="time-btn" onclick="window.handleTimeSelect('${widgetId}', '10:00 AM')">10:00 AM</button>
+                        <button class="time-btn" onclick="window.handleTimeSelect('${widgetId}', '11:30 AM')">11:30 AM</button>
+                        <button class="time-btn" onclick="window.handleTimeSelect('${widgetId}', '02:00 PM')">02:00 PM</button>
+                        <button class="time-btn" onclick="window.handleTimeSelect('${widgetId}', '04:30 PM')">04:30 PM</button>
+                    </div>
+                </div>
+
+                <div class="booking-step hidden" id="${widgetId}-step-3">
+                    <button class="back-link" onclick="window.changeStep('${widgetId}', 2)">← Back</button>
+                    <p class="booking-title">Your Details</p>
+                    <form class="booking-form" onsubmit="window.handleBookingSubmit(event, '${widgetId}')">
+                        <input type="text" placeholder="Your Name" required class="booking-input">
+                        <input type="email" placeholder="Email Address" required class="booking-input">
+                        <input type="text" placeholder="Meeting Topic" required class="booking-input">
+                        <button type="submit" class="confirm-btn">Confirm Booking</button>
+                    </form>
+                </div>
+
+                <div class="booking-step hidden" id="${widgetId}-step-4">
+                    <div class="booking-success">
+                        <div class="success-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <h4>Request Sent!</h4>
+                        <p>Chetan will confirm the meeting for:</p>
+                        <p class="final-slot"></p>
+                        <p class="small-note">Check your email for the calendar invite.</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Helper functions attached to window (idempotent check)
+        if (!window.handleDateSelect) {
+            window.handleDateSelect = (widgetId, dateStr, btn) => {
+                const widget = document.getElementById(widgetId);
+                widget.querySelectorAll('.date-card').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+
+                widget.dataset.selectedDate = dateStr;
+                widget.querySelector('.selected-date-display').textContent = dateStr;
+
+                window.changeStep(widgetId, 2);
+            };
+
+            window.changeStep = (widgetId, step) => {
+                const widget = document.getElementById(widgetId);
+                widget.querySelectorAll('.booking-step').forEach(s => s.classList.add('hidden'));
+                document.getElementById(`${widgetId}-step-${step}`).classList.remove('hidden');
+            };
+
+            window.handleTimeSelect = (widgetId, time) => {
+                const widget = document.getElementById(widgetId);
+                widget.dataset.selectedTime = time;
+                window.changeStep(widgetId, 3);
+            };
+
+            window.handleBookingSubmit = (e, widgetId) => {
+                e.preventDefault();
+                const widget = document.getElementById(widgetId);
+                const date = widget.dataset.selectedDate;
+                const time = widget.dataset.selectedTime;
+
+                const slotText = `${date} • ${time}`;
+                widget.querySelector('.final-slot').textContent = slotText;
+
+                window.changeStep(widgetId, 4);
+
+                if (window.lucide) window.lucide.createIcons();
+            };
+        }
     }
 }
 
