@@ -78,6 +78,7 @@
 
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/ai-assistant.css">
 </head>
 
 <body>
@@ -285,6 +286,89 @@
     <script type="module" src="js/utils.js"></script>
     <script type="module" src="js/navigation.js"></script>
     <script type="module" src="js/main.js"></script>
+    <!-- AI Assistant Chat Widget -->
+    <div id="ai-assistant-container">
+
+        <!-- Chat Toggle Button -->
+        <button id="chat-toggle" class="chat-toggle-btn" aria-label="Open chat assistant">
+            <svg class="chat-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <svg class="close-icon hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <!-- Chat Window -->
+        <div id="chat-window" class="chat-window">
+
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-avatar">
+                        <img src="assets/images/headshot.png" alt="Chetan's Assistant"
+                            onerror="this.style.display='none'">
+                        <span class="avatar-fallback">CS</span>
+                    </div>
+                    <div>
+                        <h4>Chetan's AI Assistant</h4>
+                        <span class="status-indicator">
+                            <span class="status-dot"></span> Online
+                        </span>
+                    </div>
+                </div>
+                <button id="chat-close" class="chat-close-btn" aria-label="Close chat">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chat-messages" class="chat-messages">
+                <!-- Welcome Message -->
+                <div class="message assistant-message">
+                    <div class="message-content">
+                        <p>👋 Hi! I'm Chetan's AI Assistant.</p>
+                        <p>I can help you learn about Chetan Sharma's professional background, skills, projects, and
+                            experience.</p>
+                        <p>What would you like to know?</p>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="quick-action-btn" data-question="What is Chetan's experience?">Experience</button>
+                    <button class="quick-action-btn" data-question="What are his skills?">Skills</button>
+                    <button class="quick-action-btn" data-question="Tell me about his projects">Projects</button>
+                    <button class="quick-action-btn" data-question="How can I contact Chetan?">Contact</button>
+                    <button class="quick-action-btn" data-question="Can I see his resume?">Resume</button>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <form id="chat-form" class="chat-form">
+                    <input type="text" id="chat-input" class="chat-input" placeholder="Ask about Chetan's profile..."
+                        autocomplete="off" maxlength="500">
+                    <button type="submit" class="chat-send-btn" aria-label="Send message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </form>
+                <p class="chat-disclaimer">AI assistant for Chetan Sharma's profile only</p>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/ai-assistant.js"></script>
 </body>
 
 </html>
