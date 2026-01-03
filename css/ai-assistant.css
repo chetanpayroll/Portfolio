@@ -225,6 +225,30 @@
     margin-bottom: 0;
 }
 
+/* Link Style used for Resume Download */
+.chat-resume-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 10px 16px;
+    background-color: #f1f5f9;
+    color: #0d47a1;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.chat-resume-link:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
 /* Quick Actions */
 .quick-actions {
     display: flex;

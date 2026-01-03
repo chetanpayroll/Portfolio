@@ -239,7 +239,7 @@ class ProfileAssistant {
         // ============================================
 
         if (this.matchesAny(q, ['resume', 'cv', 'download', 'pdf'])) {
-            return `Yes! You can download Chetan's resume from the website.\n\nClick the **'Download Resume'** button on the homepage or contact page.\n\nThe resume includes his complete work history, skills, achievements, and contact information.`;
+            return `Yes! You can download Chetan's resume directly here:\n\n<a href="https://chetanpayroll.github.io/Portfolio/assets/documents/Chetan_Sharma_Global_Payroll_Implementation_Manager.pdf" target="_blank" class="chat-resume-link">📄 Download Resume (PDF)</a>\n\nThe resume includes his complete work history, skills, achievements, and contact information.`;
         }
 
         // ============================================
