@@ -1,41 +1,67 @@
-# Robots.txt for gmppayroll.com
-# Last updated: 2026-01-02
+# ============================================
+# ROBOTS.TXT FOR CHETANPAYROLL.COM
+# ============================================
 
+# Allow all search engines
 User-agent: *
 Allow: /
 
-# Disallow admin/utility paths
-Disallow: /api/
-Disallow: /admin/
-Disallow: /*.json$
-Disallow: /assets/documents/drafts/
-
-# Allow CSS and JS for rendering
-Allow: /css/
-Allow: /js/
-Allow: /assets/
-
 # Sitemap location
-Sitemap: https://www.gmppayroll.com/sitemap.xml
+Sitemap: https://www.chetanpayroll.com/sitemap.xml
 
-# Crawl-delay (optional, for politeness)
+# Crawl delay (optional - remove if causing issues)
 Crawl-delay: 1
 
-# Specific bot instructions
+# ============================================
+# SPECIFIC BOT INSTRUCTIONS
+# ============================================
+
+# Google
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
+# Google Images
 User-agent: Googlebot-Image
 Allow: /assets/images/
 
+# Bing
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
+# LinkedIn
 User-agent: LinkedInBot
 Allow: /
 
+# Twitter
 User-agent: Twitterbot
 Allow: /
 
+# Facebook
 User-agent: facebookexternalhit
 Allow: /
+
+# WhatsApp
+User-agent: WhatsApp
+Allow: /
+
+# Slack
+User-agent: Slackbot
+Allow: /
+
+# ============================================
+# DISALLOW PATTERNS
+# ============================================
+
+# Disallow admin or private directories (if any exist)
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
+Disallow: /node_modules/
+
+# ============================================
+# HOST DIRECTIVE
+# ============================================
+Host: https://www.chetanpayroll.com

@@ -441,8 +441,7 @@
     overflow-x: auto;
     padding-bottom: 8px;
     /* Hide scrollbar */
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+
 }
 
 .date-scroll::-webkit-scrollbar {

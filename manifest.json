@@ -1,0 +1,124 @@
+{
+    "name": "Chetan Sharma - Global Payroll Expert",
+    "short_name": "Chetan Sharma",
+    "description": "Professional portfolio of Chetan Sharma, Global Payroll Implementation Manager with 13+ years experience across 25+ countries.",
+    "start_url": "https://www.chetanpayroll.com/",
+    "scope": "https://www.chetanpayroll.com/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#ffffff",
+    "theme_color": "#0d47a1",
+    "lang": "en-US",
+    "dir": "ltr",
+    "categories": [
+        "business",
+        "finance",
+        "professional"
+    ],
+    "icons": [
+        {
+            "src": "/assets/images/icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/images/icon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/images/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/images/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/images/icon-152x152.png",
+            "sizes": "152x152",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/images/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/assets/images/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/images/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "About Chetan",
+            "short_name": "About",
+            "description": "Learn about Chetan's background",
+            "url": "/about.html",
+            "icons": [
+                {
+                    "src": "/assets/images/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "View Portfolio",
+            "short_name": "Portfolio",
+            "description": "See project case studies",
+            "url": "/case-studies.html",
+            "icons": [
+                {
+                    "src": "/assets/images/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Contact",
+            "short_name": "Contact",
+            "description": "Get in touch",
+            "url": "/contact.html",
+            "icons": [
+                {
+                    "src": "/assets/images/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/assets/images/screenshot-wide.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Homepage of Chetan Sharma Portfolio"
+        },
+        {
+            "src": "/assets/images/screenshot-narrow.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Mobile view of portfolio"
+        }
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false
+}

@@ -1,0 +1,54 @@
+/* Legal Pages (Privacy Policy, Terms of Service) */
+
+.policy-header {
+    background-color: var(--color-gray-50);
+    padding-top: 120px;
+    padding-bottom: var(--space-12);
+    margin-bottom: var(--space-12);
+    text-align: center;
+}
+
+.policy-content {
+    margin-bottom: var(--space-16);
+}
+
+.policy-content h2 {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-4);
+    font-size: 1.5rem;
+}
+
+.policy-content p {
+    margin-bottom: var(--space-4);
+    color: var(--color-gray-600);
+}
+
+.policy-content ul {
+    list-style: disc;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-4);
+    color: var(--color-gray-600);
+}
+
+.policy-content li {
+    margin-bottom: var(--space-2);
+}
+
+.last-updated {
+    color: var(--color-gray-500);
+    font-size: 0.875rem;
+    margin-top: var(--space-4);
+}
+
+.policy-link {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.container-narrow {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+}
