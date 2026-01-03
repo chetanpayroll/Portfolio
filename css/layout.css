@@ -14,6 +14,9 @@
 
 .site-header .container {
     height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .site-header .logo {
@@ -21,12 +24,34 @@
     font-weight: 700;
     font-size: 1.5rem;
     color: var(--color-primary-dark);
+    text-decoration: none;
+}
+
+.desktop-nav {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .desktop-nav {
+        display: block;
+    }
+
+    .desktop-nav ul {
+        display: flex;
+        align-items: center;
+        gap: var(--space-8);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
 }
 
 .nav-link {
     font-weight: 500;
     color: var(--color-gray-700);
     transition: color var(--transition-base);
+    text-decoration: none;
+    font-size: 0.9375rem;
 }
 
 .nav-link:hover {
@@ -43,6 +68,16 @@
     border: none;
     cursor: pointer;
     color: var(--color-gray-900);
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 1024px) {
+    .mobile-menu-toggle {
+        display: none;
+    }
 }
 
 /* Footer - Dark Theme */
