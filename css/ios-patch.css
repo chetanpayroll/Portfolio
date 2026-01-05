@@ -1,0 +1,124 @@
+/* ============================================
+   iOS Responsiveness & Mobile Patch
+   Target: iPhone SE, 12, 15 Pro, iPad
+   ============================================ */
+
+/* Mobile Layout Adjustments (< 480px) */
+@media screen and (max-width: 480px) {
+
+    /* Adjust Title for small screens to prevent clipping */
+    .article-title {
+        font-size: 1.75rem !important;
+        /* ~28px */
+        line-height: 1.25 !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* Reduce hero padding for better mobile use of space */
+    .article-hero {
+        padding-top: 100px !important;
+        padding-bottom: 32px !important;
+    }
+
+    /* Stack author card elements vertically */
+    .author-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px !important;
+    }
+
+    .author-avatar {
+        margin-bottom: 12px;
+    }
+
+    .author-info {
+        width: 100%;
+    }
+
+    /* Wrap stats bar items properly */
+    .article-stats-bar {
+        gap: 24px !important;
+        justify-content: flex-start;
+    }
+
+    .article-stats-bar .stat-item {
+        flex: 1 1 40%;
+        /* 2 columns */
+        min-width: 120px;
+    }
+
+    /* Ensure breadcrumbs wrap, don't overflow, and are clickable */
+    .breadcrumb {
+        flex-wrap: wrap !important;
+        line-height: 1.6 !important;
+        margin-bottom: 16px !important;
+    }
+}
+
+/* Specific iPhone SE / Small screen adjustments (< 375px) */
+@media screen and (max-width: 375px) {
+    .article-title {
+        font-size: 1.6rem !important;
+        /* 25.6px */
+    }
+
+    .article-summary {
+        font-size: 1rem !important;
+    }
+
+    /* Ensure stats items don't get too squashed on very narrow screens */
+    .article-stats-bar .stat-item {
+        flex: 1 1 100%;
+        /* 1 column */
+    }
+}
+
+/* iPad / Tablet Adjustments */
+@media screen and (max-width: 1024px) {
+
+    /* Ensure no horizontal scroll on tablet */
+    .container {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+}
+
+/* iOS Specific Scrolling Behavior */
+.comparison-table-wrapper,
+.code-block pre {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+}
+
+/* Ensure images don't overflow */
+.article-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tap Target Sizing Improvements */
+button,
+a.btn,
+.mobile-menu-toggle {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+}
+
+/* Fix sticky hover states on iOS */
+@media (hover: none) {
+
+    .breadcrumb a:hover,
+    .toc-link:hover {
+        color: inherit;
+        /* Reset hover colors on touch devs */
+    }
+}
+
+/* Safe Area Insets for iOS Home Indicator */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    body {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}

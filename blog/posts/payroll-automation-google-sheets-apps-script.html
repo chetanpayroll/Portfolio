@@ -12,7 +12,7 @@
         gtag('config', 'G-V8JM3TTY93');
     </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!-- Primary Meta Tags -->
     <title>Payroll Automation Using Google Sheets & Apps Script | Chetan Sharma</title>
@@ -63,6 +63,7 @@
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/blog-article.css">
     <link rel="stylesheet" href="../../css/ai-assistant.css">
+    <link rel="stylesheet" href="../../css/ios-patch.css">
 
     <!-- Syntax Highlighting (Prism.js) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
@@ -1042,27 +1043,22 @@
          ============================================ -->
     <footer class="footer-dark">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="../../index.html" class="footer-logo">GMPPayroll</a>
+            <div class="d-grid grid-3 gap-8 mb-12">
+                <!-- Col 1 -->
+                <div>
+                    <a href="../../index.html" class="logo">
+                        <span class="text-primary">GMP</span> Payroll
+                    </a>
                     <p class="footer-tagline">Global payroll implementation excellence.</p>
-                    <div class="footer-social">
-                        <a href="https://www.linkedin.com/in/chetan-champ/" target="_blank" rel="noopener"
-                            aria-label="LinkedIn">
-                            <i data-lucide="linkedin"></i>
-                        </a>
-                        <a href="mailto:chetanpayroll@gmail.com" aria-label="Email">
-                            <i data-lucide="mail"></i>
-                        </a>
+                    <div class="footer-social-links">
+                        <a href="https://www.linkedin.com/in/chetan-champ/" target="_blank" rel="noopener noreferrer"
+                            class="footer-social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
                     </div>
                 </div>
-                <div class="footer-legal-links">
-                    <a href="../../privacy-policy.html">Privacy Policy</a>
-                    <a href="../../terms-of-service.html">Terms of Service</a>
-                </div>
-                <div class="footer-column">
-                    <h4>Quick Links</h4>
-                    <ul>
+                <!-- Col 2 -->
+                <div>
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="d-flex flex-col gap-4">
                         <li><a href="../../about.html">About</a></li>
                         <li><a href="../../expertise.html">Expertise</a></li>
                         <li><a href="../../case-studies.html">Portfolio</a></li>
@@ -1071,17 +1067,49 @@
                         <li><a href="../../contact.html">Connect</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h4>Contact</h4>
-                    <ul>
-                        <li><a href="mailto:chetanpayroll@gmail.com">chetanpayroll@gmail.com</a></li>
-                        <li><a href="tel:+918619495587">+91 8619495587</a></li>
-                        <li>Alwar, Rajasthan, India</li>
+                <!-- Col 3 -->
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <ul class="d-flex flex-col gap-4">
+                        <li>
+                            <a href="mailto:chetanpayroll@gmail.com">
+                                <i data-lucide="mail"></i>
+                                chetanpayroll@gmail.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+918619495587">
+                                <i data-lucide="phone"></i>
+                                +91 8619495587
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/chetan-champ/" target="_blank"
+                                rel="noopener noreferrer">
+                                <i data-lucide="linkedin"></i>
+                                LinkedIn
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.chetanpayroll.com" target="_blank" rel="noopener">
+                                <i data-lucide="globe"></i>
+                                www.chetanpayroll.com
+                            </a>
+                        </li>
+                        <li>
+                            <i data-lucide="map-pin"></i>
+                            Alwar, Rajasthan, India
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2026 Chetan Sharma. All rights reserved.</p>
+
+            <div class="footer-bottom-flex">
+                <span>&copy; <span class="copyright-year">2026</span> Chetan Sharma. All rights reserved.</span>
+                <div style="display: flex; gap: var(--space-4);">
+                    <a href="../../privacy-policy.html">Privacy Policy</a>
+                    <a href="../../terms-of-service.html">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -1089,7 +1117,9 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
-    <script src="../../js/main.js"></script>
+    <script type="module" src="../../js/utils.js"></script>
+    <script type="module" src="../../js/navigation.js"></script>
+    <script type="module" src="../../js/main.js"></script>
 
     <!-- AI Assistant -->
     <div id="ai-assistant-container">
