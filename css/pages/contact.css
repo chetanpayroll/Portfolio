@@ -29,42 +29,42 @@
 .method-card {
     text-align: center;
     padding: var(--space-6);
-    background-color: var(--color-gray-50);
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
     border-radius: var(--radius-lg);
     transition: var(--transition-base);
     display: block;
-    /* Ensure it behaves like a block for padding */
     text-decoration: none;
-    /* Remove underline from anchor */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .method-card:hover {
-    background-color: var(--color-white);
-    box-shadow: var(--shadow-md);
     transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #1e40af 0%, #60a5fa 100%);
 }
 
 .method-icon {
     width: 48px;
     height: 48px;
-    background-color: var(--color-white);
-    color: var(--color-primary);
+    background-color: #ffffff;
+    color: #1e3a8a;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto var(--space-4);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .method-card h4 {
-    color: var(--color-gray-900);
+    color: #ffffff;
     margin-bottom: var(--space-2);
     font-weight: 600;
 }
 
 .method-label {
-    color: var(--color-gray-500);
+    color: rgba(255, 255, 255, 0.9);
     font-size: var(--font-size-sm);
 }
 
