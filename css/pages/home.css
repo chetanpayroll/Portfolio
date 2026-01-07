@@ -45,6 +45,9 @@
     height: auto;
     display: block;
     cursor: pointer;
+    transform: scale(1.08);
+    transform-origin: center;
+    object-fit: cover;
 }
 
 .video-play-button {
