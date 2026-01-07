@@ -45,6 +45,10 @@
     height: auto;
     display: block;
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.video-wrapper.playing .hero-video {
     transform: scale(1.08);
     transform-origin: center;
     object-fit: cover;
