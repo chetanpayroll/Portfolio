@@ -33,4 +33,43 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+    // Video Player Logic
+    const videoWrapper = document.querySelector('.video-wrapper');
+    const video = document.getElementById('hero-video');
+    const playBtn = document.getElementById('hero-play-btn');
+
+    if (videoWrapper && video && playBtn) {
+        const togglePlay = () => {
+            if (video.paused) {
+                video.play();
+                videoWrapper.classList.add('playing');
+                video.setAttribute('controls', 'true');
+            } else {
+                video.pause();
+                videoWrapper.classList.remove('playing');
+                video.removeAttribute('controls');
+            }
+        };
+
+        playBtn.addEventListener('click', togglePlay);
+        video.addEventListener('click', (e) => {
+            // Only toggle if controls aren't showing (initial state) or if user clicked video area not controls
+            // But since controls overlay, usually browser handles click if controls are visible.
+            // A simple toggle here might interfere with native controls if they are active.
+            // Let's only handle play if not playing.
+            if (video.paused) {
+                togglePlay();
+            }
+        });
+
+        video.addEventListener('pause', () => {
+            videoWrapper.classList.remove('playing');
+            video.removeAttribute('controls');
+        });
+
+        video.addEventListener('play', () => {
+            videoWrapper.classList.add('playing');
+            video.setAttribute('controls', 'true');
+        });
+    }
 });

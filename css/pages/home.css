@@ -29,14 +29,57 @@
     max-width: 600px;
 }
 
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: var(--space-8);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    background-color: var(--color-white);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
 .hero-video {
     width: 100%;
     height: auto;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    background-color: var(--color-white);
-    padding: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    display: block;
+    cursor: pointer;
+}
+
+.video-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 68px;
+    height: 48px;
+    background-color: rgba(33, 33, 33, 0.8);
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+    padding: 0;
+}
+
+.video-play-button:hover {
+    background-color: #ff0000;
+}
+
+.video-play-button svg {
+    width: 24px;
+    height: 24px;
+    fill: #ffffff;
+    margin-left: 2px;
+}
+
+.video-wrapper.playing .video-play-button {
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* Credibility Bar */
