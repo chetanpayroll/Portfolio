@@ -247,11 +247,11 @@ class ProfileAssistant {
         // ============================================
 
         if (this.matchesAny(q, ['contact', 'email', 'phone', 'reach', 'connect', 'get in touch', 'hire', 'linkedin'])) {
-            return `You can reach Chetan through:\n\n📧 **Email:** chetanpayroll@gmail.com\n📱 **Phone:** +91 8619495587\n🔗 **LinkedIn:** linkedin.com/in/chetan-champ/\n🌐 **Website:** www.gmppayroll.com\n\nHe's open to discussing career opportunities, speaking engagements, and professional collaboration.`;
+            return `You can reach Chetan through:\n\n📧 **Email:** chetan@chetanpayroll.com\n📱 **Phone:** +91 8619495587\n🔗 **LinkedIn:** linkedin.com/in/chetan-champ/\n🌐 **Website:** www.gmppayroll.com\n\nHe's open to discussing career opportunities, speaking engagements, and professional collaboration.`;
         }
 
         if (this.matchesAny(q, ['available', 'hire', 'job', 'opportunity', 'looking', 'open to'])) {
-            return `Yes! Chetan is currently **open to new opportunities**.\n\nHe's exploring senior roles in:\n• Global payroll operations\n• Implementation leadership\n• Payroll transformation\n\nFeel free to reach out at **chetanpayroll@gmail.com**.`;
+            return `Yes! Chetan is currently **open to new opportunities**.\n\nHe's exploring senior roles in:\n• Global payroll operations\n• Implementation leadership\n• Payroll transformation\n\nFeel free to reach out at **chetan@chetanpayroll.com**.`;
         }
 
         // ============================================
@@ -287,7 +287,7 @@ class ProfileAssistant {
         }
 
         if (this.matchesAny(q, ['thank', 'thanks', 'appreciate'])) {
-            return `You're welcome! 😊\n\nIf you have more questions about Chetan's profile or want to get in touch with him, feel free to ask!\n\n**Email:** chetanpayroll@gmail.com`;
+            return `You're welcome! 😊\n\nIf you have more questions about Chetan's profile or want to get in touch with him, feel free to ask!\n\n**Email:** chetan@chetanpayroll.com`;
         }
 
         // ============================================
