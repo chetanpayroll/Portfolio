@@ -356,9 +356,68 @@ Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
             btnText.textContent = originalText;
         }
     }
+
+    /* ================= ICS Generation ================= */
+    downloadICS() {
+        if (!this.state.date || !this.state.time) return;
+
+        // Parse Date & Time
+        // this.state.date is a Date object (00:00:00)
+        // this.state.time is "09:00 AM" string
+        const [timeStr, modifier] = this.state.time.split(' ');
+        let [hours, minutes] = timeStr.split(':');
+
+        if (hours === '12') hours = '00';
+        if (modifier === 'PM') hours = parseInt(hours, 10) + 12;
+
+        const startDate = new Date(this.state.date);
+        startDate.setHours(hours, minutes, 0);
+
+        const endDate = new Date(startDate.getTime() + 30 * 60000); // +30 mins
+
+        // Format for ICS: YYYYMMDDTHHmm00
+        const formatDate = (date) => {
+            return date.toISOString().replace(/-|:|\.\d\d\d/g, "");
+        };
+
+        const icsContent = [
+            'BEGIN:VCALENDAR',
+            'VERSION:2.0',
+            'PRODID:-//Chetan Sharma Portfolio//Booking//EN',
+            'BEGIN:VEVENT',
+            `UID:${Date.now()}@chetanpayroll.com`,
+            `DTSTAMP:${formatDate(new Date())}`,
+            `DTSTART:${formatDate(startDate)}`,
+            `DTEND:${formatDate(endDate)}`,
+            `SUMMARY:Meeting with Chetan Sharma`,
+            `DESCRIPTION:Discussing: ${this.state.details.name || 'New Opportunity'}\\nPhone: ${this.state.details.phone || 'N/A'}\\nEmail: ${this.state.details.email}`,
+            'LOCATION:Remote / Phone',
+            'STATUS:CONFIRMED',
+            'END:VEVENT',
+            'END:VCALENDAR'
+        ].join('\r\n');
+
+        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'meeting-invite.ics';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 }
 
 // Initialize on Load
 document.addEventListener('DOMContentLoaded', () => {
     window.bookingFlow = new BookingFlow();
+
+    // Attach "Add to Calendar" listener dynamically since it lacks a unique ID in HTML
+    // We can do this efficiently by delegating or finding it on init
+    const addToCalBtn = document.querySelector('#screenSuccess .booking-btn-primary');
+    if (addToCalBtn) {
+        addToCalBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (window.bookingFlow) window.bookingFlow.downloadICS();
+        });
+    }
 });
