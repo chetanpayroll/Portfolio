@@ -296,9 +296,11 @@
                 <h2 class="mb-4">Stay Ahead of the Curve</h2>
                 <p class="mb-8 text-gray-600">Join 500+ payroll professionals receiving my
                     monthly digest on compliance and tech trends.</p>
-                <form action="#" class="newsletter-form">
-                    <input type="email" placeholder="Enter your email" class="newsletter-input">
-                    <button type="button" class="btn btn-primary">Subscribe</button>
+                <form action="mailto:chetan@chetanpayroll.com?subject=Newsletter Subscription Request" method="post"
+                    enctype="text/plain" class="newsletter-form">
+                    <input type="email" name="subscriber_email" placeholder="Enter your email" class="newsletter-input"
+                        required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
                 </form>
             </div>
         </section>
