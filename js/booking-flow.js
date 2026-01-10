@@ -1,6 +1,6 @@
 /* =========================================
    Fortune 100 Enterprise Booking Logic
-   Handles: State Machine, Validation, Mock Data
+   Handles: State Machine, Validation, Mock Data, Real Submission
    ========================================= */
 
 class BookingFlow {
@@ -11,6 +11,7 @@ class BookingFlow {
             time: null,
             details: {}
         };
+        this.accessKey = "f526a9f2-266b-43d8-9b49-41f03a7776b6"; // Web3Forms Key
 
         // Cache DOM Elements
         this.modalOverlay = document.getElementById('bookingModalOverlay');
@@ -53,6 +54,7 @@ class BookingFlow {
         // Setup Logic
         this.renderCalendar();
         this.setupNavigation();
+        this.setupRealTimeValidation();
     }
 
     open() {
@@ -73,6 +75,7 @@ class BookingFlow {
         this.state = { date: null, time: null, details: {} };
         // Reset Inputs
         if (this.bookingForm) this.bookingForm.reset();
+        this.clearAllErrors();
         // Clear Selections
         document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
         this.btnDateContinue.disabled = true;
@@ -113,7 +116,6 @@ class BookingFlow {
         this.calendarGrid.innerHTML = ''; // Clear
 
         // Mock Calendar: Starting from today
-        // Simple 30-day view for demo purposes
         for (let i = 0; i < 20; i++) {
             const date = new Date(today);
             date.setDate(today.getDate() + i);
@@ -144,9 +146,6 @@ class BookingFlow {
         // State
         this.state.date = date;
         this.btnDateContinue.disabled = false;
-
-        // Auto-advance for UX "wow" factor (optional, but requested by user to be seamless)
-        // setTimeout(() => this.goToStep(2), 300); 
     }
 
     /* ================= Time Slot Logic ================= */
@@ -173,8 +172,6 @@ class BookingFlow {
 
         this.state.time = time;
         this.btnTimeContinue.disabled = false;
-        // Auto-advance
-        // setTimeout(() => this.goToStep(3), 300);
     }
 
     /* ================= Navigation Logic ================= */
@@ -186,26 +183,15 @@ class BookingFlow {
         this.btnTimeContinue.onclick = () => this.goToStep(3);
 
         // Step 3 -> 4 (Validation)
-        this.btnFormContinue.onclick = () => {
+        this.btnFormContinue.onclick = (e) => {
+            e.preventDefault(); // Just in case
             if (this.validateForm()) {
                 this.goToStep(4);
             }
         };
 
-        // Step 4 -> 5 (Confirm)
-        this.btnConfirm.onclick = () => {
-            // Mock API Call
-            const btnText = this.btnConfirm.querySelector('span');
-            const originalText = btnText.textContent;
-            btnText.textContent = 'Confirming...';
-            this.btnConfirm.disabled = true;
-
-            setTimeout(() => {
-                this.goToStep(5);
-                btnText.textContent = originalText;
-                this.btnConfirm.disabled = false;
-            }, 1000);
-        };
+        // Step 4 -> 5 (Confirm & Submit)
+        this.btnConfirm.onclick = () => this.submitBooking();
 
         // Back Buttons
         document.getElementById('backToDate').onclick = () => this.goToStep(1);
@@ -213,25 +199,162 @@ class BookingFlow {
         document.getElementById('backToForm').onclick = () => this.goToStep(3);
     }
 
-    validateForm() {
-        const name = document.getElementById('inputName').value;
-        const email = document.getElementById('inputEmail').value;
-        // Basic check
-        if (name && email.includes('@')) {
-            this.state.details = { name, email, phone: document.getElementById('inputPhone').value };
-            return true;
+    /* ================= Validation Logic ================= */
+    setupRealTimeValidation() {
+        const inputs = this.bookingForm.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                this.clearError(input);
+            });
+            input.addEventListener('blur', () => {
+                if (input.value.trim() !== '') {
+                    this.validateField(input);
+                }
+            });
+        });
+    }
+
+    validateField(input) {
+        const value = input.value.trim();
+        if (input.hasAttribute('required') && !value) {
+            this.showError(input, 'This field is required');
+            return false;
         }
-        // Simple shake animation on invalid
-        this.bookingForm.classList.add('shake');
-        setTimeout(() => this.bookingForm.classList.remove('shake'), 400);
-        return false;
+        if (input.type === 'email' && value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+                this.showError(input, 'Please enter a valid email');
+                return false;
+            }
+        }
+        return true;
+    }
+
+    validateForm() {
+        let isValid = true;
+        let firstErrorInput = null;
+
+        this.clearAllErrors();
+
+        const inputs = this.bookingForm.querySelectorAll('input');
+
+        // Use a standard loop or forEach
+        inputs.forEach(input => {
+            if (!this.validateField(input)) {
+                isValid = false;
+                if (!firstErrorInput) firstErrorInput = input;
+            }
+        });
+
+        if (!isValid) {
+            this.bookingForm.classList.add('shake');
+            setTimeout(() => this.bookingForm.classList.remove('shake'), 400);
+            if (firstErrorInput) firstErrorInput.focus();
+            return false;
+        }
+
+        // Save State
+        this.state.details = {
+            name: document.getElementById('inputName').value,
+            email: document.getElementById('inputEmail').value,
+            phone: document.getElementById('inputPhone').value,
+            company: document.getElementById('inputCompany').value
+        };
+
+        return true;
+    }
+
+    showError(input, message) {
+        this.clearError(input); // Clear existing first
+        input.classList.add('input-error');
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        // Add error icon
+        errorDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> ${message}`;
+        input.parentElement.appendChild(errorDiv);
+    }
+
+    clearError(input) {
+        input.classList.remove('input-error');
+        const existingError = input.parentElement.querySelector('.error-message');
+        if (existingError) existingError.remove();
+    }
+
+    clearAllErrors() {
+        const inputs = this.bookingForm.querySelectorAll('input');
+        inputs.forEach(input => this.clearError(input));
     }
 
     updateReviewScreen() {
+        if (!this.state.date || !this.state.time) return; // Should not happen
+
         document.getElementById('reviewDate').textContent = this.state.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         document.getElementById('reviewTime').textContent = this.state.time;
         document.getElementById('reviewName').textContent = this.state.details.name;
         document.getElementById('reviewEmail').textContent = this.state.details.email;
+    }
+
+    /* ================= Submission Logic ================= */
+    async submitBooking() {
+        if (this.btnConfirm.disabled) return;
+
+        // Visual Loading State
+        const btnText = this.btnConfirm.querySelector('span');
+        const originalText = btnText.textContent;
+        btnText.textContent = 'Confirming...';
+        this.btnConfirm.disabled = true;
+
+        // Prepare Payload
+        const dateStr = this.state.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        const formData = {
+            access_key: this.accessKey,
+            subject: `New Appointment Request: ${this.state.details.name}`,
+            email: this.state.details.email, // Reply-to
+            name: this.state.details.name,
+            from_name: "Booking System",
+            message: `
+New Appointment Request
+
+Name: ${this.state.details.name}
+Email: ${this.state.details.email}
+Phone: ${this.state.details.phone || 'N/A'}
+Company: ${this.state.details.company || 'N/A'}
+
+Requested Date: ${dateStr}
+Requested Time: ${this.state.time}
+
+Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
+            `
+        };
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Success
+                this.goToStep(5);
+            } else {
+                // API Error
+                throw new Error(result.message || 'Submission failed');
+            }
+
+        } catch (error) {
+            console.error('Booking Error:', error);
+            alert('Something went wrong. Please try again or contact us directly.');
+            this.btnConfirm.disabled = false;
+        } finally {
+            // Reset button text
+            btnText.textContent = originalText;
+        }
     }
 }
 

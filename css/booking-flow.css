@@ -447,3 +447,93 @@
 .hidden {
     display: none !important;
 }
+
+/* Validation Styles */
+.form-floating-input.input-error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.form-floating-input.input-error:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    margin-left: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-2px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Shake Animation for Forms */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    75% {
+        transform: translateX(4px);
+    }
+}
+
+.shake {
+    animation: shake 0.4s ease-in-out;
+}
+
+/* Enhanced Selected Date Visibility */
+.calendar-day-btn.selected {
+    background: var(--book-primary);
+    color: white !important;
+    /* Force white text */
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(13, 71, 161, 0.4);
+    /* Stronger shadow */
+    position: relative;
+    border: 2px solid transparent;
+    /* Maintain layout */
+}
+
+/* Focus Ring for accessibility/selection clarity */
+.calendar-day-btn.selected::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 2px solid var(--book-primary);
+    border-radius: 50%;
+    opacity: 0.5;
+}
+
+/* Selected Time Slot Visibility */
+.time-slot-btn.selected {
+    background: var(--book-primary);
+    color: white !important;
+    border-color: var(--book-primary);
+    box-shadow: 0 4px 10px rgba(13, 71, 161, 0.3);
+    font-weight: 700;
+}
