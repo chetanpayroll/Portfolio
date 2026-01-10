@@ -1,0 +1,49 @@
+/* Custom Override for Google Calendar Button to match "Fortune 100" aesthetic */
+#calendar-booking-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* 
+   Target the Iframe/Button created by Google. 
+   Since Google scripts often use specific classes or inline styles, 
+   we use !important to ensure our premium theme overrides defaults.
+*/
+#calendar-booking-container .google-calendar-appointment-scheduling-button {
+    background-color: #ffffff !important;
+    color: #0d47a1 !important;
+    /* Primary Deep Blue */
+    font-family: var(--font-family-body) !important;
+    font-size: 1.125rem !important;
+    /* text-lg */
+    font-weight: 700 !important;
+    padding: 16px 32px !important;
+    border-radius: 50px !important;
+    /* Pill shape */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.3s ease !important;
+    text-transform: none !important;
+    letter-spacing: 0.025em !important;
+    border: 2px solid transparent !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+#calendar-booking-container .google-calendar-appointment-scheduling-button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    background-color: #f8fafc !important;
+    /* gray-50 */
+    color: #1e40af !important;
+    /* Slightly brighter blue on hover */
+}
+
+/* Ensure Icon inside button is sized correctly if present */
+#calendar-booking-container .google-calendar-appointment-scheduling-button svg {
+    width: 24px !important;
+    height: 24px !important;
+    margin-right: 8px !important;
+}
