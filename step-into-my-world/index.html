@@ -3,7 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Step Into My World | Chetan Sharma</title>
     <meta name="description" content="Experience 60 seconds in the life of a Global Payroll Implementation Manager.">
 
@@ -111,9 +115,15 @@
             overflow: hidden;
             /* Prevent scrolling during simulation */
             height: 100vh;
+            /* Fallback */
+            height: 100dvh;
+            /* Dynamic height for mobile browsers */
             width: 100vw;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         /* Scrollbar Styling */
@@ -489,6 +499,8 @@
             padding: 20px;
             overflow-y: auto;
             position: relative;
+            -webkit-overflow-scrolling: touch;
+            /* Smooth scrolling iOS */
         }
 
         /* =========================================
@@ -1043,8 +1055,9 @@
                 flex-direction: column;
                 gap: 12px;
                 padding: 12px;
-                height: auto;
-                overflow-y: visible;
+                padding-bottom: env(safe-area-inset-bottom, 20px);
+                height: 100dvh;
+                overflow-y: auto;
             }
 
             .window-panel {
