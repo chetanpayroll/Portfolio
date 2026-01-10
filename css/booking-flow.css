@@ -1,0 +1,449 @@
+/* =========================================
+   Fortune 100 Enterprise Booking Flow
+   Mobile-First | iOS & Android Optimized
+   ========================================= */
+
+:root {
+    --book-primary: #0d47a1;
+    --book-primary-dark: #002171;
+    --book-bg: #ffffff;
+    --book-surface: #f8fafc;
+    --book-text: #1e293b;
+    --book-text-light: #64748b;
+    --book-border: #e2e8f0;
+    --book-success: #10b981;
+    --book-radius: 12px;
+    --book-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --safe-area-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+/* Modal Overlay */
+.booking-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    /* Backdrop blur feel */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    align-items: flex-end;
+    /* Bottom sheet on mobile */
+    justify-content: center;
+}
+
+.booking-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Modal Container */
+.booking-modal {
+    width: 100%;
+    max-width: 480px;
+    /* Mobile optimal width */
+    background: var(--book-bg);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: 90vh;
+    /* Bottom sheet height */
+    max-height: 800px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -10px 25px -5px rgba(0, 0, 0, 0.1);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+}
+
+@media (min-width: 640px) {
+    .booking-modal-overlay {
+        align-items: center;
+    }
+
+    .booking-modal {
+        border-radius: 20px;
+        height: auto;
+        min-height: 600px;
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    .booking-modal-overlay.active .booking-modal {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.booking-modal-overlay.active .booking-modal {
+    transform: translateY(0);
+}
+
+/* Header */
+.booking-header {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--book-border);
+    flex-shrink: 0;
+}
+
+.booking-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--book-text);
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: var(--book-text-light);
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.close-modal-btn:hover {
+    background: var(--book-surface);
+    color: var(--book-text);
+}
+
+/* Progress Bar */
+.booking-progress {
+    height: 4px;
+    background: var(--book-surface);
+    width: 100%;
+}
+
+.booking-progress-bar {
+    height: 100%;
+    background: var(--book-primary);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* Content Area */
+.booking-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: none;
+    /* Screens managed via JS */
+    flex-direction: column;
+}
+
+.booking-content.active {
+    display: flex;
+    animation: fadeInSlide 0.3s ease;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Headings & Text */
+.booking-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--book-text);
+}
+
+.booking-subtitle {
+    font-size: 0.95rem;
+    color: var(--book-text-light);
+    margin-bottom: 24px;
+}
+
+/* STEP 2: Calendar UI */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.calendar-month {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.calendar-nav-btn {
+    background: none;
+    border: 1px solid var(--book-border);
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+}
+
+.calendar-day-header {
+    font-size: 0.8rem;
+    color: var(--book-text-light);
+    font-weight: 600;
+    padding-bottom: 8px;
+}
+
+.calendar-day-btn {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--book-text);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: none;
+    border: none;
+}
+
+.calendar-day-btn:hover:not(:disabled) {
+    background: var(--book-surface);
+}
+
+.calendar-day-btn.selected {
+    background: var(--book-primary);
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 4px 6px rgba(13, 71, 161, 0.3);
+}
+
+.calendar-day-btn:disabled {
+    color: var(--book-border);
+    cursor: not-allowed;
+}
+
+.calendar-day-btn.today {
+    border: 1px solid var(--book-primary);
+    color: var(--book-primary);
+}
+
+.calendar-day-btn.today.selected {
+    color: white;
+}
+
+/* STEP 3: Time Slots */
+.time-slot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.time-slot-btn {
+    padding: 14px;
+    border: 1px solid var(--book-border);
+    border-radius: 50px;
+    /* Pill shape */
+    background: white;
+    color: var(--book-text);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.time-slot-btn:hover {
+    border-color: var(--book-primary);
+    background: var(--book-surface);
+}
+
+.time-slot-btn.selected {
+    background: var(--book-primary);
+    color: white;
+    border-color: var(--book-primary);
+    box-shadow: 0 4px 6px rgba(13, 71, 161, 0.2);
+}
+
+/* STEP 4: Form */
+.form-floating-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-floating-input {
+    width: 100%;
+    padding: 16px 12px 6px;
+    /* Top padding for floating label */
+    border: 1px solid var(--book-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    transition: border 0.2s;
+    height: 56px;
+}
+
+.form-floating-input:focus {
+    outline: none;
+    border-color: var(--book-primary);
+    box-shadow: 0 0 0 2px rgba(13, 71, 161, 0.1);
+}
+
+.form-floating-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: var(--book-text-light);
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.form-floating-input:focus+.form-floating-label,
+.form-floating-input:not(:placeholder-shown)+.form-floating-label {
+    top: 12px;
+    font-size: 0.75rem;
+    color: var(--book-primary);
+    font-weight: 600;
+}
+
+/* STEP 5: Review Card */
+.review-card {
+    background: var(--book-surface);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.review-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.review-item:last-child {
+    margin-bottom: 0;
+}
+
+.review-icon {
+    color: var(--book-primary);
+    margin-right: 12px;
+    width: 20px;
+    height: 20px;
+}
+
+.review-label {
+    font-size: 0.85rem;
+    color: var(--book-text-light);
+    margin-bottom: 2px;
+}
+
+.review-value {
+    font-weight: 600;
+    color: var(--book-text);
+}
+
+.review-edit-btn {
+    margin-left: auto;
+    color: var(--book-primary);
+    background: none;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* STEP 6: Success */
+.success-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    background: #ecfdf5;
+    /* green-50 */
+    color: var(--book-success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Sticky Footer CTA */
+.booking-footer {
+    padding: 16px 20px calc(16px + var(--safe-area-bottom));
+    border-top: 1px solid var(--book-border);
+    background: white;
+}
+
+.booking-btn-primary,
+.booking-btn-secondary {
+    width: 100%;
+    padding: 16px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.booking-btn-primary {
+    background: var(--book-primary);
+    color: white;
+    border: none;
+}
+
+.booking-btn-primary:active {
+    transform: scale(0.98);
+}
+
+.booking-btn-secondary {
+    background: white;
+    color: var(--book-text);
+    border: 1px solid var(--book-border);
+    margin-top: 12px;
+}
+
+.hidden {
+    display: none !important;
+}
