@@ -1144,6 +1144,28 @@
             letter-spacing: 1px;
         }
 
+        .final-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .final-actions {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        .btn-text:hover {
+            color: var(--text-primary) !important;
+            text-decoration: underline !important;
+        }
+
         /* Animation utilities */
         .fade-in {
             animation: fadeIn 0.5s ease forwards;
@@ -1397,11 +1419,32 @@
             </div>
         </div>
 
-        <div style="display: flex; gap: 16px;">
-            <a href="../index.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Back to
-                Portfolio</a>
-            <a href="https://linkedin.com/in/chetan-sharma" target="_blank" rel="noopener noreferrer"
-                class="btn-primary btn-outline">Connect on LinkedIn</a>
+        <div class="final-actions">
+            <a href="../assets/documents/Chetan_Sharma_Resume.docx" download class="btn-primary"
+                style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download Resume
+            </a>
+            <a href="https://www.linkedin.com/in/chetan-champ/" target="_blank" rel="noopener noreferrer"
+                class="btn-primary btn-outline"
+                style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+                Connect on LinkedIn
+            </a>
+            <a href="../index.html" class="btn-text"
+                style="margin-top: 20px; color: var(--text-muted); text-decoration: none; font-size: 14px;">
+                ← Back to Portfolio
+            </a>
         </div>
     </div>
 
