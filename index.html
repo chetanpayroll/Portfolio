@@ -267,6 +267,7 @@
          ============================================ -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/pages/home.css">
+    <link rel="stylesheet" href="css/booking-flow.css">
     <link rel="stylesheet" href="css/ai-assistant.css">
 
     <!-- ============================================
@@ -514,7 +515,8 @@
                     transformation.</p>
                 <div class="d-flex justify-center gap-4">
                     <a href="experience.html" class="btn btn-primary">View My Experience</a>
-                    <a href="contact.html" class="btn btn-outline-white">Let's Connect</a>
+                    <button class="trigger-booking-flow btn btn-outline-white" style="cursor: pointer;">Book an
+                        Appointment</button>
                 </div>
             </div>
         </section>
@@ -601,6 +603,195 @@
     <script type="module" src="js/utils.js"></script>
     <script type="module" src="js/navigation.js"></script>
     <script type="module" src="js/main.js"></script>
+    <!-- Booking Flow Script -->
+    <script src="js/booking-flow.js" defer></script>
+    <!-- Enterprise Booking Modal (Shared Component) -->
+    <div class="booking-modal-overlay" id="bookingModalOverlay">
+        <div class="booking-modal">
+            <!-- Header -->
+            <div class="booking-header">
+                <h3>Book Appointment</h3>
+                <button class="close-modal-btn" id="closeBookingModal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="booking-progress">
+                <div class="booking-progress-bar" id="bookingProgressBar"></div>
+            </div>
+
+            <!-- Step 1: Date Selection -->
+            <div class="booking-content active" id="screenDate">
+                <div class="booking-title">Select a Date</div>
+                <div class="booking-subtitle">Choose a day that works best for you.</div>
+
+                <div class="calendar-container-custom">
+                    <div class="calendar-header">
+                        <span class="calendar-month" id="currentMonthDisplay">June 2026</span>
+                        <div class="d-flex gap-2">
+                            <button class="calendar-nav-btn"><i data-lucide="chevron-left"
+                                    style="width:16px;"></i></button>
+                            <button class="calendar-nav-btn"><i data-lucide="chevron-right"
+                                    style="width:16px;"></i></button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid" style="margin-bottom: 8px;">
+                        <div class="calendar-day-header">S</div>
+                        <div class="calendar-day-header">M</div>
+                        <div class="calendar-day-header">T</div>
+                        <div class="calendar-day-header">W</div>
+                        <div class="calendar-day-header">T</div>
+                        <div class="calendar-day-header">F</div>
+                        <div class="calendar-day-header">S</div>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="booking-footer">
+                    <button class="booking-btn-primary" id="btnDateContinue" disabled>
+                        Continue to Time
+                        <i data-lucide="arrow-right" style="width: 18px;"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Time Selection -->
+            <div class="booking-content" id="screenTime">
+                <div class="d-flex align-center gap-2 mb-4">
+                    <button class="calendar-nav-btn" id="backToDate"><i data-lucide="arrow-left"
+                            style="width:16px;"></i></button>
+                    <span class="text-sm font-medium" id="selectedDateDisplay">Wed, June 21</span>
+                </div>
+                <div class="booking-title">Select Time</div>
+                <div class="booking-subtitle">Duration: 30 Minutes</div>
+
+                <div class="time-slot-grid" id="timeSlotGrid">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="booking-footer">
+                    <button class="booking-btn-primary" id="btnTimeContinue" disabled>
+                        Continue
+                        <i data-lucide="arrow-right" style="width: 18px;"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Information Form -->
+            <div class="booking-content" id="screenForm">
+                <div class="d-flex align-center gap-2 mb-4">
+                    <button class="calendar-nav-btn" id="backToTime"><i data-lucide="arrow-left"
+                            style="width:16px;"></i></button>
+                    <span class="text-sm font-medium">Your Details</span>
+                </div>
+                <div class="booking-title">Enter Details</div>
+                <div class="booking-subtitle">Tell us a bit about yourself.</div>
+
+                <form id="bookingDetailsForm">
+                    <div class="form-floating-group">
+                        <input type="text" class="form-floating-input" id="inputName" placeholder=" " required>
+                        <label class="form-floating-label">Full Name</label>
+                    </div>
+                    <div class="form-floating-group">
+                        <input type="email" class="form-floating-input" id="inputEmail" placeholder=" " required>
+                        <label class="form-floating-label">Work Email</label>
+                    </div>
+                    <div class="form-floating-group">
+                        <input type="tel" class="form-floating-input" id="inputPhone" placeholder=" ">
+                        <label class="form-floating-label">Phone Number</label>
+                    </div>
+                    <div class="form-floating-group">
+                        <input type="text" class="form-floating-input" id="inputCompany" placeholder=" ">
+                        <label class="form-floating-label">Company Name</label>
+                    </div>
+                </form>
+
+                <div class="booking-footer">
+                    <button class="booking-btn-primary" id="btnFormContinue">
+                        Review Details
+                        <i data-lucide="arrow-right" style="width: 18px;"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Review -->
+            <div class="booking-content" id="screenReview">
+                <div class="d-flex align-center gap-2 mb-4">
+                    <button class="calendar-nav-btn" id="backToForm"><i data-lucide="arrow-left"
+                            style="width:16px;"></i></button>
+                    <span class="text-sm font-medium">Review</span>
+                </div>
+                <div class="booking-title">Confirm Booking</div>
+                <div class="booking-subtitle">Please double check your details.</div>
+
+                <div class="review-card">
+                    <div class="review-item">
+                        <i data-lucide="calendar" class="review-icon"></i>
+                        <div class="flex-1">
+                            <div class="review-label">Date</div>
+                            <div class="review-value" id="reviewDate">Wednesday, 21 June</div>
+                        </div>
+                        <button class="review-edit-btn">Edit</button>
+                    </div>
+                    <div class="review-item">
+                        <i data-lucide="clock" class="review-icon"></i>
+                        <div class="flex-1">
+                            <div class="review-label">Time</div>
+                            <div class="review-value" id="reviewTime">09:00 AM</div>
+                        </div>
+                    </div>
+                    <div class="review-item">
+                        <i data-lucide="user" class="review-icon"></i>
+                        <div class="flex-1">
+                            <div class="review-label">Guest</div>
+                            <div class="review-value"><span id="reviewName">John Doe</span><br><span id="reviewEmail"
+                                    style="font-weight:400; font-size:0.85rem; color:#64748b;">john@example.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-center gap-2 mb-6"
+                    style="background: #f0fdf4; padding: 12px; border-radius: 8px;">
+                    <i data-lucide="shield-check" style="color: #10b981; width: 18px;"></i>
+                    <span style="font-size: 0.85rem; color: #047857; font-weight: 500;">Secure booking. No payment
+                        required.</span>
+                </div>
+
+                <div class="booking-footer">
+                    <button class="booking-btn-primary" id="btnConfirmBooking">
+                        <span>Confirm & Book Meeting</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 5: Success -->
+            <div class="booking-content" id="screenSuccess">
+                <div class="success-container">
+                    <div class="success-icon">
+                        <i data-lucide="check" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <div class="booking-title" style="text-align: center;">Meeting Confirmed! 🎉</div>
+                    <div class="booking-subtitle" style="text-align: center; max-width: 280px;">
+                        A calendar invitation has been sent to your email address.
+                    </div>
+
+                    <div style="width: 100%; margin-top: 24px;">
+                        <button class="booking-btn-primary">
+                            Add to Calendar
+                        </button>
+                        <button class="booking-btn-secondary"
+                            onclick="document.getElementById('closeBookingModal').click()">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <!-- AI Assistant Chat Widget -->
     <div id="ai-assistant-container">
 
