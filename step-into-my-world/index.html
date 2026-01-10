@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step Into My World | Chetan Sharma</title>
+    <meta name="description" content="Experience 60 seconds in the life of a Global Payroll Implementation Manager.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. VARIABLES & THEME
+           ========================================= */
+        :root {
+            /* Font Stack */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+            /* Typography Scale */
+            --text-xs: 12px;
+            --text-sm: 13px;
+            --text-base: 14px;
+            --text-md: 15px;
+            --text-lg: 16px;
+            --text-xl: 18px;
+            --text-2xl: 24px;
+            --text-3xl: 32px;
+            --text-4xl: 48px;
+
+            /* Font Weights */
+            --weight-regular: 400;
+            --weight-medium: 500;
+            --weight-semibold: 600;
+            --weight-bold: 700;
+            --weight-extrabold: 800;
+
+            /* Line Heights */
+            --leading-tight: 1.25;
+            --leading-snug: 1.375;
+            --leading-normal: 1.5;
+            --leading-relaxed: 1.625;
+            --leading-loose: 1.75;
+
+            /* Background Colors */
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a24;
+            --bg-card: #1e1e2a;
+            --bg-elevated: #252532;
+
+            /* Accent Colors */
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #a855f7;
+
+            /* Semantic Colors */
+            --success: #10b981;
+            --success-soft: rgba(16, 185, 129, 0.15);
+            --warning: #f59e0b;
+            --warning-soft: rgba(245, 158, 11, 0.15);
+            --error: #ef4444;
+            --error-soft: rgba(239, 68, 68, 0.15);
+            --info: #3b82f6;
+            --info-soft: rgba(59, 130, 246, 0.15);
+
+            /* Text Colors */
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --text-disabled: #475569;
+
+            /* Borders */
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-visible: rgba(255, 255, 255, 0.12);
+            --border-strong: rgba(255, 255, 255, 0.2);
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+            --gradient-accent: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+        }
+
+        /* =========================================
+           2. GLOBAL STYLES & RESET
+           ========================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            font-size: var(--text-base);
+            line-height: var(--leading-normal);
+            overflow: hidden;
+            /* Prevent scrolling during simulation */
+            height: 100vh;
+            width: 100vw;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-elevated);
+            border-radius: 3px;
+        }
+
+        /* Utility Classes */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .status-ok {
+            color: var(--success);
+        }
+
+        .status-error {
+            color: var(--error);
+        }
+
+        .status-warning {
+            color: var(--warning);
+        }
+
+        /* =========================================
+           3. INTRO & LANDING SCREENS
+           ========================================= */
+        .screen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .screen-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .intro-title {
+            font-size: var(--text-4xl);
+            font-weight: var(--weight-extrabold);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 24px;
+        }
+
+        .intro-subtitle {
+            font-size: var(--text-xl);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            padding: 16px 32px;
+            font-size: var(--text-lg);
+            font-weight: var(--weight-semibold);
+            color: white;
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: var(--accent-secondary);
+        }
+
+        /* Intro Loading State */
+        .loading-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .loader-bar {
+            width: 300px;
+            height: 4px;
+            background: var(--bg-elevated);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loader-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-primary);
+            transition: width 3s linear;
+        }
+
+        .loading-text {
+            color: var(--text-muted);
+            font-size: var(--text-sm);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           4. WORKSPACE LAYOUT (GRID)
+           ========================================= */
+        .workspace-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr 1fr;
+            gap: 16px;
+            padding: 20px;
+            height: 100vh;
+            width: 100vw;
+            opacity: 0;
+            transform: scale(0.98);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .workspace-container.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .control-bar-area {
+            grid-column: 1 / -1;
+            grid-row: 1;
+        }
+
+        .slack-panel-area {
+            grid-column: 1;
+            grid-row: 2;
+            min-height: 300px;
+        }
+
+        .email-panel-area {
+            grid-column: 2;
+            grid-row: 2;
+            min-height: 300px;
+        }
+
+        .dashboard-panel-area {
+            grid-column: 1;
+            grid-row: 3;
+            min-height: 280px;
+        }
+
+        .spreadsheet-panel-area {
+            grid-column: 2;
+            grid-row: 3;
+            min-height: 280px;
+        }
+
+        /* =========================================
+           5. CONTROL BAR
+           ========================================= */
+        .control-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .control-time {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .control-time .clock {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .control-time .date {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .timezone-strip {
+            display: flex;
+            gap: 24px;
+        }
+
+        .tz-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tz-item .flag {
+            font-size: 18px;
+        }
+
+        .tz-item .time {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .control-progress {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .progress-track {
+            width: 200px;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: width 0.1s linear;
+        }
+
+        .skip-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: transparent;
+            border: 1px solid var(--border-visible);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .skip-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+            border-color: var(--text-muted);
+        }
+
+        /* =========================================
+           6. WINDOW PANELS (SHARED)
+           ========================================= */
+        .window-panel {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .window-panel.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .window-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        .window-header .app-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .app-icon.slack {
+            background: #4A154B;
+        }
+
+        .app-icon.email {
+            background: #0078D4;
+        }
+
+        .app-icon.dashboard {
+            background: #059669;
+        }
+
+        .app-icon.spreadsheet {
+            background: #0F9D58;
+        }
+
+        .window-header h3 {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .window-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .window-dot.red {
+            background: #ff5f57;
+        }
+
+        .window-dot.yellow {
+            background: #febc2e;
+        }
+
+        .window-dot.green {
+            background: #28c840;
+        }
+
+        .window-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* =========================================
+           7. SLACK PANEL
+           ========================================= */
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 14px;
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            opacity: 0;
+            transform: translateX(-15px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .chat-message.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .chat-message.own-message {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .msg-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .chat-message.own-message .msg-avatar {
+            background: var(--gradient-success);
+        }
+
+        .msg-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .msg-header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .msg-sender {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .msg-time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .msg-text {
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .typing-status {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .typing-status.visible {
+            display: flex;
+        }
+
+        .typing-bubbles {
+            display: flex;
+            gap: 5px;
+        }
+
+        .typing-bubbles span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: typingPulse 1.4s ease-in-out infinite;
+        }
+
+        .typing-bubbles span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-bubbles span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingPulse {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+
+            30% {
+                transform: translateY(-6px);
+                opacity: 1;
+            }
+        }
+
+        /* =========================================
+           8. EMAIL PANEL
+           ========================================= */
+        .email-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .email-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border-left: 3px solid transparent;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .email-row.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .email-row.unread {
+            border-left-color: var(--accent-primary);
+            background: rgba(99, 102, 241, 0.08);
+            /* slight tint */
+        }
+
+        .email-row.visible:hover {
+            background: var(--bg-elevated);
+        }
+
+        .email-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--info), #0ea5e9);
+            color: white;
+        }
+
+        .email-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .email-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .email-sender {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .email-type-time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .email-subject {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .email-preview {
+            font-size: 13px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* =========================================
+           9. DASHBOARD PANEL
+           ========================================= */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-tile {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 14px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .metric-tile.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .metric-note {
+            font-size: 12px;
+            color: var(--success);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .project-row {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-row.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .project-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .project-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .project-percent {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .project-track {
+            height: 8px;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .project-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* =========================================
+           10. SPREADSHEET PANEL
+           ========================================= */
+        .formula-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .formula-display.visible {
+            opacity: 1;
+        }
+
+        .formula-display .cell {
+            padding: 4px 10px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        .formula-display .formula {
+            color: var(--text-secondary);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-family: var(--font-mono);
+            font-size: 13px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 14px;
+            text-align: left;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .data-table th {
+            background: var(--bg-card);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .data-table th:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        .data-table th:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        .data-table tr {
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .data-table tr.visible {
+            opacity: 1;
+        }
+
+        .data-table tr.flagged {
+            background: rgba(239, 68, 68, 0.15);
+        }
+
+        .data-table td {
+            color: var(--text-primary);
+        }
+
+        /* =========================================
+           11. NOTIFICATIONS & POPUPS
+           ========================================= */
+        .notification-popup {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 340px;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-visible);
+            z-index: 50;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .notification-popup.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .notif-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-visible);
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .notif-body {
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        .notif-actions {
+            display: flex;
+            padding: 12px 16px;
+            gap: 10px;
+            border-top: 1px solid var(--border-visible);
+        }
+
+        .btn-sm {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid var(--border-visible);
+            background: transparent;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .btn-sm.primary {
+            background: var(--accent-primary);
+            border-color: transparent;
+            color: white;
+        }
+
+        .toast-container {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 60;
+        }
+
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--success);
+            border-radius: 50px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .toast.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast-icon {
+            color: var(--success);
+            font-size: 18px;
+        }
+
+        .toast-msg {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* =========================================
+           12. RESPONSIVE BREAKPOINTS
+           ========================================= */
+        @media (min-width: 1440px) {
+            .workspace-container {
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .workspace-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                padding: 12px;
+            }
+
+            .window-panel {
+                min-height: 250px;
+            }
+
+            .metric-value {
+                font-size: 26px;
+            }
+
+            .timezone-strip {
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            body {
+                overflow-y: auto;
+            }
+
+            .workspace-container {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px;
+                height: auto;
+                overflow-y: visible;
+            }
+
+            .window-panel {
+                min-height: auto;
+                max-height: 350px;
+            }
+
+            .control-bar {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .control-progress {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .progress-track {
+                flex: 1;
+            }
+
+            .timezone-strip {
+                display: none;
+            }
+        }
+
+        /* Final Reveal Screen */
+        .final-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 10, 15, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .final-screen.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .final-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .mb-2 {
+            margin-bottom: 10px;
+        }
+
+        .mb-8 {
+            margin-bottom: 30px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .stat-item h4 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--accent-primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-item p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Animation utilities */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- INTRO SEQUENCE -->
+    <div id="intro-screen" class="screen-overlay">
+        <div id="landing-content">
+            <h1 class="intro-title">Step Into My World</h1>
+            <p class="intro-subtitle">Experience 60 seconds of a Global Payroll Implementation Manager's day. Live the
+                job instead of just reading a resume.</p>
+            <button id="start-btn" class="btn-primary" aria-label="Begin Experience">Begin Experience</button>
+        </div>
+
+        <div id="loading-content" class="loading-container">
+            <h2 style="font-size: 24px; font-weight: 600; margin-bottom: 8px;">Entering Workspace...</h2>
+            <div id="current-date-intro" style="color: var(--text-muted); margin-bottom: 24px;"></div>
+            <div class="loader-bar">
+                <div class="loader-fill" id="intro-loader"></div>
+            </div>
+            <p class="loading-text">Establishing Connection</p>
+        </div>
+    </div>
+
+    <!-- MAIN WORKSPACE -->
+    <div id="workspace" class="workspace-container" role="main" aria-label="Interactive work simulation">
+
+        <!-- CONTROL BAR -->
+        <div class="control-bar-area control-bar">
+            <div class="control-time">
+                <span class="clock" id="sim-clock">9:00 AM</span>
+                <span class="date">IST (Local)</span>
+            </div>
+
+            <div class="timezone-strip">
+                <div class="tz-item">
+                    <span class="flag">🇮🇳</span>
+                    <span class="time">9:00</span>
+                </div>
+                <div class="tz-item">
+                    <span class="flag">🇪🇬</span>
+                    <span class="time">5:30</span>
+                </div>
+                <div class="tz-item">
+                    <span class="flag">🇭🇰</span>
+                    <span class="time">11:30</span>
+                </div>
+                <div class="tz-item">
+                    <span class="flag">🇮🇩</span>
+                    <span class="time">10:30</span>
+                </div>
+            </div>
+
+            <div class="control-progress">
+                <span class="progress-time" id="progress-timer">0:00 / 1:00</span>
+                <div class="progress-track">
+                    <div class="progress-bar-fill" id="session-progress"></div>
+                </div>
+                <button id="skip-btn" class="skip-btn" aria-label="Skip to end">
+                    Skip &rarr;
+                </button>
+            </div>
+        </div>
+
+        <!-- SLACK PANEL -->
+        <div class="slack-panel-area window-panel" id="slack-panel">
+            <div class="window-header">
+                <div class="app-icon slack">#</div>
+                <h3>Slack — #region-middle-east</h3>
+                <div class="window-controls">
+                    <div class="window-dot red"></div>
+                    <div class="window-dot yellow"></div>
+                    <div class="window-dot green"></div>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="message-list" id="slack-messages">
+                    <!-- Messages injected here -->
+                </div>
+                <div class="typing-status" id="typing-indicator">
+                    <div class="typing-bubbles"><span></span><span></span><span></span></div>
+                    <span>Chetan is typing...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- EMAIL PANEL -->
+        <div class="email-panel-area window-panel" id="email-panel">
+            <div class="window-header">
+                <div class="app-icon email">@</div>
+                <h3>Outlook — Inbox (12)</h3>
+                <div class="window-controls">
+                    <div class="window-dot red"></div>
+                    <div class="window-dot yellow"></div>
+                    <div class="window-dot green"></div>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="email-stack" id="email-list">
+                    <!-- Emails injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD PANEL -->
+        <div class="dashboard-panel-area window-panel" id="dashboard-panel">
+            <div class="window-header">
+                <div class="app-icon dashboard">📊</div>
+                <h3>Implementation Tracker</h3>
+                <div class="window-controls">
+                    <div class="window-dot red"></div>
+                    <div class="window-dot yellow"></div>
+                    <div class="window-dot green"></div>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="metrics-grid">
+                    <div class="metric-tile" id="metric-1">
+                        <div class="metric-label">Active Projects</div>
+                        <div class="metric-value">7</div>
+                    </div>
+                    <div class="metric-tile" id="metric-2">
+                        <div class="metric-label">Countries</div>
+                        <div class="metric-value">25+</div>
+                    </div>
+                    <div class="metric-tile" id="metric-3">
+                        <div class="metric-label">This Month</div>
+                        <div class="metric-value">234</div>
+                        <div class="metric-note">employees processed</div>
+                    </div>
+                    <div class="metric-tile" id="metric-4">
+                        <div class="metric-label">Accuracy Rate</div>
+                        <div class="metric-value">99.8%</div>
+                        <div class="metric-note">↑ maintained</div>
+                    </div>
+                </div>
+                <div style="height: 1px; background: var(--border-visible); margin: 0 0 16px 0;"></div>
+                <div class="projects-list" id="project-list">
+                    <!-- Projects injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- SPREADSHEET PANEL -->
+        <div class="spreadsheet-panel-area window-panel" id="spreadsheet-panel">
+            <div class="window-header">
+                <div class="app-icon spreadsheet">📑</div>
+                <h3>Region_A_Nov2025_Validation.xlsx</h3>
+                <div class="window-controls">
+                    <div class="window-dot red"></div>
+                    <div class="window-dot yellow"></div>
+                    <div class="window-dot green"></div>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="formula-display" id="formula-bar">
+                    <div class="cell">D3</div>
+                    <div class="formula">=IF(C3*0.145=D3,"Match","MISMATCH")</div>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>EmpID</th>
+                            <th>Name</th>
+                            <th>Gross</th>
+                            <th>SI Calc</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="spreadsheet-rows">
+                        <!-- Rows injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div id="email-notification" class="notification-popup" role="dialog" aria-label="New email notification">
+        <div class="notif-header">
+            <span>📧 New Email</span>
+            <span style="cursor:pointer;" onclick="hideNotification('email-notification')">✕</span>
+        </div>
+        <div class="notif-body">
+            <strong>From:</strong> Regional HR Director<br>
+            <strong>Subject:</strong> URGENT: Registration Status Update<br><br>
+            Hi Chetan, the regional team is asking for an update on social security registration for the 12 new
+            employees.
+        </div>
+        <div class="notif-actions">
+            <button class="btn-sm primary">Reply</button>
+            <button class="btn-sm">Mark Follow-up</button>
+        </div>
+    </div>
+
+    <div id="calendar-notification" class="notification-popup" role="dialog" aria-label="Calendar reminder">
+        <div class="notif-header">
+            <span>📅 REMINDER — 30 Minutes</span>
+            <span style="cursor:pointer;" onclick="hideNotification('calendar-notification')">✕</span>
+        </div>
+        <div class="notif-body">
+            <strong>UAT Call: Regional Migration</strong><br>
+            09:30 AM — 10:30 AM IST<br>
+            Attendees: Client Team, Vendor, QA
+        </div>
+        <div class="notif-actions">
+            <button class="btn-sm primary">Join Meeting</button>
+            <button class="btn-sm">Snooze 10m</button>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container">
+        <div class="toast" id="success-toast">
+            <div class="toast-icon">✓</div>
+            <div class="toast-msg">Calculation fixed — 3 records corrected. Accuracy: 99.8%</div>
+        </div>
+    </div>
+
+    <!-- FINAL REVEAL -->
+    <div id="final-screen" class="final-screen">
+        <h2 class="intro-title mb-2">Experience Complete</h2>
+        <p class="intro-subtitle mb-8">You just lived 60 seconds of my day.</p>
+
+        <div class="final-stats-grid">
+            <div class="stat-item">
+                <h4>60s</h4>
+                <p>Time Elapsed</p>
+            </div>
+            <div class="stat-item">
+                <h4>4</h4>
+                <p>Problems Solved</p>
+            </div>
+            <div class="stat-item">
+                <h4>100%</h4>
+                <p>Focus</p>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 16px;">
+            <a href="../index.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Back to
+                Portfolio</a>
+            <a href="https://linkedin.com/in/chetan-sharma" target="_blank" rel="noopener noreferrer"
+                class="btn-primary btn-outline">Connect on LinkedIn</a>
+        </div>
+    </div>
+
+    <script>
+        // =========================================
+        // DATA SOURCES
+        // =========================================
+        const MESSAGES = [
+            {
+                id: 1,
+                sender: 'Regional Vendor',
+                initials: 'RV',
+                time: '9:01 AM',
+                text: 'Hi, we have a discrepancy in the social insurance calculation for Client A. 3 employees showing wrong deductions. Can you check?',
+                isOwn: false
+            },
+            {
+                id: 2,
+                sender: 'Chetan',
+                initials: 'CS',
+                time: '9:03 AM',
+                text: 'Checking now. Pulling the validation report from our reconciliation sheet. Give me 2 minutes.',
+                isOwn: true
+            },
+            {
+                id: 3,
+                sender: 'Chetan',
+                initials: 'CS',
+                time: '9:06 AM',
+                text: 'Found the issue. The SI cap wasn\'t updated for the 2025 regulatory change. Ceiling increased from 12,600 to 13,230 effective January. Sending corrected file now.',
+                isOwn: true
+            },
+            {
+                id: 4,
+                sender: 'Regional Vendor',
+                initials: 'RV',
+                time: '9:08 AM',
+                text: 'You\'re a lifesaver 🙏',
+                isOwn: false
+            },
+            {
+                id: 5,
+                sender: 'Regional Lead (APAC)',
+                initials: 'RL',
+                time: '11:32 AM HKT',
+                text: 'The retirement contribution file looks good. One question — the voluntary contribution cap for 2 employees seems different from last month?',
+                isOwn: false
+            },
+            {
+                id: 6,
+                sender: 'Chetan',
+                initials: 'CS',
+                time: '9:12 AM',
+                text: 'Good catch. Employee #1087 got promoted in October — their tier changed from 5% to 8% voluntary. I\'ll add a note to the audit trail.',
+                isOwn: true
+            }
+        ];
+
+        const EMAILS = [
+            {
+                sender: 'Client A',
+                initials: 'CA',
+                subject: 'RE: UAT Sign-off',
+                preview: 'All test cases passed. Ready for go-live...',
+                time: '9:01 AM',
+                unread: true
+            },
+            {
+                sender: 'Client B',
+                initials: 'CB',
+                subject: 'November Payroll Inputs',
+                preview: 'Please find attached the variable pay data...',
+                time: '9:02 AM',
+                unread: true
+            },
+            {
+                sender: 'Client C',
+                initials: 'CC',
+                subject: 'Medical Insurance Query',
+                preview: 'We need clarification on the coverage limits...',
+                time: '9:03 AM',
+                unread: false
+            }
+        ];
+
+        const SPREADSHEET_ROWS = [
+            { id: 'EMP-1042', name: 'Employee A', gross: '45,000', calc: '6,525', status: '✅ Match', isError: false },
+            { id: 'EMP-1043', name: 'Employee B', gross: '52,000', calc: '7,540', status: '❌ MISMATCH', isError: true },
+            { id: 'EMP-1044', name: 'Employee C', gross: '48,500', calc: '7,033', status: '❌ MISMATCH', isError: true },
+            { id: 'EMP-1045', name: 'Employee D', gross: '51,200', calc: '7,424', status: '❌ MISMATCH', isError: true }
+        ];
+
+        const PROJECTS = [
+            { name: 'Region A Migration — Client A', percent: '78%' },
+            { name: 'APAC Retirement — Client B', percent: '89%' },
+            { name: 'SEA Social Security — Client C', percent: '65%' }
+        ];
+
+        // =========================================
+        // ENGINE & STATE
+        // =========================================
+        let startTime = null;
+        let animationFrameId;
+        let isRunning = false;
+        let elaspedSeconds = 0;
+        const DURATION = 60; // seconds
+
+        // DOM Elements
+        const introScreen = document.getElementById('intro-screen');
+        const landingContent = document.getElementById('landing-content');
+        const loadingContent = document.getElementById('loading-content');
+        const workspace = document.getElementById('workspace');
+        const introLoader = document.getElementById('intro-loader');
+        const progressBar = document.getElementById('session-progress');
+        const progressTimer = document.getElementById('progress-timer');
+        const finalScreen = document.getElementById('final-screen');
+
+        // Panels
+        const slackPanel = document.getElementById('slack-panel');
+        const emailPanel = document.getElementById('email-panel');
+        const dashboardPanel = document.getElementById('dashboard-panel');
+        const spreadsheetPanel = document.getElementById('spreadsheet-panel');
+
+        // =========================================
+        // ACTIONS
+        // =========================================
+
+        function showMessage(msgIndex) {
+            const msg = MESSAGES[msgIndex];
+            const container = document.getElementById('slack-messages');
+            const el = document.createElement('div');
+            el.className = `chat-message ${msg.isOwn ? 'own-message' : ''}`;
+            el.innerHTML = `
+                <div class="msg-avatar">${msg.initials}</div>
+                <div class="msg-content">
+                    <div class="msg-header">
+                        <span class="msg-sender">${msg.sender}</span>
+                        <span class="msg-time">${msg.time}</span>
+                    </div>
+                    <div class="msg-text">${msg.text}</div>
+                </div>
+            `;
+            container.appendChild(el);
+            // Trigger animation
+            setTimeout(() => {
+                el.classList.add('visible');
+                // Scroll to bottom
+                const body = container.parentElement;
+                body.scrollTop = body.scrollHeight;
+            }, 50);
+        }
+
+        function setTyping(visible) {
+            const el = document.getElementById('typing-indicator');
+            if (visible) {
+                el.classList.add('visible');
+                // Scroll to ensure typing is visible
+                const body = el.parentElement;
+                body.scrollTop = body.scrollHeight;
+            } else {
+                el.classList.remove('visible');
+            }
+        }
+
+        function loadEmails() {
+            const container = document.getElementById('email-list');
+            if (container.children.length > 0) return; // Prevent duplicates
+
+            EMAILS.forEach((email, index) => {
+                const el = document.createElement('div');
+                el.className = `email-row ${email.unread ? 'unread' : ''}`;
+                el.innerHTML = `
+                    <div class="email-avatar">${email.initials}</div>
+                    <div class="email-info">
+                        <div class="email-top">
+                            <span class="email-sender">${email.sender}</span>
+                            <span class="email-type-time">${email.time}</span>
+                        </div>
+                        <div class="email-subject">${email.subject}</div>
+                        <div class="email-preview">${email.preview}</div>
+                    </div>
+                `;
+                container.appendChild(el);
+                setTimeout(() => el.classList.add('visible'), index * 100);
+            });
+        }
+
+        function loadSpreadsheetRows() {
+            const container = document.getElementById('spreadsheet-rows');
+            if (container.children.length > 0) return;
+
+            SPREADSHEET_ROWS.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                if (row.isError) tr.classList.add('flagged');
+                tr.innerHTML = `
+                    <td>${row.id}</td>
+                    <td>${row.name}</td>
+                    <td>${row.gross}</td>
+                    <td>${row.calc}</td>
+                    <td><span class="${row.isError ? 'status-error' : 'status-ok'}">${row.status}</span></td>
+                `;
+                container.appendChild(tr);
+                setTimeout(() => tr.classList.add('visible'), index * 150);
+            });
+        }
+
+        function loadProjects() {
+            const container = document.getElementById('project-list');
+            if (container.children.length > 0) return;
+
+            PROJECTS.forEach((proj, index) => {
+                const el = document.createElement('div');
+                el.className = 'project-row';
+                el.innerHTML = `
+                    <div class="project-info">
+                        <span class="project-name">${proj.name}</span>
+                        <span class="project-percent">${proj.percent}</span>
+                    </div>
+                    <div class="project-track">
+                        <div class="project-fill" style="width: 0%"></div>
+                    </div>
+                `;
+                container.appendChild(el);
+                setTimeout(() => {
+                    el.classList.add('visible');
+                    setTimeout(() => {
+                        el.querySelector('.project-fill').style.width = proj.percent;
+                    }, 200);
+                }, index * 200);
+            });
+        }
+
+        function showNotification(id) {
+            const el = document.getElementById(id);
+            el.classList.add('active');
+        }
+
+        function hideNotification(id) {
+            const el = document.getElementById(id);
+            el.classList.remove('active');
+        }
+
+        function showToast() {
+            const el = document.getElementById('success-toast');
+            el.classList.add('visible');
+            setTimeout(() => el.classList.remove('visible'), 4000);
+        }
+
+        // =========================================
+        // TIMELINE SEQUENCE
+        // =========================================
+        const TIMELINE = {
+            4.0: () => { slackPanel.classList.add('visible'); },
+            4.3: () => { emailPanel.classList.add('visible'); },
+            4.6: () => { dashboardPanel.classList.add('visible'); },
+            4.9: () => { spreadsheetPanel.classList.add('visible'); },
+            5.5: () => { document.getElementById('metric-1').classList.add('visible'); },
+            5.8: () => { document.getElementById('metric-2').classList.add('visible'); },
+            6.1: () => { document.getElementById('metric-3').classList.add('visible'); },
+            6.4: () => { document.getElementById('metric-4').classList.add('visible'); },
+            8.0: () => { showMessage(0); }, // Regional Vendor
+            12.0: () => { setTyping(true); },
+            14.0: () => { setTyping(false); showMessage(1); }, // Chetan
+            15.0: () => { loadSpreadsheetRows(); },
+            17.0: () => { document.getElementById('formula-bar').classList.add('visible'); },
+            18.0: () => { /* Rows are error highlighted via CSS class 'flagged' in loadSpreadsheetRows */ },
+            19.0: () => { showNotification('email-notification'); },
+            20.0: () => { loadEmails(); },
+            25.0: () => { showNotification('calendar-notification'); },
+            26.0: () => { hideNotification('email-notification'); },
+            28.0: () => { hideNotification('calendar-notification'); },
+            29.0: () => { setTyping(true); },
+            32.0: () => { setTyping(false); showMessage(2); }, // Chetan fix
+            35.0: () => { showMessage(3); }, // Thanks
+            38.0: () => { loadProjects(); },
+            43.0: () => { showToast(); },
+            47.0: () => { /* Toast auto hides */ },
+            48.0: () => { showMessage(4); }, // APAC Lead
+            52.0: () => { setTyping(true); },
+            55.0: () => { setTyping(false); showMessage(5); }, // Chetan response
+            58.0: () => { endExperience(); },
+            60.0: () => { /* End handled */ }
+        };
+
+        const executedEvents = new Set();
+
+        function updateLoop(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const rawElapsed = (timestamp - startTime) / 1000;
+            elaspedSeconds = Math.min(rawElapsed, DURATION);
+
+            // Update timer UI
+            const secs = Math.floor(elaspedSeconds);
+            const displaySecs = secs < 10 ? `0${secs}` : secs;
+            progressTimer.innerText = `0:${displaySecs} / 1:00`;
+            progressBar.style.width = `${(elaspedSeconds / DURATION) * 100}%`;
+
+            // Check events
+            for (const [timeStr, action] of Object.entries(TIMELINE)) {
+                const time = parseFloat(timeStr);
+                if (elaspedSeconds >= time && !executedEvents.has(timeStr)) {
+                    action();
+                    executedEvents.add(timeStr);
+                }
+            }
+
+            if (elaspedSeconds < DURATION) {
+                if (isRunning) animationFrameId = requestAnimationFrame(updateLoop);
+            } else {
+                endExperience();
+            }
+        }
+
+        function startExperience() {
+            // Intro Animation
+            landingContent.style.display = 'none';
+            loadingContent.style.display = 'flex';
+
+            const dateEl = document.getElementById('current-date-intro');
+            const now = new Date();
+            dateEl.innerText = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+            setTimeout(() => {
+                introLoader.style.width = '100%';
+            }, 100);
+
+            setTimeout(() => {
+                introScreen.classList.add('hidden');
+                workspace.classList.add('active');
+                isRunning = true;
+                requestAnimationFrame(updateLoop);
+            }, 3000);
+        }
+
+        function endExperience() {
+            isRunning = false;
+            cancelAnimationFrame(animationFrameId);
+            finalScreen.classList.add('active');
+        }
+
+        // =========================================
+        // INITIALIZATION
+        // =========================================
+        document.getElementById('start-btn').addEventListener('click', startExperience);
+
+        document.getElementById('skip-btn').addEventListener('click', () => {
+            endExperience();
+        });
+
+        // Current time clock
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('sim-clock').innerText = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        }, 1000);
+
+    </script>
+</body>
+
+</html>
