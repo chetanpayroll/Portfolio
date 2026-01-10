@@ -262,9 +262,9 @@
         .workspace-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto 1fr 1fr;
+            grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
             gap: 12px;
-            padding: 16px;
+            padding: 12px;
             height: 100vh;
             width: 100vw;
             overflow: hidden;
@@ -349,6 +349,119 @@
 
             :root {
                 --text-base: 13px;
+            }
+        }
+
+        /* Aggressive Compact Mode for Laptops (e.g. 1366x768 and below) */
+        @media (max-height: 900px) and (min-width: 768px) {
+            .workspace-container {
+                gap: 8px;
+                padding: 8px;
+                max-width: 100vw;
+            }
+
+            .control-bar {
+                padding: 8px 12px;
+                min-height: 50px;
+            }
+
+            .window-header {
+                padding: 8px 12px;
+                min-height: 40px;
+            }
+
+            .window-header h3 {
+                font-size: 13px;
+            }
+
+            .window-body {
+                padding: 10px;
+                scrollbar-width: thin;
+                /* Firefox */
+            }
+
+            /* Adjust Dashboards */
+            .metrics-grid {
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+
+            .metric-tile {
+                padding: 10px;
+            }
+
+            .metric-label {
+                font-size: 10px;
+                margin-bottom: 4px;
+            }
+
+            .metric-value {
+                font-size: 20px;
+            }
+
+            .projects-list {
+                gap: 8px;
+                margin-top: 8px;
+            }
+
+            .project-row {
+                margin-bottom: 0;
+            }
+
+            /* Adjust Lists (Slack/Email) */
+            .message-list,
+            .email-stack {
+                gap: 8px;
+            }
+
+            .chat-message,
+            .email-row {
+                padding: 10px;
+                border-radius: 8px;
+            }
+
+            .msg-avatar,
+            .email-avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+
+            .msg-text,
+            .email-subject {
+                font-size: 13px;
+                line-height: 1.4;
+            }
+
+            .msg-header,
+            .email-top {
+                margin-bottom: 2px;
+            }
+
+            /* Spreadsheet */
+            .formula-display {
+                padding: 6px 10px;
+                margin-bottom: 8px;
+                font-size: 11px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 6px 8px;
+                font-size: 11px;
+            }
+        }
+
+        /* Ultra Compact for very short screens (< 700px) */
+        @media (max-height: 700px) and (min-width: 768px) {
+            .workspace-container {
+                transform: scale(0.95);
+                transform-origin: center center;
+                height: 105vh;
+                /* Compensate for scale */
+                width: 105vw;
+                margin-left: -2.5vw;
+                margin-top: -2.5vh;
             }
         }
 
