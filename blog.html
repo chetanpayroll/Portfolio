@@ -296,8 +296,8 @@
                 <h2 class="mb-4">Stay Ahead of the Curve</h2>
                 <p class="mb-8 text-gray-600">Join 500+ payroll professionals receiving my
                     monthly digest on compliance and tech trends.</p>
-                <form action="mailto:chetan@chetanpayroll.com?subject=Newsletter Subscription Request" method="post"
-                    enctype="text/plain" class="newsletter-form">
+                <form id="newsletter-form" class="newsletter-form"
+                    onsubmit="event.preventDefault(); const email = this.querySelector('input[type=email]').value; window.location.href = 'mailto:chetan@chetanpayroll.com?subject=Newsletter Subscription Request&body=Please subscribe me to the newsletter. My email is: ' + email;">
                     <input type="email" name="subscriber_email" placeholder="Enter your email" class="newsletter-input"
                         required>
                     <button type="submit" class="btn btn-primary">Subscribe</button>
