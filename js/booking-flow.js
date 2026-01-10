@@ -183,12 +183,19 @@ class BookingFlow {
         this.btnTimeContinue.onclick = () => this.goToStep(3);
 
         // Step 3 -> 4 (Validation)
+        // Handle Button Click
         this.btnFormContinue.onclick = (e) => {
-            e.preventDefault(); // Just in case
-            if (this.validateForm()) {
-                this.goToStep(4);
-            }
+            e.preventDefault();
+            this.handleFormSubmit();
         };
+
+        // Handle Enter Key on Mobile/Desktop
+        if (this.bookingForm) {
+            this.bookingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleFormSubmit();
+            });
+        }
 
         // Step 4 -> 5 (Confirm & Submit)
         this.btnConfirm.onclick = () => this.submitBooking();
@@ -197,6 +204,12 @@ class BookingFlow {
         document.getElementById('backToDate').onclick = () => this.goToStep(1);
         document.getElementById('backToTime').onclick = () => this.goToStep(2);
         document.getElementById('backToForm').onclick = () => this.goToStep(3);
+    }
+
+    handleFormSubmit() {
+        if (this.validateForm()) {
+            this.goToStep(4);
+        }
     }
 
     /* ================= Validation Logic ================= */
@@ -304,15 +317,19 @@ class BookingFlow {
         btnText.textContent = 'Confirming...';
         this.btnConfirm.disabled = true;
 
-        // Prepare Payload
-        const dateStr = this.state.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        const formData = {
-            access_key: this.accessKey,
-            subject: `New Appointment Request: ${this.state.details.name}`,
-            email: this.state.details.email, // Reply-to
-            name: this.state.details.name,
-            from_name: "Booking System",
-            message: `
+        try {
+            // Validate Date State
+            if (!this.state.date) throw new Error('Invalid date selection');
+
+            // Prepare Payload
+            const dateStr = this.state.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const formData = {
+                access_key: this.accessKey,
+                subject: `New Appointment Request: ${this.state.details.name}`,
+                email: this.state.details.email, // Reply-to
+                name: this.state.details.name,
+                from_name: "Booking System",
+                message: `
 New Appointment Request
 
 Name: ${this.state.details.name}
@@ -324,10 +341,9 @@ Requested Date: ${dateStr}
 Requested Time: ${this.state.time}
 
 Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
-            `
-        };
+                `
+            };
 
-        try {
             const response = await fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
                 headers: {
@@ -349,7 +365,7 @@ Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
 
         } catch (error) {
             console.error('Booking Error:', error);
-            alert('Something went wrong. Please try again or contact us directly.');
+            alert(`Unable to schedule booking: ${error.message}. Please try again.`);
             this.btnConfirm.disabled = false;
         } finally {
             // Reset button text
@@ -359,51 +375,59 @@ Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
 
     /* ================= ICS Generation ================= */
     downloadICS() {
-        if (!this.state.date || !this.state.time) return;
+        if (!this.state.date || !this.state.time) {
+            alert("Missing booking details to generate calendar invite.");
+            return;
+        }
 
-        // Parse Date & Time
-        // this.state.date is a Date object (00:00:00)
-        // this.state.time is "09:00 AM" string
-        const [timeStr, modifier] = this.state.time.split(' ');
-        let [hours, minutes] = timeStr.split(':');
+        try {
+            // Parse Date & Time
+            // this.state.date is a Date object (00:00:00)
+            // this.state.time is "09:00 AM" string
+            const [timeStr, modifier] = this.state.time.split(' ');
+            let [hours, minutes] = timeStr.split(':');
 
-        if (hours === '12') hours = '00';
-        if (modifier === 'PM') hours = parseInt(hours, 10) + 12;
+            if (hours === '12') hours = '00';
+            if (modifier === 'PM') hours = parseInt(hours, 10) + 12;
 
-        const startDate = new Date(this.state.date);
-        startDate.setHours(hours, minutes, 0);
+            const startDate = new Date(this.state.date);
+            startDate.setHours(hours, minutes, 0);
 
-        const endDate = new Date(startDate.getTime() + 30 * 60000); // +30 mins
+            const endDate = new Date(startDate.getTime() + 30 * 60000); // +30 mins
 
-        // Format for ICS: YYYYMMDDTHHmm00
-        const formatDate = (date) => {
-            return date.toISOString().replace(/-|:|\.\d\d\d/g, "");
-        };
+            // Format for ICS: YYYYMMDDTHHmm00
+            const formatDate = (date) => {
+                return date.toISOString().replace(/-|:|\.\d\d\d/g, "");
+            };
 
-        const icsContent = [
-            'BEGIN:VCALENDAR',
-            'VERSION:2.0',
-            'PRODID:-//Chetan Sharma Portfolio//Booking//EN',
-            'BEGIN:VEVENT',
-            `UID:${Date.now()}@chetanpayroll.com`,
-            `DTSTAMP:${formatDate(new Date())}`,
-            `DTSTART:${formatDate(startDate)}`,
-            `DTEND:${formatDate(endDate)}`,
-            `SUMMARY:Meeting with Chetan Sharma`,
-            `DESCRIPTION:Discussing: ${this.state.details.name || 'New Opportunity'}\\nPhone: ${this.state.details.phone || 'N/A'}\\nEmail: ${this.state.details.email}`,
-            'LOCATION:Remote / Phone',
-            'STATUS:CONFIRMED',
-            'END:VEVENT',
-            'END:VCALENDAR'
-        ].join('\r\n');
+            const icsContent = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Chetan Sharma Portfolio//Booking//EN',
+                'BEGIN:VEVENT',
+                `UID:${Date.now()}@chetanpayroll.com`,
+                `DTSTAMP:${formatDate(new Date())}`,
+                `DTSTART:${formatDate(startDate)}`,
+                `DTEND:${formatDate(endDate)}`,
+                `SUMMARY:Meeting with Chetan Sharma`,
+                `DESCRIPTION:Discussing: ${this.state.details.name || 'New Opportunity'}\\nPhone: ${this.state.details.phone || 'N/A'}\\nEmail: ${this.state.details.email || ''}`,
+                'LOCATION:Remote / Phone',
+                'STATUS:CONFIRMED',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n');
 
-        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'meeting-invite.ics';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'meeting-invite.ics';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (e) {
+            console.error("ICS Gen Error", e);
+            alert("Could not download calendar file.");
+        }
     }
 }
 
