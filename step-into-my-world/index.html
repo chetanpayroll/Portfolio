@@ -193,6 +193,26 @@
             opacity: 0.2;
         }
 
+        @media (max-width: 767px) {
+            .blob-1 {
+                width: 90vw;
+                height: 90vw;
+                opacity: 0.3;
+            }
+
+            .blob-2 {
+                width: 80vw;
+                height: 80vw;
+                opacity: 0.3;
+            }
+
+            .blob-3 {
+                width: 70vw;
+                height: 70vw;
+                opacity: 0.2;
+            }
+        }
+
         @keyframes float {
 
             0%,
@@ -2151,14 +2171,20 @@
         function moveCursorTo(selector, offsetX = 0, offsetY = 0) {
             const target = document.querySelector(selector);
             if (target) {
-                const rect = target.getBoundingClientRect();
-                // Check if target is visible in viewport
-                if (rect.width > 0 && rect.height > 0) {
-                    const x = rect.left + (rect.width / 2) + offsetX;
-                    const y = rect.top + (rect.height / 2) + offsetY;
-                    cursor.style.left = `${x}px`;
-                    cursor.style.top = `${y}px`;
-                }
+                // Ensure target is in view on mobile
+                target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+
+                // Slight delay to allow scroll to settle before calculating position
+                setTimeout(() => {
+                    const rect = target.getBoundingClientRect();
+                    // Check if target is visible in viewport
+                    if (rect.width > 0 && rect.height > 0) {
+                        const x = rect.left + (rect.width / 2) + offsetX;
+                        const y = rect.top + (rect.height / 2) + offsetY;
+                        cursor.style.left = `${x}px`;
+                        cursor.style.top = `${y}px`;
+                    }
+                }, 300);
             }
         }
 
