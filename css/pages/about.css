@@ -46,14 +46,18 @@
 .about-hero-image-container {
     width: 100%;
     /* max-width set in container/grid usually, but let's keep consistent */
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
 }
 
 .about-hero-img {
     width: 100%;
     height: auto;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
     object-fit: cover;
+    transform: scale(1.06);
+    /* Slight zoom to crop out generated watermark */
+    transform-origin: center;
 }
 
 /* My Story */
