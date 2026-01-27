@@ -247,7 +247,7 @@ class ProfileAssistant {
         // ============================================
 
         if (this.matchesAny(q, ['contact', 'email', 'phone', 'reach', 'connect', 'get in touch', 'hire', 'linkedin'])) {
-            return `You can reach Chetan through:\n\n📧 **Email:** chetan@chetanpayroll.com\n📱 **Phone:** +91 8619495587\n🔗 **LinkedIn:** linkedin.com/in/chetan-champ/\n🌐 **Website:** www.gmppayroll.com\n\nHe's open to discussing career opportunities, speaking engagements, and professional collaboration.`;
+            return `You can reach Chetan through:\n\n📧 **Email:** chetan@chetanpayroll.com\n📱 **Phone:** +91 8619495587\n🔗 **LinkedIn:** linkedin.com/in/chetan-champ/\n🌐 **Website:** www.chetanpayroll.com\n\nHe's open to discussing career opportunities, speaking engagements, and professional collaboration.`;
         }
 
         if (this.matchesAny(q, ['available', 'hire', 'job', 'opportunity', 'looking', 'open to'])) {
