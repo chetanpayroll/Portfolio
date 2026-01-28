@@ -383,45 +383,110 @@ class ProfileAssistant {
             </div>
         `;
 
-        // Helper functions attached to window (idempotent check)
-        if (!window.handleDateSelect) {
-            window.handleDateSelect = (widgetId, dateStr, btn) => {
-                const widget = document.getElementById(widgetId);
-                widget.querySelectorAll('.date-card').forEach(c => c.classList.remove('active'));
-                btn.classList.add('active');
+        // Helper functions attached to window
+        window.handleDateSelect = (widgetId, dateStr, btn) => {
+            const widget = document.getElementById(widgetId);
+            if (!widget) return;
+            widget.querySelectorAll('.date-card').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
 
-                widget.dataset.selectedDate = dateStr;
-                widget.querySelector('.selected-date-display').textContent = dateStr;
+            widget.dataset.selectedDate = dateStr;
+            const display = widget.querySelector('.selected-date-display');
+            if (display) display.textContent = dateStr;
 
-                window.changeStep(widgetId, 2);
-            };
+            window.changeStep(widgetId, 2);
+        };
 
-            window.changeStep = (widgetId, step) => {
-                const widget = document.getElementById(widgetId);
-                widget.querySelectorAll('.booking-step').forEach(s => s.classList.add('hidden'));
-                document.getElementById(`${widgetId}-step-${step}`).classList.remove('hidden');
-            };
+        window.changeStep = (widgetId, step) => {
+            const widget = document.getElementById(widgetId);
+            if (!widget) return;
+            widget.querySelectorAll('.booking-step').forEach(s => s.classList.add('hidden'));
+            const stepEl = document.getElementById(`${widgetId}-step-${step}`);
+            if (stepEl) stepEl.classList.remove('hidden');
+        };
 
-            window.handleTimeSelect = (widgetId, time) => {
-                const widget = document.getElementById(widgetId);
-                widget.dataset.selectedTime = time;
-                window.changeStep(widgetId, 3);
-            };
+        window.handleTimeSelect = (widgetId, time) => {
+            const widget = document.getElementById(widgetId);
+            if (!widget) return;
+            widget.dataset.selectedTime = time;
+            window.changeStep(widgetId, 3);
+        };
 
-            window.handleBookingSubmit = (e, widgetId) => {
-                e.preventDefault();
-                const widget = document.getElementById(widgetId);
-                const date = widget.dataset.selectedDate;
-                const time = widget.dataset.selectedTime;
+        window.handleBookingSubmit = async (e, widgetId) => {
+            e.preventDefault();
+            const widget = document.getElementById(widgetId);
+            if (!widget) return;
 
-                const slotText = `${date} • ${time}`;
-                widget.querySelector('.final-slot').textContent = slotText;
+            const form = e.target;
+            const submitBtn = form.querySelector('.confirm-btn');
+            const originalBtnText = submitBtn ? submitBtn.textContent : 'Confirm Booking';
 
-                window.changeStep(widgetId, 4);
+            const date = widget.dataset.selectedDate;
+            const time = widget.dataset.selectedTime;
+            const nameInput = form.querySelector('input[placeholder="Your Name"]');
+            const emailInput = form.querySelector('input[type="email"]');
+            const topicInput = form.querySelector('input[placeholder="Meeting Topic"]');
 
-                if (window.lucide) window.lucide.createIcons();
-            };
-        }
+            const name = nameInput ? nameInput.value : 'Anonymous';
+            const email = emailInput ? emailInput.value : '';
+            const topic = topicInput ? topicInput.value : 'General Inquiry';
+
+            // Visual Loading State
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending Request...';
+            }
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        access_key: 'f526a9f2-266b-43d8-9b49-41f03a7776b6',
+                        subject: `AI Assistant Booking: ${name} (${date})`,
+                        from_name: "Chetan's AI Assistant",
+                        name: name,
+                        email: email,
+                        message: `
+New Meeting Request from AI Assistant
+
+Name: ${name}
+Email: ${email}
+Topic: ${topic}
+
+Requested Date: ${date}
+Requested Time: ${time}
+
+Source: Portfolio AI Chat
+                        `
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    const slotText = `${date} • ${time}`;
+                    const finalSlot = widget.querySelector('.final-slot');
+                    if (finalSlot) finalSlot.textContent = slotText;
+
+                    window.changeStep(widgetId, 4);
+                    if (window.lucide) window.lucide.createIcons();
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+            } catch (error) {
+                console.error('Booking Email Error:', error);
+                alert('Sorry, there was an issue sending your request. Please try again or contact Chetan directly at chetan@chetanpayroll.com.');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
+                }
+            }
+        };
     }
 }
 
