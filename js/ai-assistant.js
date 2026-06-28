@@ -171,6 +171,14 @@ class ProfileAssistant {
         }
 
         // ============================================
+        // TECH STACK / MICROSOFT POWER PLATFORM (priority match)
+        // ============================================
+
+        if (this.matchesAny(q, ['power platform', 'power apps', 'powerapps', 'power automate', 'sharepoint', 'tech stack', 'low-code', 'low code', 'flows', 'dynamics 365'])) {
+            return `Chetan builds enterprise automation on the **Microsoft Power Platform**:\n\n• **Power Apps** — custom low-code apps for payroll intake, approvals & audit trails across 54 countries and 179 legal entities\n• **Power Automate** — automated flows that validate calculations, route approvals and sync systems, eliminating manual touchpoints\n• **SharePoint** — centralized compliance libraries, document control and version governance for secure global collaboration\n\nHe pairs this with **Excel & Power Query**, **Deel**, and **Google Apps Script** to deliver end-to-end global payroll transformation at Vertiv.`;
+        }
+
+        // ============================================
         // EXPERIENCE QUESTIONS
         // ============================================
 
@@ -191,11 +199,11 @@ class ProfileAssistant {
         // ============================================
 
         if (this.matchesAny(q, ['skills', 'expertise', 'good at', 'abilities', 'competencies', 'capable'])) {
-            return `Chetan's key skills include:\n\n**Payroll Platforms:** Deel, Unity, Payroll2u\n\n**Compliance:** Hong Kong MPF/IR56B, Singapore CPF/SDL, UAE Gratuity/WPS\n\n**Automation:** Google Apps Script, Advanced Excel, Data Migration\n\n**Management:** Project Management, Stakeholder Management, Vendor Transitions, Team Leadership`;
+            return `Chetan's key skills include:\n\n**Microsoft Power Platform:** Power Apps, Power Automate, SharePoint\n\n**Payroll Platforms:** Deel, Unity, Payroll2u\n\n**Compliance:** Hong Kong MPF/IR56B, Singapore CPF/SDL, UAE Gratuity/WPS\n\n**Automation:** Power Automate flows, Google Apps Script, Advanced Excel & Power Query, Data Migration\n\n**Leadership:** Global Payroll Transformation, Project Management, Stakeholder Management, Vendor Transitions, Team Leadership`;
         }
 
         if (this.matchesAny(q, ['tools', 'software', 'platforms', 'systems', 'technology'])) {
-            return `Chetan works with:\n\n**Payroll:** Deel, Unity, Payroll2u\n**Project Management:** Monday.com, Gainsight\n**Communication:** Slack, Microsoft Teams\n**Automation:** Google Apps Script, Advanced Excel`;
+            return `Chetan works with:\n\n**Microsoft Power Platform:** Power Apps, Power Automate, SharePoint\n**Payroll:** Deel, Unity, Payroll2u\n**Project Management:** Monday.com, Gainsight\n**Communication:** Microsoft Teams, Outlook, Slack\n**Automation:** Power Automate, Google Apps Script, Advanced Excel & Power Query`;
         }
 
         if (this.matchesAny(q, ['hong kong', 'hk', 'mpf'])) {
@@ -223,7 +231,7 @@ class ProfileAssistant {
         }
 
         if (this.matchesAny(q, ['automation', 'dashboard', 'script', 'validation'])) {
-            return `Chetan has built several automation tools:\n\n**ICP Service Dashboard:**\n• Automates 50+ service provider comparisons\n• Saves 15+ hours/week\n• Reduced planning cycle by 40%\n\n**Two-Way Validation Engine:**\n• Google Apps Script tool\n• Saves 12 hours/week in reconciliation\n• Audit-ready for SOC 1 compliance`;
+            return `Chetan has built several automation solutions:\n\n**Microsoft Power Automate:**\n• Flows that validate payroll calculations and route approvals\n• Automated notifications and cross-system sync across regions\n\n**ICP Service Dashboard:**\n• Automates 50+ service provider comparisons\n• Saves 15+ hours/week, reduced planning cycle by 40%\n\n**Two-Way Validation Engine:**\n• Google Apps Script tool, saves 12 hours/week in reconciliation\n• Audit-ready for SOC 1 compliance`;
         }
 
         // ============================================
