@@ -120,6 +120,10 @@
     color: var(--color-gray-400);
 }
 
+.logo-text.text-vertiv {
+    color: #231F20;
+}
+
 .logo-text.text-deel {
     color: #00ACEC;
 }
