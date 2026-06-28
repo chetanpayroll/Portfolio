@@ -270,7 +270,7 @@
 }
 
 .toc-link.active {
-    background: rgba(13, 71, 161, 0.1);
+    background: rgba(209, 17, 73, 0.1);
     color: var(--color-primary);
     border-left-color: var(--color-primary);
     font-weight: 500;
@@ -318,15 +318,15 @@
 }
 
 .share-btn.linkedin:hover {
-    background: #0077b5;
+    background: #2B2B2B;
     color: white;
-    border-color: #0077b5;
+    border-color: #2B2B2B;
 }
 
 .share-btn.twitter:hover {
-    background: #1da1f2;
+    background: #2B2B2B;
     color: white;
-    border-color: #1da1f2;
+    border-color: #2B2B2B;
 }
 
 /* ============================================
@@ -428,8 +428,8 @@
 }
 
 .callout-info {
-    background: #dbeafe;
-    border-left: 4px solid #3b82f6;
+    background: #FFE4EC;
+    border-left: 4px solid #D11149;
 }
 
 /* Icon List */
@@ -629,7 +629,7 @@
     align-items: center;
     gap: 16px;
     padding: 20px 24px;
-    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    background: linear-gradient(135deg, #FFE4EC 0%, #FFC9D9 100%);
     border-radius: 12px;
     margin: 24px 0;
 }
@@ -883,7 +883,7 @@
 
 .cta-box {
     padding: 40px;
-    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+    background: linear-gradient(135deg, #D11149 0%, #7F1027 100%);
     border-radius: 16px;
     text-align: center;
     color: white;

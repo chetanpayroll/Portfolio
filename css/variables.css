@@ -1,26 +1,31 @@
-/* Color System */
+/* Color System — "Garnet Royale" (crimson + gold). No blue. */
 :root {
-    --color-primary: #0d47a1;
-    --color-primary-light: #42a5f5;
-    --color-primary-dark: #01579b;
-    --color-secondary: #6a1b9a;
-    --color-accent: #ff6b6b;
+    --color-primary: #D11149;
+    --color-primary-light: #FF4D74;
+    --color-primary-dark: #9B0C36;
+    --color-secondary: #E8A317;
+    --color-accent: #FF7A5C;
     --color-success: #2e7d32;
     --color-warning: #f57f17;
     --color-error: #c62828;
 
-    /* Neutral Colors */
+    /* Brand gradient + dark surfaces */
+    --gradient-primary: linear-gradient(135deg, #E11D48 0%, #7F1027 100%);
+    --color-dark: #160E13;
+    --color-dark-2: #2A0E18;
+
+    /* Neutral Colors — warm neutral (no blue/slate tint) */
     --color-white: #ffffff;
-    --color-gray-50: #f8fafc;
-    --color-gray-100: #f1f5f9;
-    --color-gray-200: #e2e8f0;
-    --color-gray-300: #cbd5e1;
-    --color-gray-400: #94a3b8;
-    --color-gray-500: #64748b;
-    --color-gray-600: #475569;
-    --color-gray-700: #334155;
-    --color-gray-800: #1e293b;
-    --color-gray-900: #0f172a;
+    --color-gray-50: #FAF8F8;
+    --color-gray-100: #F3EFEF;
+    --color-gray-200: #E6E0E1;
+    --color-gray-300: #CFC7C8;
+    --color-gray-400: #9C9092;
+    --color-gray-500: #6E6164;
+    --color-gray-600: #534749;
+    --color-gray-700: #3A3032;
+    --color-gray-800: #241D1F;
+    --color-gray-900: #140F11;
 
     /* Typography Scale */
     --font-family-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;

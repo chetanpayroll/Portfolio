@@ -29,7 +29,7 @@
 .method-card {
     text-align: center;
     padding: var(--space-6);
-    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    background: linear-gradient(135deg, #9B0C36 0%, #D11149 100%);
     border-radius: var(--radius-lg);
     transition: var(--transition-base);
     display: block;
@@ -41,14 +41,14 @@
 .method-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #1e40af 0%, #60a5fa 100%);
+    background: linear-gradient(135deg, #9B0C36 0%, #FF4D74 100%);
 }
 
 .method-icon {
     width: 48px;
     height: 48px;
     background-color: #ffffff;
-    color: #1e3a8a;
+    color: #9B0C36;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -128,7 +128,7 @@
 
 /* Form Styles */
 .contact-form-container {
-    background: linear-gradient(135deg, #101827 0%, #1e40af 50%, #3b82f6 100%);
+    background: linear-gradient(135deg, #160E13 0%, #9B0C36 50%, #D11149 100%);
     padding: var(--space-8);
     border-radius: var(--radius-xl);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -173,13 +173,13 @@
 /* Override button to pop against dark background */
 .contact-form-container .btn-primary {
     background-color: white;
-    color: #1e40af;
+    color: #9B0C36;
     border: none;
 }
 
 .contact-form-container .btn-primary:hover {
     background-color: #f3f4f6;
-    color: #111827;
+    color: #160E13;
     transform: translateY(-2px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
@@ -227,7 +227,7 @@ textarea.form-control {
 /* Calendar Section */
 /* Calendar Section - WOW Edition */
 .calendar-container {
-    background: linear-gradient(135deg, #101827 0%, #1e40af 50%, #3b82f6 100%);
+    background: linear-gradient(135deg, #160E13 0%, #9B0C36 50%, #D11149 100%);
     border-radius: var(--radius-xl);
     padding: var(--space-8);
     height: 100%;
@@ -271,7 +271,7 @@ textarea.form-control {
 }
 
 .calendar-icon {
-    color: #60a5fa;
+    color: #FF4D74;
     /* Light blue accent */
     width: 20px;
 }
@@ -279,14 +279,14 @@ textarea.form-control {
 /* Override button to pop against dark background */
 .calendar-container .btn-primary {
     background-color: white;
-    color: #1e40af;
+    color: #9B0C36;
     /* Dark blue text */
     border: none;
 }
 
 .calendar-container .btn-primary:hover {
     background-color: #f3f4f6;
-    color: #111827;
+    color: #160E13;
     transform: translateY(-2px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }

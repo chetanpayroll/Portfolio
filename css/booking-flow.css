@@ -4,12 +4,12 @@
    ========================================= */
 
 :root {
-    --book-primary: #0d47a1;
-    --book-primary-dark: #002171;
+    --book-primary: #D11149;
+    --book-primary-dark: #6E0828;
     --book-bg: #ffffff;
     --book-surface: #f8fafc;
     --book-text: #1e293b;
-    --book-text-light: #64748b;
+    --book-text-light: #6E6164;
     --book-border: #e2e8f0;
     --book-success: #10b981;
     --book-radius: 12px;
@@ -24,7 +24,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(15, 23, 42, 0.5);
+    background: rgba(20, 15, 17, 0.5);
     /* Backdrop blur feel */
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -234,7 +234,7 @@
     background: var(--book-primary);
     color: white;
     font-weight: 700;
-    box-shadow: 0 4px 6px rgba(13, 71, 161, 0.3);
+    box-shadow: 0 4px 6px rgba(209, 17, 73, 0.3);
 }
 
 .calendar-day-btn:disabled {
@@ -279,7 +279,7 @@
     background: var(--book-primary);
     color: white;
     border-color: var(--book-primary);
-    box-shadow: 0 4px 6px rgba(13, 71, 161, 0.2);
+    box-shadow: 0 4px 6px rgba(209, 17, 73, 0.2);
 }
 
 /* STEP 4: Form */
@@ -303,7 +303,7 @@
 .form-floating-input:focus {
     outline: none;
     border-color: var(--book-primary);
-    box-shadow: 0 0 0 2px rgba(13, 71, 161, 0.1);
+    box-shadow: 0 0 0 2px rgba(209, 17, 73, 0.1);
 }
 
 .form-floating-label {
@@ -509,7 +509,7 @@
     color: white !important;
     /* Force white text */
     font-weight: 700;
-    box-shadow: 0 4px 10px rgba(13, 71, 161, 0.4);
+    box-shadow: 0 4px 10px rgba(209, 17, 73, 0.4);
     /* Stronger shadow */
     position: relative;
     border: 2px solid transparent;
@@ -534,6 +534,6 @@
     background: var(--book-primary);
     color: white !important;
     border-color: var(--book-primary);
-    box-shadow: 0 4px 10px rgba(13, 71, 161, 0.3);
+    box-shadow: 0 4px 10px rgba(209, 17, 73, 0.3);
     font-weight: 700;
 }
