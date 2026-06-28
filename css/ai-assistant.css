@@ -303,7 +303,7 @@
 }
 
 .chat-input::placeholder {
-    color: #9C9092;
+    color: #6E6164;
 }
 
 .chat-send-btn {
@@ -334,7 +334,7 @@
 .chat-disclaimer {
     margin: 8px 0 0 0;
     font-size: 11px;
-    color: #9C9092;
+    color: #6E6164;
     text-align: center;
 }
 
@@ -353,7 +353,7 @@
 .typing-dot {
     width: 8px;
     height: 8px;
-    background: #9C9092;
+    background: #6E6164;
     border-radius: 50%;
     animation: typingBounce 1.4s infinite ease-in-out;
 }

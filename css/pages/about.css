@@ -250,7 +250,7 @@
 
 .about-cta-subtitle {
     font-size: var(--font-size-lg);
-    color: var(--color-primary-light);
+    color: rgba(255, 255, 255, 0.88);
     margin-bottom: var(--space-8);
 }
 
