@@ -159,15 +159,15 @@ class ProfileAssistant {
         // ============================================
 
         if (this.matchesAny(q, ['who is chetan', 'tell me about chetan', 'who are you', 'about chetan', 'introduce'])) {
-            return `**Chetan Sharma** is a Global Payroll Implementation Manager with **13+ years** of experience.\n\nHe currently works at **Deel**, where he leads enterprise payroll implementations across **25+ countries** with **99.8% accuracy**.\n\nHe specializes in Hong Kong MPF, Singapore CPF, and UAE compliance, and has been promoted **5 times in 4 years**.`;
+            return `**Chetan Sharma** is a Global Payroll Transformation Manager with **13+ years** of experience.\n\nHe currently works at **Vertiv**, where he leads global payroll transformation across **54 countries** and **179 legal entities** (~37,000 employees).\n\nPreviously at **Deel**, he led enterprise payroll implementations across **25+ countries** with **99.8% accuracy**, specializing in Hong Kong MPF, Singapore CPF, and UAE compliance, and was promoted **5 times in 4 years**.`;
         }
 
         if (this.matchesAny(q, ['what does chetan do', 'what is his job', 'his role', 'job title', 'position'])) {
-            return `Chetan is a **Global Payroll Implementation Manager** at Deel.\n\nHe leads multi-country payroll transitions, builds automation solutions, manages compliance across APAC and Middle East regions, and mentors implementation teams.`;
+            return `Chetan is a **Global Payroll Transformation Manager** at Vertiv.\n\nHe leads global payroll transformation across 54 countries and 179 legal entities (~37,000 employees). Earlier, at Deel, he led multi-country payroll transitions, built automation solutions, managed compliance across APAC and Middle East regions, and mentored implementation teams.`;
         }
 
         if (this.matchesAny(q, ['where is chetan', 'location', 'where does he', 'based', 'work from'])) {
-            return `Chetan is based in **Alwar, Rajasthan, India**.\n\nHe works remotely and has managed global payroll operations across multiple time zones throughout his career at Deel.`;
+            return `Chetan is based in **Alwar, Rajasthan, India**.\n\nHe has managed global payroll operations across multiple time zones throughout his career — currently with Vertiv and previously at Deel.`;
         }
 
         // ============================================
@@ -175,11 +175,11 @@ class ProfileAssistant {
         // ============================================
 
         if (this.matchesAny(q, ['experience', 'work history', 'career', 'worked', 'employment', 'background'])) {
-            return `Chetan has **13+ years** of experience:\n\n• **Deel** (2018-Present): Global Payroll Implementation Manager\n• **Xerex Business Services** (2014-2017): Benefits Administrator\n• **AON Hewitt** (2011-2014): HR & Benefits Coordinator\n\nAt Deel, he's led implementations across 25+ countries and managed 122 payrolls in a single year.`;
+            return `Chetan has **13+ years** of experience:\n\n• **Vertiv** (2026-Present): Global Payroll Transformation Manager\n• **Deel** (2018-2026): Global Payroll Implementation Manager\n• **Xerex Business Services** (2014-2017): Benefits Administrator\n• **AON Hewitt** (2011-2014): HR & Benefits Coordinator\n\nAt Vertiv he leads transformation across 54 countries and 179 legal entities; at Deel he led implementations across 25+ countries and managed 122 payrolls in a single year.`;
         }
 
         if (this.matchesAny(q, ['how long', 'deel', 'current job', 'current company'])) {
-            return `Chetan has been with **Deel** (formerly Safeguard Pay) since **October 2018** - over 6 years.\n\nDuring this time, he's received **5 promotions** and multiple awards including the Global Bolt Award.`;
+            return `Chetan currently works at **Vertiv** as Global Payroll Transformation Manager (since **March 2026**), leading transformation across 54 countries and 179 legal entities.\n\nBefore Vertiv, he was with **Deel** (formerly Safeguard Pay) from **October 2018 to March 2026** - over 7 years - where he received **5 promotions** and multiple awards including the Global Bolt Award.`;
         }
 
         if (this.matchesAny(q, ['countries', 'regions', 'international', 'global'])) {
