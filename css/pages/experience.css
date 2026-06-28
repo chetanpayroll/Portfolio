@@ -151,7 +151,7 @@
 
 /* Experience CTA */
 .experience-cta {
-    background: linear-gradient(135deg, var(--color-gray-900) 0%, #0c1a3a 100%);
+    background: linear-gradient(135deg, var(--color-gray-900) 0%, #2A0E18 100%);
     color: var(--color-white);
     text-align: center;
     position: relative;
@@ -211,7 +211,7 @@
     justify-content: center;
     width: 64px;
     height: 64px;
-    background: rgba(13, 71, 161, 0.1);
+    background: rgba(209, 17, 73, 0.1);
     border-radius: 16px;
     margin-bottom: 16px;
 }
@@ -322,8 +322,8 @@
 }
 
 .skill-card:nth-child(2) .skill-tag:hover {
-    background: #7c3aed;
-    border-color: #7c3aed;
+    background: #E8A317;
+    border-color: #E8A317;
 }
 
 .skill-card:nth-child(3) .skill-tag:hover {
@@ -337,8 +337,8 @@
 }
 
 .skill-card:nth-child(5) .skill-tag:hover {
-    background: #2563eb;
-    border-color: #2563eb;
+    background: #D11149;
+    border-color: #D11149;
 }
 
 .skill-card:nth-child(6) .skill-tag:hover {

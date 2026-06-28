@@ -16,20 +16,20 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+    background: linear-gradient(135deg, #D11149 0%, #7F1027 100%);
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 20px rgba(13, 71, 161, 0.4);
+    box-shadow: 0 4px 20px rgba(209, 17, 73, 0.4);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     color: white;
 }
 
 .chat-toggle-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 25px rgba(13, 71, 161, 0.5);
+    box-shadow: 0 6px 25px rgba(209, 17, 73, 0.5);
 }
 
 .chat-toggle-btn .close-icon {
@@ -74,7 +74,7 @@
 /* Chat Header */
 .chat-header {
     padding: 16px 20px;
-    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+    background: linear-gradient(135deg, #D11149 0%, #7F1027 100%);
     color: white;
     display: flex;
     align-items: center;
@@ -212,7 +212,7 @@
 }
 
 .user-message .message-content {
-    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+    background: linear-gradient(135deg, #D11149 0%, #7F1027 100%);
     color: white;
     border-bottom-right-radius: 4px;
 }
@@ -233,7 +233,7 @@
     margin-top: 8px;
     padding: 10px 16px;
     background-color: #f1f5f9;
-    color: #0d47a1;
+    color: #D11149;
     text-decoration: none;
     border-radius: 8px;
     font-weight: 500;
@@ -244,7 +244,7 @@
 
 .chat-resume-link:hover {
     background-color: #e2e8f0;
-    color: #0f172a;
+    color: #140F11;
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -264,15 +264,15 @@
     border-radius: 20px;
     font-size: 13px;
     font-weight: 500;
-    color: #0d47a1;
+    color: #D11149;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .quick-action-btn:hover {
-    background: #0d47a1;
+    background: #D11149;
     color: white;
-    border-color: #0d47a1;
+    border-color: #D11149;
 }
 
 /* Chat Input */
@@ -298,19 +298,19 @@
 }
 
 .chat-input:focus {
-    border-color: #0d47a1;
-    box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
+    border-color: #D11149;
+    box-shadow: 0 0 0 3px rgba(209, 17, 73, 0.1);
 }
 
 .chat-input::placeholder {
-    color: #94a3b8;
+    color: #6E6164;
 }
 
 .chat-send-btn {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+    background: linear-gradient(135deg, #D11149 0%, #7F1027 100%);
     border: none;
     color: white;
     cursor: pointer;
@@ -322,7 +322,7 @@
 
 .chat-send-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(13, 71, 161, 0.3);
+    box-shadow: 0 4px 12px rgba(209, 17, 73, 0.3);
 }
 
 .chat-send-btn:disabled {
@@ -334,7 +334,7 @@
 .chat-disclaimer {
     margin: 8px 0 0 0;
     font-size: 11px;
-    color: #94a3b8;
+    color: #6E6164;
     text-align: center;
 }
 
@@ -353,7 +353,7 @@
 .typing-dot {
     width: 8px;
     height: 8px;
-    background: #94a3b8;
+    background: #6E6164;
     border-radius: 50%;
     animation: typingBounce 1.4s infinite ease-in-out;
 }
@@ -423,7 +423,7 @@
 .booking-title {
     font-size: 14px;
     font-weight: 600;
-    color: #0f172a;
+    color: #140F11;
     margin-bottom: 12px;
     display: flex;
     justify-content: space-between;
@@ -464,14 +464,14 @@
 }
 
 .date-card:hover {
-    border-color: #0d47a1;
+    border-color: #D11149;
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .date-card.active {
-    background: #0d47a1;
-    border-color: #0d47a1;
+    background: #D11149;
+    border-color: #D11149;
     color: white;
 }
 
@@ -479,7 +479,7 @@
     font-size: 11px;
     text-transform: uppercase;
     font-weight: 500;
-    color: #64748b;
+    color: #6E6164;
     margin-bottom: 4px;
 }
 
@@ -490,7 +490,7 @@
 .card-date {
     font-size: 18px;
     font-weight: 700;
-    color: #0f172a;
+    color: #140F11;
 }
 
 .date-card.active .card-date {
@@ -517,9 +517,9 @@
 }
 
 .time-btn:hover {
-    border-color: #0d47a1;
-    color: #0d47a1;
-    background: #f0f9ff;
+    border-color: #D11149;
+    color: #D11149;
+    background: #FFF0F4;
 }
 
 /* Booking Form */
@@ -540,14 +540,14 @@
 }
 
 .booking-input:focus {
-    border-color: #0d47a1;
-    box-shadow: 0 0 0 2px rgba(13, 71, 161, 0.1);
+    border-color: #D11149;
+    box-shadow: 0 0 0 2px rgba(209, 17, 73, 0.1);
 }
 
 .confirm-btn {
     padding: 10px;
     border-radius: 8px;
-    background: #0d47a1;
+    background: #D11149;
     color: white;
     border: none;
     font-weight: 600;
@@ -558,16 +558,16 @@
 }
 
 .confirm-btn:hover {
-    background: #1565c0;
+    background: #7F1027;
     transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(13, 71, 161, 0.2);
+    box-shadow: 0 4px 6px rgba(209, 17, 73, 0.2);
 }
 
 /* Navigation */
 .back-link {
     background: none;
     border: none;
-    color: #64748b;
+    color: #6E6164;
     font-size: 12px;
     cursor: pointer;
     padding: 0;
@@ -577,13 +577,13 @@
 }
 
 .back-link:hover {
-    color: #0f172a;
+    color: #140F11;
     text-decoration: underline;
 }
 
 .selected-date-display {
     font-size: 13px;
-    color: #0d47a1;
+    color: #D11149;
     font-weight: 500;
     margin-bottom: 12px !important;
 }
@@ -607,18 +607,18 @@
 }
 
 .booking-success h4 {
-    color: #0f172a;
+    color: #140F11;
     margin: 0 0 8px 0;
 }
 
 .final-slot {
-    color: #0d47a1;
+    color: #D11149;
     font-weight: 600;
     margin: 4px 0;
 }
 
 .small-note {
     font-size: 12px;
-    color: #64748b;
+    color: #6E6164;
     margin-top: 12px !important;
 }

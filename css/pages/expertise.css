@@ -2,7 +2,7 @@
 
 /* Page Level Overrides */
 .bg-deep-dark {
-    background-color: #0f1115;
+    background-color: #140F11;
 }
 
 /* Header Overrides for Dark Page */
@@ -27,7 +27,7 @@
 
 /* --- Expertise Hero / Value Prop --- */
 .expertise-hero {
-    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+    background: linear-gradient(135deg, #160E13 0%, #241D1F 100%);
     color: var(--color-white);
     padding: calc(var(--space-20) + var(--space-12)) 0 var(--space-20);
     position: relative;
@@ -81,7 +81,7 @@
 
 .hero-cta-btn {
     background: #fbbf24;
-    color: #111827;
+    color: #160E13;
     border: none;
     font-weight: 600;
     padding: 1rem 2rem;
@@ -89,7 +89,7 @@
 
 /* --- Capability Cards (Holographic / Glassmorphism) --- */
 .core-leadership-section {
-    background-color: #0f1115;
+    background-color: #140F11;
 }
 
 .capability-grid {
@@ -185,7 +185,7 @@
 
 /* --- Tech Stack Visual --- */
 .tech-stack-section {
-    background-color: #0f1115;
+    background-color: #140F11;
     /* Deep dark bg */
     padding: var(--space-24) 0;
     color: white;
@@ -256,7 +256,7 @@
 
 /* --- CTA Section --- */
 .cta-dark-section {
-    background: #111827;
+    background: #160E13;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     text-align: center;
 }
@@ -269,7 +269,7 @@
 
 .cta-btn-primary {
     background: white;
-    color: #111827;
+    color: #160E13;
     border: none;
 }
 
