@@ -1338,9 +1338,17 @@
         /* Mobile / Small Tablet Styles */
         @media (max-width: 767px) {
 
+            /* Clip stray off-screen sim elements at the root — no horizontal scroll */
+            html {
+                overflow-x: hidden !important;
+                max-width: 100%;
+            }
+
             /* Allow body to scroll naturally on mobile */
             body {
                 overflow-y: auto !important;
+                overflow-x: hidden !important;
+                max-width: 100%;
                 height: auto !important;
                 position: relative;
                 -webkit-overflow-scrolling: touch;
@@ -1514,6 +1522,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
+            height: 100dvh;
             background: rgba(10, 10, 15, 0.95);
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
@@ -1521,7 +1530,10 @@
             display: none;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: clamp(32px, 6vh, 64px) 20px;
             opacity: 0;
             transition: opacity 1s ease;
         }
@@ -1763,6 +1775,20 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* Intro action buttons (perfectly aligned, stacked) */
+        .intro-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .intro-actions .btn-primary {
+            min-width: 260px;
+            text-align: center;
+            justify-content: center;
+        }
+
         /* =========================================
            "HOW I BUILD" INTERACTIVE SHOWCASE
            ========================================= */
@@ -2242,7 +2268,10 @@
             <h1 class="intro-title">Step Into My World</h1>
             <p class="intro-subtitle">Experience 60 seconds of a Global Payroll Transformation Manager's day. Live the
                 job instead of just reading a resume.</p>
-            <button id="start-btn" class="btn-primary" aria-label="Begin Experience">Begin Experience</button>
+            <div class="intro-actions">
+                <button id="start-btn" class="btn-primary" aria-label="Begin Experience">Begin Experience</button>
+                <button id="build-jump-btn" class="btn-primary btn-outline" type="button" aria-label="See how I build it">See How I Build It &rarr;</button>
+            </div>
         </div>
 
         <div id="loading-content" class="loading-container">
@@ -3137,6 +3166,17 @@
         document.getElementById('skip-btn').addEventListener('click', () => {
             endExperience();
         });
+
+        // Jump straight to the "How I Build It" showcase (skip the simulation)
+        function goToBuild() {
+            introScreen.classList.add('hidden');
+            endExperience();
+            setTimeout(() => {
+                const bs = document.querySelector('.build-showcase');
+                if (bs) bs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 80);
+        }
+        document.getElementById('build-jump-btn').addEventListener('click', goToBuild);
 
         // Current time clock
         setInterval(() => {
