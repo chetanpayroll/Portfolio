@@ -1763,6 +1763,460 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* =========================================
+           "HOW I BUILD" INTERACTIVE SHOWCASE
+           ========================================= */
+        .build-showcase {
+            width: 100%;
+            max-width: 860px;
+            margin: 8px auto 32px;
+            text-align: center;
+        }
+
+        .build-tabs {
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            padding: 6px;
+            margin: 0 auto 24px;
+        }
+
+        .build-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 0;
+            cursor: pointer;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: var(--text-sm);
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 999px;
+            transition: all .25s ease;
+        }
+
+        .build-tab svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .build-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .build-tab.active {
+            background: var(--gradient-accent);
+            color: #fff;
+            box-shadow: 0 6px 16px -6px rgba(209, 17, 73, .6);
+        }
+
+        .build-panel {
+            display: none;
+            text-align: left;
+        }
+
+        .build-panel.active {
+            display: block;
+            animation: buildIn .45s ease both;
+        }
+
+        @keyframes buildIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .build-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 560px;
+        }
+
+        .build-card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: var(--text-md);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .build-card-title svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-secondary);
+            flex-shrink: 0;
+        }
+
+        .build-card-sub {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        /* Power Automate flow */
+        .flow {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .flow-node {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 13px;
+        }
+
+        .flow-node.trigger {
+            border-left: 3px solid var(--accent-secondary);
+        }
+
+        .flow-node.condition {
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .flow-ico {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(209, 17, 73, .2), rgba(232, 163, 23, .2));
+            border: 1px solid var(--border-visible);
+        }
+
+        .flow-ico svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-secondary);
+        }
+
+        .flow-pill {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .flow-t {
+            font-size: var(--text-sm);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .flow-s {
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .flow-connector {
+            width: 2px;
+            height: 16px;
+            background: var(--border-visible);
+            margin-left: 30px;
+        }
+
+        .flow-branch {
+            margin-left: 30px;
+            border-left: 2px solid var(--border-visible);
+            padding-left: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .flow-action .flow-ico {
+            background: rgba(16, 185, 129, .15);
+            border-color: rgba(16, 185, 129, .25);
+        }
+
+        .flow-action .flow-ico svg {
+            color: var(--success);
+        }
+
+        .flow-success {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: rgba(16, 185, 129, .12);
+            border: 1px solid rgba(16, 185, 129, .4);
+            color: var(--text-primary);
+            font-size: var(--text-sm);
+            font-weight: 600;
+        }
+
+        .flow-success svg {
+            width: 18px;
+            height: 18px;
+            color: var(--success);
+            flex-shrink: 0;
+        }
+
+        /* Power Apps mock */
+        .papp-frame {
+            max-width: 360px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-visible);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .papp-top {
+            background: var(--gradient-accent);
+            color: #fff;
+            padding: 14px 16px;
+            font-weight: 700;
+            font-size: var(--text-sm);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .papp-body {
+            padding: 14px;
+        }
+
+        .papp-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .papp-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 11px 12px;
+        }
+
+        .papp-row.sel {
+            border-color: rgba(209, 17, 73, .55);
+            box-shadow: inset 0 0 0 1px rgba(209, 17, 73, .3);
+        }
+
+        .papp-c {
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .papp-m {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .chip {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            padding: 3px 8px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        .chip.ok {
+            background: rgba(16, 185, 129, .15);
+            color: #34d399;
+        }
+
+        .chip.warn {
+            background: rgba(245, 158, 11, .15);
+            color: #fbbf24;
+        }
+
+        .chip.run {
+            background: rgba(209, 17, 73, .15);
+            color: #ff6b8b;
+        }
+
+        .papp-detail {
+            margin-top: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .papp-detail .kv {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+            padding: 4px 0;
+        }
+
+        .papp-detail .kv b {
+            color: var(--text-primary);
+        }
+
+        .papp-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .papp-btn {
+            flex: 1;
+            border: 0;
+            border-radius: 9px;
+            padding: 10px;
+            font-weight: 700;
+            font-size: var(--text-sm);
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .papp-btn.approve {
+            background: var(--gradient-accent);
+            color: #fff;
+        }
+
+        .papp-btn.reject {
+            background: transparent;
+            border: 1px solid var(--border-visible);
+            color: var(--text-secondary);
+        }
+
+        /* SharePoint mock */
+        .sp-shell {
+            max-width: 560px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .sp-head {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sp-title {
+            font-size: var(--text-sm);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .sp-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .sp-cols,
+        .sp-row {
+            display: grid;
+            grid-template-columns: 1.7fr 1fr .85fr;
+            gap: 10px;
+            align-items: center;
+            padding: 11px 16px;
+        }
+
+        .sp-cols {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-subtle);
+            font-weight: 700;
+        }
+
+        .sp-row {
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: var(--text-sm);
+        }
+
+        .sp-row:last-child {
+            border-bottom: 0;
+        }
+
+        .sp-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .sp-name svg {
+            width: 15px;
+            height: 15px;
+            color: var(--accent-secondary);
+            flex-shrink: 0;
+        }
+
+        .sp-mod {
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 600px) {
+            .build-tabs {
+                display: flex;
+                width: 100%;
+            }
+
+            .build-tab {
+                flex: 1;
+                justify-content: center;
+                padding: 10px 6px;
+                font-size: 11px;
+            }
+
+            .sp-cols {
+                display: none;
+            }
+
+            .sp-row {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+
+            .sp-mod,
+            .sp-row .chip {
+                justify-self: start;
+            }
+        }
     </style>
 </head>
 
@@ -2113,6 +2567,150 @@
                 </div>
             </div>
         </div>
+
+        <!-- HOW I BUILD IT — interactive showcase -->
+        <div class="build-showcase">
+            <h3 class="stack-title">How I Build It</h3>
+            <p class="stack-sub">Self-paced — explore the Power Platform behind the operation.</p>
+
+            <div class="build-tabs" role="tablist">
+                <button class="build-tab active" data-build="flow" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Power Automate
+                </button>
+                <button class="build-tab" data-build="app" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>Power Apps
+                </button>
+                <button class="build-tab" data-build="sp" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"></line><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line></svg>SharePoint
+                </button>
+            </div>
+
+            <!-- POWER AUTOMATE -->
+            <div class="build-panel active" data-panel="flow">
+                <div class="build-card">
+                    <div class="build-card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        Regional Payroll Validation Flow
+                    </div>
+                    <div class="build-card-sub">Automated cloud flow • runs on every country submission</div>
+                    <div class="flow">
+                        <div class="flow-node trigger">
+                            <div class="flow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg></div>
+                            <div><span class="flow-pill">Trigger</span>
+                                <div class="flow-t">When a payroll file is submitted</div>
+                                <div class="flow-s">SharePoint — Country Submissions library</div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+                        <div class="flow-node condition">
+                            <div class="flow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg></div>
+                            <div><span class="flow-pill">Condition</span>
+                                <div class="flow-t">If validation variance &gt; 0</div>
+                                <div class="flow-s">Compare gross vs. statutory calculation</div>
+                            </div>
+                        </div>
+                        <div class="flow-connector"></div>
+                        <div class="flow-branch">
+                            <div class="flow-node flow-action">
+                                <div class="flow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 17 0z"></path></svg></div>
+                                <div><div class="flow-t">Post approval card to Teams</div><div class="flow-s">Adaptive card → Regional Approver</div></div>
+                            </div>
+                            <div class="flow-node flow-action">
+                                <div class="flow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg></div>
+                                <div><div class="flow-t">Update Compliance Register</div><div class="flow-s">SharePoint list — status + audit stamp</div></div>
+                            </div>
+                            <div class="flow-node flow-action">
+                                <div class="flow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></div>
+                                <div><div class="flow-t">Log to Dataverse</div><div class="flow-s">Immutable audit trail</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flow-success">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        Flow checker: 0 errors • Published • running across 54 countries
+                    </div>
+                </div>
+            </div>
+
+            <!-- POWER APPS -->
+            <div class="build-panel" data-panel="app">
+                <div class="papp-frame">
+                    <div class="papp-top"><span>Global Payroll Approvals</span><span>≡</span></div>
+                    <div class="papp-body">
+                        <div class="papp-gallery">
+                            <div class="papp-row sel">
+                                <div><div class="papp-c">India — Nov Run</div><div class="papp-m">37,000 employees</div></div>
+                                <span class="chip warn">Review</span>
+                            </div>
+                            <div class="papp-row">
+                                <div><div class="papp-c">Singapore — Nov Run</div><div class="papp-m">CPF validated</div></div>
+                                <span class="chip ok">Approved</span>
+                            </div>
+                            <div class="papp-row">
+                                <div><div class="papp-c">UAE — Nov Run</div><div class="papp-m">WPS pending</div></div>
+                                <span class="chip run">Running</span>
+                            </div>
+                        </div>
+                        <div class="papp-detail">
+                            <div class="kv"><span>Entity</span><b>Vertiv India Pvt Ltd</b></div>
+                            <div class="kv"><span>Variance flagged</span><b>3 records</b></div>
+                            <div class="kv"><span>Net total</span><b>&#8377; 41.2 Cr</b></div>
+                            <div class="papp-actions">
+                                <button class="papp-btn approve" type="button">Approve</button>
+                                <button class="papp-btn reject" type="button">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SHAREPOINT -->
+            <div class="build-panel" data-panel="sp">
+                <div class="sp-shell">
+                    <div class="sp-head">
+                        <div class="flow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"></line><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line></svg></div>
+                        <div>
+                            <div class="sp-title">Global Payroll — Compliance</div>
+                            <div class="sp-sub">Document library • 54 country sites</div>
+                        </div>
+                    </div>
+                    <div class="sp-cols"><span>Name</span><span>Modified</span><span>Status</span></div>
+                    <div class="sp-row">
+                        <span class="sp-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Country Pack — India.xlsx</span>
+                        <span class="sp-mod">2 min ago • Chetan S.</span>
+                        <span class="chip warn">In review</span>
+                    </div>
+                    <div class="sp-row">
+                        <span class="sp-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Variance Report — Nov.pdf</span>
+                        <span class="sp-mod">18 min ago • Flow</span>
+                        <span class="chip ok">Signed off</span>
+                    </div>
+                    <div class="sp-row">
+                        <span class="sp-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Statutory Sign-off — SG.docx</span>
+                        <span class="sp-mod">1 hr ago • Approver</span>
+                        <span class="chip ok">Approved</span>
+                    </div>
+                    <div class="sp-row">
+                        <span class="sp-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>Compliance Register.aspx</span>
+                        <span class="sp-mod">live • auto-updated by Flow</span>
+                        <span class="chip run">Live</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.querySelectorAll('.build-tab').forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    var key = tab.getAttribute('data-build');
+                    document.querySelectorAll('.build-tab').forEach(function (t) { t.classList.remove('active'); });
+                    document.querySelectorAll('.build-panel').forEach(function (p) { p.classList.remove('active'); });
+                    tab.classList.add('active');
+                    var panel = document.querySelector('.build-panel[data-panel="' + key + '"]');
+                    if (panel) { void panel.offsetWidth; panel.classList.add('active'); }
+                });
+            });
+        </script>
 
         <div class="final-actions">
             <a href="../assets/documents/Chetan_Sharma_Resume.docx?v=garnet-v3" download class="btn-primary"
