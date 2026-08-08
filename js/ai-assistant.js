@@ -9,7 +9,11 @@
 
 class ProfileAssistant {
     constructor() {
-        this.chatToggle = document.getElementById('chat-toggle');
+        // The blog-post template uses `chat-toggle-btn` and hides the window
+        // with a `hidden` class instead of `chat-toggle` / `.visible`. Support
+        // both so the assistant works on every page that includes it.
+        this.chatToggle = document.getElementById('chat-toggle')
+            || document.getElementById('chat-toggle-btn');
         this.chatWindow = document.getElementById('chat-window');
         this.chatClose = document.getElementById('chat-close');
         this.chatForm = document.getElementById('chat-form');
@@ -20,6 +24,7 @@ class ProfileAssistant {
 
         this.isOpen = false;
         this.isProcessing = false;
+        this.usesHiddenClass = this.chatWindow.classList.contains('hidden');
 
         this.engine = (window.AssistantEngine && window.AssistantEngine.create())
             || { match: () => ({ matched: false, suggestions: [], answer: '' }), reset: () => { } };
@@ -39,6 +44,17 @@ class ProfileAssistant {
                 e.preventDefault();
                 this.handleUserMessage();
             });
+        }
+
+        // Some templates ship the send button disabled and never re-enable it,
+        // which also blocks Enter-to-submit (implicit submission is suppressed
+        // when the default button is disabled). Keep it in sync with the input.
+        const sendBtn = this.chatForm && this.chatForm.querySelector('.chat-send-btn, #chat-send-btn');
+        if (sendBtn && this.chatInput) {
+            const sync = () => { sendBtn.disabled = this.chatInput.value.trim().length === 0; };
+            this.syncSendBtn = sync;
+            this.chatInput.addEventListener('input', sync);
+            sync();
         }
 
         // Quick action buttons (existing markup) + any added later.
@@ -178,14 +194,16 @@ class ProfileAssistant {
 
     openChat() {
         this.isOpen = true;
+        this.chatWindow.classList.remove('hidden');
         this.chatWindow.classList.add('visible');
         this.chatToggle.classList.add('active');
-        this.chatInput.focus();
+        if (this.chatInput) this.chatInput.focus();
     }
 
     closeChat() {
         this.isOpen = false;
         this.chatWindow.classList.remove('visible');
+        if (this.usesHiddenClass) this.chatWindow.classList.add('hidden');
         this.chatToggle.classList.remove('active');
         this.chatToggle.focus();
     }
@@ -198,6 +216,7 @@ class ProfileAssistant {
 
         this.addMessage(message, 'user');
         this.chatInput.value = '';
+        if (this.syncSendBtn) this.syncSendBtn();
 
         const quickActions = this.chatMessages.querySelector('.quick-actions');
         if (quickActions) quickActions.style.display = 'none';
