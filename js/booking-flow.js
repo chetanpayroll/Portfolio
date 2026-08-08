@@ -323,44 +323,39 @@ class BookingFlow {
 
             // Prepare Payload
             const dateStr = this.state.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            const formData = {
-                access_key: this.accessKey,
-                subject: `New Appointment Request: ${this.state.details.name}`,
-                email: this.state.details.email, // Reply-to
+            const payload = {
                 name: this.state.details.name,
-                from_name: "Booking System",
-                message: `
-New Appointment Request
-
-Name: ${this.state.details.name}
-Email: ${this.state.details.email}
-Phone: ${this.state.details.phone || 'N/A'}
-Company: ${this.state.details.company || 'N/A'}
-
-Requested Date: ${dateStr}
-Requested Time: ${this.state.time}
-
-Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
-                `
+                email: this.state.details.email,
+                phone: this.state.details.phone || '',
+                company: this.state.details.company || '',
+                topic: this.state.details.topic || 'General Inquiry',
+                date: dateStr,
+                time: this.state.time,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                source: 'Portfolio Booking Modal'
             };
 
-            const response = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+            // Build the calendar event once and reuse it for the invite,
+            // the "add to calendar" links and the email attachment.
+            this.currentEvent = null;
+            if (window.CalendarUtils && this.state.time) {
+                const start = window.CalendarUtils.combineDateAndTime(this.state.date, this.state.time);
+                this.currentEvent = window.CalendarUtils.buildEvent({
+                    start,
+                    attendeeName: payload.name,
+                    attendeeEmail: payload.email,
+                    topic: payload.topic,
+                    phone: payload.phone
+                });
+            }
 
-            const result = await response.json();
+            const result = await window.BookingTransport.submit(payload, this.currentEvent);
 
-            if (result.success) {
-                // Success
-                this.goToStep(5);
-            } else {
-                // API Error
-                throw new Error(result.message || 'Submission failed');
+            this.renderSuccess(result);
+            this.goToStep(5);
+
+            if (typeof window.gtag === 'function') {
+                try { window.gtag('event', 'booking_submitted', { via: result.via, source: 'modal' }); } catch (e) { }
             }
 
         } catch (error) {
@@ -373,61 +368,48 @@ Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
         }
     }
 
+    /* ================= Success screen ================= */
+    renderSuccess(result) {
+        const screen = this.screenSuccess;
+        if (!screen) return;
+
+        // Say what actually happened. Previously this always claimed an email
+        // invitation had been sent, which was not true on the Web3Forms path.
+        const subtitle = screen.querySelector('.booking-subtitle');
+        if (subtitle) {
+            subtitle.textContent = result && result.bothNotified
+                ? 'A confirmation email with the calendar invite is on its way to you, and Chetan has been notified.'
+                : 'Your request has been sent to Chetan. Add the invite to your calendar below — he will confirm by email.';
+        }
+
+        // Offer the invite + one-click calendar links.
+        if (this.currentEvent && window.CalendarUtils) {
+            let slot = screen.querySelector('.cal-slot');
+            if (!slot) {
+                slot = document.createElement('div');
+                slot.className = 'cal-slot';
+                const actions = screen.querySelector('.success-container > div:last-child');
+                if (actions) actions.parentNode.insertBefore(slot, actions);
+                else screen.querySelector('.success-container').appendChild(slot);
+            }
+            slot.innerHTML = window.CalendarUtils.calendarLinksHTML(this.currentEvent);
+        }
+    }
+
     /* ================= ICS Generation ================= */
     downloadICS() {
-        if (!this.state.date || !this.state.time) {
-            alert("Missing booking details to generate calendar invite.");
-            return;
+        if (!this.currentEvent || !window.CalendarUtils) {
+            if (!this.state.date || !this.state.time) return;
+            const start = window.CalendarUtils.combineDateAndTime(this.state.date, this.state.time);
+            this.currentEvent = window.CalendarUtils.buildEvent({
+                start,
+                attendeeName: this.state.details.name,
+                attendeeEmail: this.state.details.email,
+                topic: this.state.details.topic,
+                phone: this.state.details.phone
+            });
         }
-
-        try {
-            // Parse Date & Time
-            // this.state.date is a Date object (00:00:00)
-            // this.state.time is "09:00 AM" string
-            const [timeStr, modifier] = this.state.time.split(' ');
-            let [hours, minutes] = timeStr.split(':');
-
-            if (hours === '12') hours = '00';
-            if (modifier === 'PM') hours = parseInt(hours, 10) + 12;
-
-            const startDate = new Date(this.state.date);
-            startDate.setHours(hours, minutes, 0);
-
-            const endDate = new Date(startDate.getTime() + 30 * 60000); // +30 mins
-
-            // Format for ICS: YYYYMMDDTHHmm00
-            const formatDate = (date) => {
-                return date.toISOString().replace(/-|:|\.\d\d\d/g, "");
-            };
-
-            const icsContent = [
-                'BEGIN:VCALENDAR',
-                'VERSION:2.0',
-                'PRODID:-//Chetan Sharma Portfolio//Booking//EN',
-                'BEGIN:VEVENT',
-                `UID:${Date.now()}@chetanpayroll.com`,
-                `DTSTAMP:${formatDate(new Date())}`,
-                `DTSTART:${formatDate(startDate)}`,
-                `DTEND:${formatDate(endDate)}`,
-                `SUMMARY:Meeting with Chetan Sharma`,
-                `DESCRIPTION:Discussing: ${this.state.details.name || 'New Opportunity'}\\nPhone: ${this.state.details.phone || 'N/A'}\\nEmail: ${this.state.details.email || ''}`,
-                'LOCATION:Remote / Phone',
-                'STATUS:CONFIRMED',
-                'END:VEVENT',
-                'END:VCALENDAR'
-            ].join('\r\n');
-
-            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = 'meeting-invite.ics';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        } catch (e) {
-            console.error("ICS Gen Error", e);
-            alert("Could not download calendar file.");
-        }
+        window.CalendarUtils.downloadICS(this.currentEvent);
     }
 }
 
@@ -435,13 +417,15 @@ Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
 document.addEventListener('DOMContentLoaded', () => {
     window.bookingFlow = new BookingFlow();
 
-    // Attach "Add to Calendar" listener dynamically since it lacks a unique ID in HTML
-    // We can do this efficiently by delegating or finding it on init
-    const addToCalBtn = document.querySelector('#screenSuccess .booking-btn-primary');
-    if (addToCalBtn) {
-        addToCalBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (window.bookingFlow) window.bookingFlow.downloadICS();
+    // "Add to Calendar" on the success screen, plus the .ics button inside the
+    // dynamically injected calendar-links row. Delegated so both work.
+    const successScreen = document.getElementById('screenSuccess');
+    if (successScreen) {
+        successScreen.addEventListener('click', (e) => {
+            if (e.target.closest('.booking-btn-primary') || e.target.closest('[data-cal="ics"]')) {
+                e.preventDefault();
+                if (window.bookingFlow) window.bookingFlow.downloadICS();
+            }
         });
     }
 });
