@@ -292,7 +292,7 @@
     padding: 12px 16px;
     border: 1px solid #e2e8f0;
     border-radius: 24px;
-    font-size: 14px;
+    font-size: 16px; /* iOS zooms below 16px */
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -392,8 +392,10 @@
 
     .chat-window {
         width: calc(100vw - 32px);
+        /* 100vh sits behind mobile browser chrome; dvh tracks the visible area */
         height: calc(100vh - 120px);
-        bottom: 70px;
+        height: calc(100dvh - 120px);
+        bottom: calc(70px + env(safe-area-inset-bottom, 0px));
         right: -8px;
     }
 
@@ -534,7 +536,7 @@
     padding: 10px 12px;
     border-radius: 8px;
     border: 1px solid #e2e8f0;
-    font-size: 13px;
+    font-size: 16px; /* iOS zooms below 16px */
     outline: none;
     transition: all 0.2s ease;
 }
@@ -750,7 +752,7 @@
     border: 1px solid #CFC7C8;
     border-radius: 8px;
     padding: 10px;
-    font-size: 13px;
+    font-size: 16px; /* iOS zooms below 16px */
     font-family: inherit;
     color: #241D1F;
     background: #ffffff;
@@ -925,4 +927,433 @@
     .cal-actions { flex-direction: column; }
     .cal-btn { justify-content: center; }
     .jd-score { gap: 10px; }
+}
+
+/* ============================================
+   BOOKING WIDGET v2 — timezone-aware, month grid
+   Additive. Garnet tokens only. Existing rules above unchanged.
+   ============================================ */
+
+.bk {
+    background: #FAF8F8;
+    border: 1px solid #E6E0E1;
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 8px;
+}
+
+/* ---- Timezone bar ---- */
+.bk-tzbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #E6E0E1;
+}
+
+.bk-tz-text {
+    font-size: 12px;
+    color: #534749;
+    line-height: 1.4;
+}
+
+.bk-tz-text strong { color: #241D1F; }
+
+.bk-tz-abbr {
+    display: inline-block;
+    background: #F3EFEF;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 11px;
+    color: #6E6164;
+}
+
+.bk-tz-toggle {
+    background: none;
+    border: none;
+    color: #D11149;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 6px 10px;
+    min-height: 44px;
+}
+
+.bk-tzpicker { padding: 10px 0 2px; }
+
+.bk-tz-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #6E6164;
+    margin-bottom: 4px;
+}
+
+.bk-tz-select {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 10px;
+    font-size: 16px;
+    font-family: inherit;
+    border: 1px solid #CFC7C8;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #241D1F;
+}
+
+/* ---- Progress ---- */
+.bk-progress {
+    height: 4px;
+    background: #E6E0E1;
+    border-radius: 9999px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.bk-progress-fill {
+    height: 100%;
+    background: linear-gradient(135deg, #E11D48 0%, #7F1027 100%);
+    border-radius: 9999px;
+    transition: width 300ms ease;
+}
+
+.bk-steplabel {
+    margin: 6px 0 0;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #6E6164;
+}
+
+/* ---- Summary card ---- */
+.bk-summary {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: linear-gradient(135deg, #E11D48 0%, #7F1027 100%);
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+.bk-summary-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.bk-summary-date { font-size: 13px; opacity: .92; }
+.bk-summary-time { font-size: 19px; font-weight: 700; letter-spacing: -.01em; }
+.bk-summary-meta { font-size: 11px; opacity: .85; }
+
+.bk-summary-host {
+    margin-top: 4px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, .22);
+    font-size: 11px;
+    opacity: .88;
+}
+
+/* ---- Calendar ---- */
+.bk-cal { margin-top: 12px; }
+
+.bk-cal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.bk-cal-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #241D1F;
+}
+
+.bk-nav {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 8px;
+    border: 1px solid #E6E0E1;
+    background: #ffffff;
+    color: #3A3032;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+
+.bk-nav:hover:not(:disabled) { border-color: #D11149; color: #D11149; }
+.bk-nav:disabled { opacity: .35; cursor: not-allowed; }
+
+.bk-dow {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 4px;
+}
+
+.bk-dow span {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: #9C9092;
+    text-transform: uppercase;
+}
+
+.bk-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.bk-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    font-size: 13px;
+    font-family: inherit;
+    color: #CFC7C8;
+    padding: 0;
+}
+
+.bk-day.is-open {
+    background: #ffffff;
+    border-color: #E6E0E1;
+    color: #241D1F;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+
+.bk-day.is-open:hover,
+.bk-day.is-open:focus-visible {
+    border-color: #D11149;
+    color: #D11149;
+    transform: translateY(-1px);
+}
+
+.bk-day.is-selected {
+    background: linear-gradient(135deg, #E11D48 0%, #7F1027 100%);
+    border-color: transparent;
+    color: #ffffff;
+}
+
+.bk-day.is-today { box-shadow: inset 0 0 0 1px #E8A317; }
+.bk-day.is-closed { cursor: default; }
+.bk-day-blank { min-height: 0; aspect-ratio: auto; }
+
+.bk-hint {
+    margin: 10px 0 0;
+    font-size: 11px;
+    color: #6E6164;
+    line-height: 1.45;
+}
+
+/* ---- Time slots ---- */
+.bk-step { margin-top: 12px; }
+
+.bk-back {
+    background: none;
+    border: none;
+    color: #D11149;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 6px;
+    min-height: 44px;
+}
+
+.bk-back:hover { text-decoration: underline; }
+
+.bk-slots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.bk-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: 52px;
+    padding: 8px 6px;
+    border-radius: 10px;
+    border: 1px solid #E6E0E1;
+    background: #ffffff;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 150ms ease;
+}
+
+.bk-slot:hover,
+.bk-slot:focus-visible {
+    border-color: #D11149;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(209, 17, 73, .12);
+}
+
+.bk-slot-time { font-size: 14px; font-weight: 700; color: #241D1F; }
+.bk-slot-host { font-size: 10px; color: #6E6164; }
+
+.bk-slot:hover .bk-slot-time,
+.bk-slot:focus-visible .bk-slot-time { color: #D11149; }
+
+.bk-nofit {
+    width: 100%;
+    margin-top: 8px;
+    min-height: 44px;
+    background: none;
+    border: 1px dashed #CFC7C8;
+    border-radius: 8px;
+    color: #534749;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+
+.bk-nofit:hover { border-color: #D11149; color: #D11149; }
+
+/* ---- Form ---- */
+.bk-form { margin-top: 6px; }
+
+.bk-field { margin-bottom: 10px; }
+
+.bk-flabel {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #534749;
+    margin-bottom: 4px;
+}
+
+.bk-form .booking-input {
+    min-height: 44px;
+    box-sizing: border-box;
+}
+
+.bk-form .booking-input.is-invalid {
+    border-color: #9B0C36;
+    box-shadow: 0 0 0 3px rgba(155, 12, 54, .1);
+}
+
+.bk-err {
+    display: block;
+    min-height: 14px;
+    margin-top: 3px;
+    font-size: 11px;
+    color: #9B0C36;
+}
+
+.bk-confirm {
+    width: 100%;
+    min-height: 48px;
+    margin-top: 4px;
+}
+
+.bk-note {
+    margin: 8px 0 0;
+    font-size: 11px;
+    color: #6E6164;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.bk-preferred {
+    margin: 0 0 10px;
+    padding: 8px 10px;
+    background: #FFF0F4;
+    border: 1px solid #FFC9D9;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #9B0C36;
+}
+
+/* ---- Success ---- */
+.bk-success { text-align: center; }
+
+.bk-success h4 {
+    margin: 8px 0 4px;
+    font-size: 16px;
+    color: #140F11;
+}
+
+.bk-success .success-icon {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: #E8F3E9;
+    color: #1F5C23;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---- Focus visibility (keyboard users) ---- */
+.bk button:focus-visible,
+.bk select:focus-visible,
+.bk input:focus-visible {
+    outline: 2px solid #D11149;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bk-progress-fill { transition: none; }
+    .bk-day.is-open:hover,
+    .bk-slot:hover { transform: none; }
+}
+
+/* Narrow phones: give the grid the full bubble width */
+@media screen and (max-width: 420px) {
+    .bk { padding: 10px; }
+    .bk-slots { grid-template-columns: 1fr 1fr; }
+    .bk-day { min-height: 38px; font-size: 12px; }
+}
+
+/* Widget-bearing messages use the full bubble width so the 7-column
+   calendar grid keeps usable touch targets on small phones. */
+.message.has-widget {
+    max-width: 100%;
+    align-self: stretch;
+}
+
+.message.has-widget .message-content {
+    padding: 10px;
+}
+
+@media screen and (max-width: 480px) {
+    .chat-messages { padding: 12px; }
+    .message.has-widget .message-content { padding: 8px; }
+    .bk { padding: 8px; }
+}
+
+/* The input row gained a mic button; on a 375px phone the fixed 44px send
+   button + 38px mic + gaps overflowed because a flex item defaults to
+   min-width:auto and refuses to shrink. */
+.chat-input {
+    min-width: 0;
+}
+
+@media screen and (max-width: 420px) {
+    .chat-input-container { padding: 12px; }
+    .chat-form { gap: 6px; }
+    .chat-send-btn { width: 44px; height: 44px; min-width: 44px; }
 }

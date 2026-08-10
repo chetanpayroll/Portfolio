@@ -537,3 +537,40 @@
     box-shadow: 0 4px 10px rgba(209, 17, 73, 0.3);
     font-weight: 700;
 }
+/* ============================================
+   Timezone-aware slots (additive)
+   ============================================ */
+.booking-tz-note {
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: #6E6164;
+    text-align: center;
+}
+
+.time-slot-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: 48px;
+}
+
+.time-slot-btn .ts-local {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.time-slot-btn .ts-host {
+    font-size: 10px;
+    opacity: .7;
+    line-height: 1.2;
+}
+
+/* iOS zooms any focused field below 16px */
+.booking-modal-overlay input,
+.booking-modal-overlay select,
+.booking-modal-overlay textarea {
+    font-size: 16px;
+}

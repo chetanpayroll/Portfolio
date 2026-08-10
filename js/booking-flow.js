@@ -72,7 +72,7 @@ class BookingFlow {
 
     reset() {
         this.step = 1;
-        this.state = { date: null, time: null, details: {} };
+        this.state = { date: null, time: null, dateKey: null, instant: null, details: {} };
         // Reset Inputs
         if (this.bookingForm) this.bookingForm.reset();
         this.clearAllErrors();
@@ -107,70 +107,93 @@ class BookingFlow {
         this.step = stepNumber;
     }
 
-    /* ================= Calendar Logic ================= */
+    /* ================= Calendar Logic =================
+     * Slots come from CalendarUtils, which anchors them to Chetan's IST
+     * working hours and converts to the visitor's timezone. Previously the
+     * hardcoded slot strings were interpreted in the visitor's own zone, so a
+     * non-IST visitor booked a different instant than the one displayed.
+     */
     renderCalendar() {
+        const CU = window.CalendarUtils;
         const today = new Date();
+        this.tz = (CU && CU.visitorTimeZone()) || 'UTC';
+        this.slotGroups = CU ? CU.slotsByVisitorDate(this.tz) : {};
+
         const currentMonth = today.toLocaleString('default', { month: 'long', year: 'numeric' });
         this.monthDisplay.textContent = currentMonth;
 
-        this.calendarGrid.innerHTML = ''; // Clear
+        this.calendarGrid.innerHTML = '';
 
-        // Mock Calendar: Starting from today
-        for (let i = 0; i < 20; i++) {
-            const date = new Date(today);
-            date.setDate(today.getDate() + i);
+        const keys = Object.keys(this.slotGroups).sort().slice(0, 20);
+        const todayKey = CU ? CU.partsInZone(today, this.tz).key : '';
 
+        keys.forEach(key => {
+            const first = this.slotGroups[key][0];
             const btn = document.createElement('button');
             btn.className = 'calendar-day-btn';
-            btn.textContent = date.getDate();
-
-            // Highlight today
-            if (i === 0) btn.classList.add('today');
-
-            // Disable Sundays (mock logic)
-            if (date.getDay() === 0) {
-                btn.disabled = true;
-            } else {
-                btn.onclick = () => this.selectDate(btn, date);
-            }
-
+            btn.textContent = CU.partsInZone(first, this.tz).day;
+            if (key === todayKey) btn.classList.add('today');
+            btn.onclick = () => this.selectDate(btn, key);
             this.calendarGrid.appendChild(btn);
-        }
+        });
+
+        this.showTimezoneNote();
     }
 
-    selectDate(btn, date) {
-        // Visual
+    showTimezoneNote() {
+        const CU = window.CalendarUtils;
+        if (!CU || !this.monthDisplay) return;
+        let note = document.getElementById('bookingTzNote');
+        if (!note) {
+            note = document.createElement('p');
+            note.id = 'bookingTzNote';
+            note.className = 'booking-tz-note';
+            const host = this.monthDisplay.closest('.booking-content') || this.monthDisplay.parentElement;
+            if (host) host.appendChild(note);
+        }
+        const city = String(this.tz).split('/').pop().replace(/_/g, ' ');
+        note.textContent = 'Times shown in your timezone — ' + city +
+            ' (' + CU.zoneAbbreviation(new Date(), this.tz) + ')';
+    }
+
+    selectDate(btn, key) {
         document.querySelectorAll('.calendar-day-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
 
-        // State
-        this.state.date = date;
+        this.state.dateKey = key;
+        this.state.date = (this.slotGroups[key] || [])[0] || new Date();
         this.btnDateContinue.disabled = false;
     }
 
     /* ================= Time Slot Logic ================= */
     renderTimeSlots() {
-        const slots = ['09:00 AM', '09:30 AM', '10:00 AM', '11:00 AM', '02:00 PM', '02:30 PM', '03:00 PM', '04:00 PM'];
+        const CU = window.CalendarUtils;
+        const list = (this.slotGroups && this.slotGroups[this.state.dateKey]) || [];
         this.timeSlotGrid.innerHTML = '';
 
-        // Dynamic Header Update
-        const dateStr = this.state.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-        document.querySelector('#selectedDateDisplay').textContent = dateStr;
+        const display = document.querySelector('#selectedDateDisplay');
+        if (display && list.length) {
+            display.textContent = CU.formatDateInZone(list[0], this.tz);
+        }
 
-        slots.forEach(time => {
+        list.forEach(instant => {
             const btn = document.createElement('button');
             btn.className = 'time-slot-btn';
-            btn.textContent = time;
-            btn.onclick = () => this.selectTime(btn, time);
+            btn.innerHTML =
+                '<span class="ts-local">' + CU.formatTimeInZone(instant, this.tz) + '</span>' +
+                '<span class="ts-host">' + CU.formatTimeInZone(instant, CU.HOST_TZ) + ' IST</span>';
+            btn.onclick = () => this.selectTime(btn, instant);
             this.timeSlotGrid.appendChild(btn);
         });
     }
 
-    selectTime(btn, time) {
+    selectTime(btn, instant) {
+        const CU = window.CalendarUtils;
         document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
 
-        this.state.time = time;
+        this.state.instant = instant;
+        this.state.time = CU.formatTimeInZone(instant, this.tz);
         this.btnTimeContinue.disabled = false;
     }
 
@@ -299,10 +322,14 @@ class BookingFlow {
     }
 
     updateReviewScreen() {
-        if (!this.state.date || !this.state.time) return; // Should not happen
+        if (!this.state.instant) return; // Should not happen
 
-        document.getElementById('reviewDate').textContent = this.state.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        document.getElementById('reviewTime').textContent = this.state.time;
+        const CU = window.CalendarUtils;
+        document.getElementById('reviewDate').textContent =
+            CU.formatDateInZone(this.state.instant, this.tz, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('reviewTime').textContent =
+            CU.formatTimeInZone(this.state.instant, this.tz) + ' ' + CU.zoneAbbreviation(this.state.instant, this.tz) +
+            ' (' + CU.formatTimeInZone(this.state.instant, CU.HOST_TZ) + ' IST)';
         document.getElementById('reviewName').textContent = this.state.details.name;
         document.getElementById('reviewEmail').textContent = this.state.details.email;
     }
@@ -319,10 +346,11 @@ class BookingFlow {
 
         try {
             // Validate Date State
-            if (!this.state.date) throw new Error('Invalid date selection');
+            if (!this.state.instant) throw new Error('Invalid date selection');
 
             // Prepare Payload
-            const dateStr = this.state.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const CU = window.CalendarUtils;
+            const dateStr = CU.formatDateInZone(this.state.instant, this.tz, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             const payload = {
                 name: this.state.details.name,
                 email: this.state.details.email,
@@ -330,7 +358,8 @@ class BookingFlow {
                 company: this.state.details.company || '',
                 topic: this.state.details.topic || 'General Inquiry',
                 date: dateStr,
-                time: this.state.time,
+                time: CU.formatTimeInZone(this.state.instant, this.tz) + ' ' + CU.zoneAbbreviation(this.state.instant, this.tz) +
+                    ' (' + CU.formatTimeInZone(this.state.instant, CU.HOST_TZ) + ' IST)',
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
                 source: 'Portfolio Booking Modal'
             };
@@ -338,8 +367,8 @@ class BookingFlow {
             // Build the calendar event once and reuse it for the invite,
             // the "add to calendar" links and the email attachment.
             this.currentEvent = null;
-            if (window.CalendarUtils && this.state.time) {
-                const start = window.CalendarUtils.combineDateAndTime(this.state.date, this.state.time);
+            if (window.CalendarUtils && this.state.instant) {
+                const start = this.state.instant;
                 this.currentEvent = window.CalendarUtils.buildEvent({
                     start,
                     attendeeName: payload.name,
@@ -399,8 +428,8 @@ class BookingFlow {
     /* ================= ICS Generation ================= */
     downloadICS() {
         if (!this.currentEvent || !window.CalendarUtils) {
-            if (!this.state.date || !this.state.time) return;
-            const start = window.CalendarUtils.combineDateAndTime(this.state.date, this.state.time);
+            if (!this.state.instant) return;
+            const start = this.state.instant;
             this.currentEvent = window.CalendarUtils.buildEvent({
                 start,
                 attendeeName: this.state.details.name,

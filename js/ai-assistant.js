@@ -286,6 +286,8 @@ class ProfileAssistant {
         messageDiv.className = `message ${type}-message`;
 
         if (typeof content === 'object' && content.type === 'widget') {
+            // Widgets (calendar grid, JD analyzer) need the full bubble width.
+            messageDiv.classList.add('has-widget');
             messageDiv.innerHTML = `
                 <div class="message-content">
                     <p>${this.formatMessage(content.text)}</p>
@@ -536,190 +538,460 @@ class ProfileAssistant {
 
     /* ================= Booking widget ================= */
 
-    renderBookingWidget(container) {
-        const today = new Date();
-        const dates = [];
+    /* ================= Booking widget ================= */
 
-        // Next 5 weekdays.
-        let cursor = 1;
-        while (dates.length < 5 && cursor < 20) {
-            const d = new Date(today);
-            d.setDate(today.getDate() + cursor);
-            cursor++;
-            const dow = d.getDay();
-            if (dow === 0 || dow === 6) continue; // skip weekends
-            dates.push({
-                day: d.toLocaleDateString('en-US', { weekday: 'short' }),
-                date: d.getDate(),
-                fullDate: d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }),
-                iso: d.toISOString()
-            });
+    renderBookingWidget(container) {
+        const CU = window.CalendarUtils;
+        if (!CU) {
+            container.innerHTML = '<p class="booking-error">Booking is unavailable right now. Please email chetanpayroll@gmail.com.</p>';
+            return;
         }
 
-        const widgetId = 'booking-' + Date.now();
-
-        container.innerHTML = `
-            <div id="${widgetId}" class="booking-widget">
-                <div class="booking-step" id="${widgetId}-step-1">
-                    <p class="booking-title">Select a Date</p>
-                    <div class="date-scroll">
-                        ${dates.map(d => `
-                            <button type="button" class="date-card" data-date="${d.fullDate}" data-iso="${d.iso}">
-                                <span class="card-day">${d.day}</span>
-                                <span class="card-date">${d.date}</span>
-                            </button>
-                        `).join('')}
-                    </div>
-                </div>
-
-                <div class="booking-step hidden" id="${widgetId}-step-2">
-                    <button type="button" class="back-link" data-step="1">← Back</button>
-                    <p class="booking-title">Select Time</p>
-                    <p class="selected-date-display"></p>
-                    <div class="time-grid">
-                        <button type="button" class="time-btn">10:00 AM</button>
-                        <button type="button" class="time-btn">11:30 AM</button>
-                        <button type="button" class="time-btn">02:00 PM</button>
-                        <button type="button" class="time-btn">04:30 PM</button>
-                    </div>
-                </div>
-
-                <div class="booking-step hidden" id="${widgetId}-step-3">
-                    <button type="button" class="back-link" data-step="2">← Back</button>
-                    <p class="booking-title">Your Details</p>
-                    <form class="booking-form" novalidate>
-                        <input type="text" name="name" placeholder="Your Name" required class="booking-input">
-                        <input type="email" name="email" placeholder="Email Address" required class="booking-input">
-                        <input type="text" name="topic" placeholder="Meeting Topic" required class="booking-input">
-                        <button type="submit" class="confirm-btn">Confirm Booking</button>
-                    </form>
-                </div>
-
-                <div class="booking-step hidden" id="${widgetId}-step-4">
-                    <div class="booking-success">
-                        <div class="success-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                        </div>
-                        <h4>Request Sent!</h4>
-                        <p>Chetan will confirm the meeting for:</p>
-                        <p class="final-slot"></p>
-                        <div class="cal-slot"></div>
-                        <p class="small-note"></p>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        const widget = container.querySelector('.' + 'booking-widget');
-        const state = { date: null, iso: null, time: null };
         const self = this;
+        const STEP_LABELS = ['Choose a date', 'Choose a time', 'Your details', 'Confirmed'];
 
-        const goStep = (n) => {
-            widget.querySelectorAll('.booking-step').forEach(s => s.classList.add('hidden'));
-            const el = document.getElementById(`${widgetId}-step-${n}`);
-            if (el) el.classList.remove('hidden');
-            self.scrollToBottom();
+        const state = {
+            tz: CU.visitorTimeZone(),
+            groups: {},
+            year: 0,
+            month: 0,      // 1-12, in the visitor's calendar
+            dateKey: null,
+            instant: null,
+            preferred: '',
+            step: 1,
+            sending: false,
+            done: null
         };
 
-        widget.addEventListener('click', async (e) => {
-            const dateBtn = e.target.closest('.date-card');
-            if (dateBtn) {
-                widget.querySelectorAll('.date-card').forEach(c => c.classList.remove('active'));
-                dateBtn.classList.add('active');
-                state.date = dateBtn.dataset.date;
-                state.iso = dateBtn.dataset.iso;
-                const disp = widget.querySelector('.selected-date-display');
-                if (disp) disp.textContent = state.date;
-                goStep(2);
+        container.innerHTML = '<div class="bk"></div>';
+        const root = container.querySelector('.bk');
+
+        /* ---------- data ---------- */
+
+        function refreshSlots() {
+            state.groups = CU.slotsByVisitorDate(state.tz);
+            const keys = Object.keys(state.groups).sort();
+            const first = keys[0];
+            if (first) {
+                const p = first.split('-');
+                state.year = parseInt(p[0], 10);
+                state.month = parseInt(p[1], 10);
+            } else {
+                const now = CU.partsInZone(new Date(), state.tz);
+                state.year = now.year;
+                state.month = now.month;
+            }
+        }
+
+        function pad(n) { return n < 10 ? '0' + n : '' + n; }
+        function keyOf(y, m, d) { return y + '-' + pad(m) + '-' + pad(d); }
+
+        function monthHasAnySlot(y, m) {
+            const prefix = y + '-' + pad(m) + '-';
+            return Object.keys(state.groups).some(k => k.indexOf(prefix) === 0);
+        }
+
+        /* ---------- small helpers ---------- */
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function zoneCity(tz) {
+            const bits = String(tz).split('/');
+            return bits[bits.length - 1].replace(/_/g, ' ');
+        }
+
+        function hostTimeOf(instant) {
+            return CU.formatTimeInZone(instant, CU.HOST_TZ) + ' IST';
+        }
+
+        /* ---------- render ---------- */
+
+        function render(focusSel) {
+            const pct = Math.round((state.step / 4) * 100);
+            const html = [];
+
+            // Timezone bar
+            const sample = state.instant || new Date();
+            html.push(
+                '<div class="bk-tzbar">' +
+                '<span class="bk-tz-text">Times shown in <strong>' + esc(zoneCity(state.tz)) + '</strong>' +
+                ' <span class="bk-tz-abbr">' + esc(CU.zoneAbbreviation(sample, state.tz)) + '</span></span>' +
+                (state.step < 4
+                    ? '<button type="button" class="bk-tz-toggle" aria-expanded="false">Change</button>'
+                    : '') +
+                '</div>' +
+                '<div class="bk-tzpicker" hidden>' +
+                '<label class="bk-tz-label" for="bk-tz-select">Your timezone</label>' +
+                '<select id="bk-tz-select" class="bk-tz-select">' +
+                CU.availableTimeZones().map(z =>
+                    '<option value="' + esc(z) + '"' + (z === state.tz ? ' selected' : '') + '>' + esc(z) + '</option>'
+                ).join('') +
+                '</select></div>'
+            );
+
+            // Progress
+            html.push(
+                '<div class="bk-progress" role="progressbar" aria-valuemin="1" aria-valuemax="4"' +
+                ' aria-valuenow="' + state.step + '" aria-label="Booking progress">' +
+                '<div class="bk-progress-fill" style="width:' + pct + '%"></div></div>' +
+                '<p class="bk-steplabel">Step ' + state.step + ' of 4 · ' + STEP_LABELS[state.step - 1] + '</p>'
+            );
+
+            // Summary once a slot is chosen
+            if (state.instant) {
+                html.push(
+                    '<div class="bk-summary">' +
+                    '<div class="bk-summary-row">' +
+                    '<span class="bk-summary-date">' + esc(CU.formatDateInZone(state.instant, state.tz, { weekday: 'long', month: 'long', day: 'numeric' })) + '</span>' +
+                    '</div>' +
+                    '<div class="bk-summary-row">' +
+                    '<span class="bk-summary-time">' + esc(CU.formatTimeInZone(state.instant, state.tz)) + '</span>' +
+                    '<span class="bk-summary-meta">' + esc(CU.zoneAbbreviation(state.instant, state.tz)) + ' · 30 min</span>' +
+                    '</div>' +
+                    '<div class="bk-summary-host">' + esc(hostTimeOf(state.instant)) + ' for Chetan</div>' +
+                    '</div>'
+                );
+            }
+
+            if (state.step === 1) html.push(renderCalendar());
+            if (state.step === 2) html.push(renderTimes());
+            if (state.step === 3) html.push(renderForm());
+            if (state.step === 4) html.push(renderSuccess());
+
+            root.innerHTML = html.join('');
+            self.scrollToBottom();
+
+            if (focusSel) {
+                const el = root.querySelector(focusSel);
+                if (el) el.focus();
+            }
+        }
+
+        function renderCalendar() {
+            const monthName = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' })
+                .format(new Date(Date.UTC(state.year, state.month - 1, 1)));
+
+            const firstDow = new Date(Date.UTC(state.year, state.month - 1, 1)).getUTCDay();
+            const daysInMonth = new Date(Date.UTC(state.year, state.month, 0)).getUTCDate();
+            const todayKey = CU.partsInZone(new Date(), state.tz).key;
+
+            const cells = [];
+            for (let i = 0; i < firstDow; i++) cells.push('<span class="bk-day bk-day-blank"></span>');
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const k = keyOf(state.year, state.month, d);
+                const open = !!state.groups[k];
+                const isToday = k === todayKey;
+                const sel = state.dateKey === k;
+                if (open) {
+                    cells.push(
+                        '<button type="button" class="bk-day is-open' + (sel ? ' is-selected' : '') +
+                        (isToday ? ' is-today' : '') + '" data-key="' + k + '" role="gridcell"' +
+                        ' aria-selected="' + (sel ? 'true' : 'false') + '"' +
+                        ' aria-label="' + esc(CU.formatDateInZone(state.groups[k][0], state.tz, { weekday: 'long', month: 'long', day: 'numeric' })) +
+                        ', ' + state.groups[k].length + ' slots">' + d + '</button>'
+                    );
+                } else {
+                    cells.push(
+                        '<span class="bk-day is-closed' + (isToday ? ' is-today' : '') +
+                        '" aria-disabled="true">' + d + '</span>'
+                    );
+                }
+            }
+
+            const prevOk = monthHasAnySlot(
+                state.month === 1 ? state.year - 1 : state.year,
+                state.month === 1 ? 12 : state.month - 1
+            );
+            const nextOk = monthHasAnySlot(
+                state.month === 12 ? state.year + 1 : state.year,
+                state.month === 12 ? 1 : state.month + 1
+            );
+
+            return '<div class="bk-cal">' +
+                '<div class="bk-cal-head">' +
+                '<button type="button" class="bk-nav" data-nav="-1" aria-label="Previous month"' +
+                (prevOk ? '' : ' disabled') + '>&#8249;</button>' +
+                '<span class="bk-cal-title">' + esc(monthName) + '</span>' +
+                '<button type="button" class="bk-nav" data-nav="1" aria-label="Next month"' +
+                (nextOk ? '' : ' disabled') + '>&#8250;</button>' +
+                '</div>' +
+                '<div class="bk-dow" aria-hidden="true">' +
+                ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(x => '<span>' + x + '</span>').join('') +
+                '</div>' +
+                '<div class="bk-grid" role="grid" aria-label="Available dates">' + cells.join('') + '</div>' +
+                '<p class="bk-hint">Weekdays only · 24-hour notice · times converted to your timezone</p>' +
+                '</div>';
+        }
+
+        function renderTimes() {
+            const list = state.groups[state.dateKey] || [];
+            const slots = list.map((instant, i) =>
+                '<button type="button" class="bk-slot" role="radio" aria-checked="false"' +
+                ' data-i="' + i + '" tabindex="' + (i === 0 ? '0' : '-1') + '">' +
+                '<span class="bk-slot-time">' + esc(CU.formatTimeInZone(instant, state.tz)) + '</span>' +
+                '<span class="bk-slot-host">' + esc(hostTimeOf(instant)) + '</span>' +
+                '</button>'
+            ).join('');
+
+            return '<div class="bk-step">' +
+                '<button type="button" class="bk-back" data-back="1">&#8592; Change date</button>' +
+                '<div class="bk-slots" role="radiogroup" aria-label="Available times">' + slots + '</div>' +
+                '<button type="button" class="bk-nofit">None of these work for me</button>' +
+                '</div>';
+        }
+
+        function renderForm() {
+            return '<div class="bk-step">' +
+                '<button type="button" class="bk-back" data-back="2">&#8592; Change time</button>' +
+                '<form class="booking-form bk-form" novalidate>' +
+                field('name', 'text', 'Your name', 'name') +
+                field('email', 'email', 'Email address', 'email') +
+                field('topic', 'text', 'What would you like to discuss?', 'off') +
+                (state.preferred
+                    ? '<p class="bk-preferred">Preferred time noted: <strong>' + esc(state.preferred) + '</strong></p>'
+                    : '') +
+                '<button type="submit" class="confirm-btn bk-confirm">Request this meeting</button>' +
+                '<p class="bk-note">Chetan confirms by email — this sends a request, it is not an instant booking.</p>' +
+                '</form></div>';
+        }
+
+        function field(name, type, label, ac) {
+            return '<div class="bk-field">' +
+                '<label class="bk-flabel" for="bk-' + name + '">' + esc(label) + '</label>' +
+                '<input class="booking-input" id="bk-' + name + '" name="' + name + '" type="' + type + '"' +
+                ' autocomplete="' + ac + '" aria-describedby="bk-' + name + '-err" required>' +
+                '<span class="bk-err" id="bk-' + name + '-err" role="alert"></span>' +
+                '</div>';
+        }
+
+        function renderSuccess() {
+            const r = state.done || {};
+            return '<div class="bk-step bk-success">' +
+                '<div class="success-icon" aria-hidden="true">' +
+                '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+                '</div>' +
+                '<h4>Request sent</h4>' +
+                '<p class="bk-note">' +
+                (r.bothNotified
+                    ? 'A confirmation is on its way to your inbox, and Chetan has been notified.'
+                    : 'Your request has reached Chetan. Add it to your calendar below — he will confirm by email.') +
+                '</p>' +
+                (state.instant ? CU.calendarLinksHTML(state.eventObj) : '') +
+                '</div>';
+        }
+
+        /* ---------- validation ---------- */
+
+        const RULES = {
+            name: v => v.trim().length >= 2 || 'Please enter your name',
+            email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) || 'Please enter a valid email',
+            topic: v => v.trim().length >= 3 || 'A short topic helps Chetan prepare'
+        };
+
+        function validateField(input) {
+            const rule = RULES[input.name];
+            if (!rule) return true;
+            const res = rule(input.value);
+            const err = root.querySelector('#bk-' + input.name + '-err');
+            if (res === true) {
+                input.classList.remove('is-invalid');
+                if (err) err.textContent = '';
+                return true;
+            }
+            input.classList.add('is-invalid');
+            if (err) err.textContent = res;
+            return false;
+        }
+
+        /* ---------- events ---------- */
+
+        root.addEventListener('click', async (e) => {
+            const tzToggle = e.target.closest('.bk-tz-toggle');
+            if (tzToggle) {
+                const picker = root.querySelector('.bk-tzpicker');
+                const open = picker.hasAttribute('hidden');
+                if (open) picker.removeAttribute('hidden'); else picker.setAttribute('hidden', '');
+                tzToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                if (open) picker.querySelector('select').focus();
                 return;
             }
 
-            const timeBtn = e.target.closest('.time-btn');
-            if (timeBtn) {
-                state.time = timeBtn.textContent.trim();
-                goStep(3);
+            const nav = e.target.closest('.bk-nav');
+            if (nav && !nav.disabled) {
+                const dir = parseInt(nav.dataset.nav, 10);
+                let m = state.month + dir, y = state.year;
+                if (m < 1) { m = 12; y--; }
+                if (m > 12) { m = 1; y++; }
+                state.month = m; state.year = y;
+                render('.bk-cal-title');
                 return;
             }
 
-            const back = e.target.closest('.back-link');
-            if (back) { goStep(Number(back.dataset.step)); return; }
+            const day = e.target.closest('.bk-day.is-open');
+            if (day) {
+                state.dateKey = day.dataset.key;
+                state.instant = null;
+                state.step = 2;
+                render('.bk-slot');
+                return;
+            }
 
-            const calBtn = e.target.closest('[data-cal="ics"]');
-            if (calBtn && widget._event && window.CalendarUtils) {
-                window.CalendarUtils.downloadICS(widget._event);
+            const slot = e.target.closest('.bk-slot');
+            if (slot) {
+                const list = state.groups[state.dateKey] || [];
+                state.instant = list[parseInt(slot.dataset.i, 10)];
+                state.step = 3;
+                render('#bk-name');
+                return;
+            }
+
+            const back = e.target.closest('.bk-back');
+            if (back) {
+                state.step = parseInt(back.dataset.back, 10);
+                if (state.step === 1) { state.instant = null; }
+                render(state.step === 1 ? '.bk-day.is-open' : '.bk-slot');
+                return;
+            }
+
+            const nofit = e.target.closest('.bk-nofit');
+            if (nofit) {
+                const answer = window.prompt('What day and time would suit you? (your local time)');
+                if (answer && answer.trim()) {
+                    state.preferred = answer.trim();
+                    const list = state.groups[state.dateKey] || [];
+                    state.instant = list[0] || null;
+                    state.step = 3;
+                    render('#bk-name');
+                }
+                return;
+            }
+
+            const ics = e.target.closest('[data-cal="ics"]');
+            if (ics && state.eventObj) {
+                CU.downloadICS(state.eventObj);
             }
         });
 
-        const form = widget.querySelector('.booking-form');
-        form.addEventListener('submit', async (e) => {
+        root.addEventListener('change', (e) => {
+            if (e.target.id === 'bk-tz-select') {
+                state.tz = e.target.value;
+                state.dateKey = null;
+                state.instant = null;
+                state.step = 1;
+                refreshSlots();
+                render('.bk-tz-toggle');
+            }
+        });
+
+        root.addEventListener('blur', (e) => {
+            if (e.target.classList && e.target.classList.contains('booking-input')) validateField(e.target);
+        }, true);
+
+        root.addEventListener('input', (e) => {
+            if (e.target.classList && e.target.classList.contains('booking-input') &&
+                e.target.classList.contains('is-invalid')) {
+                validateField(e.target);
+            }
+        });
+
+        // Keyboard: arrow navigation across days and slots
+        root.addEventListener('keydown', (e) => {
+            const inGrid = e.target.closest('.bk-grid');
+            const inSlots = e.target.closest('.bk-slots');
+            if (!inGrid && !inSlots) return;
+
+            const items = Array.from(
+                (inGrid || inSlots).querySelectorAll(inGrid ? '.bk-day.is-open' : '.bk-slot')
+            );
+            const idx = items.indexOf(e.target);
+            if (idx === -1) return;
+
+            const step = inGrid ? { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 7, ArrowUp: -7 }
+                : { ArrowDown: 1, ArrowUp: -1, ArrowRight: 1, ArrowLeft: -1 };
+            if (step[e.key] !== undefined) {
+                e.preventDefault();
+                const next = items[Math.min(items.length - 1, Math.max(0, idx + step[e.key]))];
+                if (next) {
+                    items.forEach(i => i.setAttribute('tabindex', '-1'));
+                    next.setAttribute('tabindex', '0');
+                    next.focus();
+                }
+            } else if (e.key === 'Home' || e.key === 'End') {
+                e.preventDefault();
+                const t = e.key === 'Home' ? items[0] : items[items.length - 1];
+                if (t) t.focus();
+            }
+        });
+
+        root.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const submitBtn = form.querySelector('.confirm-btn');
-            const original = submitBtn.textContent;
+            if (state.sending) return;
 
-            const name = form.elements.name.value.trim();
-            const email = form.elements.email.value.trim();
-            const topic = form.elements.topic.value.trim();
-
-            if (!name || !email || !topic || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            const form = e.target;
+            const inputs = Array.from(form.querySelectorAll('.booking-input'));
+            const allOk = inputs.map(validateField).every(Boolean);
+            if (!allOk) {
+                const bad = form.querySelector('.is-invalid');
+                if (bad) bad.focus();
                 form.classList.add('shake');
                 setTimeout(() => form.classList.remove('shake'), 400);
                 return;
             }
 
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending Request...';
+            state.sending = true;
+            const btn = form.querySelector('.bk-confirm');
+            const original = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Sending…';
+
+            const name = form.elements.name.value.trim();
+            const email = form.elements.email.value.trim();
+            const topic = form.elements.topic.value.trim();
+
+            state.eventObj = CU.buildEvent({
+                start: state.instant, attendeeName: name, attendeeEmail: email, topic: topic
+            });
 
             const payload = {
-                name, email, topic,
-                date: state.date,
-                time: state.time,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                name: name, email: email, topic: topic,
+                date: CU.formatDateInZone(state.instant, state.tz, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+                time: CU.formatTimeInZone(state.instant, state.tz) + ' ' + CU.zoneAbbreviation(state.instant, state.tz) +
+                    ' (' + hostTimeOf(state.instant) + ')',
+                timezone: state.tz,
+                company: state.preferred ? ('Preferred alternative: ' + state.preferred) : '',
                 source: 'Portfolio AI Chat'
             };
 
-            let ev = null;
-            if (window.CalendarUtils && state.iso && state.time) {
-                const start = window.CalendarUtils.combineDateAndTime(new Date(state.iso), state.time);
-                ev = window.CalendarUtils.buildEvent({
-                    start, attendeeName: name, attendeeEmail: email, topic
-                });
-                widget._event = ev;
-            }
-
             try {
-                const res = await window.BookingTransport.submit(payload, ev);
-
-                widget.querySelector('.final-slot').textContent = `${state.date} • ${state.time}`;
-
-                const note = widget.querySelector('.small-note');
-                note.textContent = res.bothNotified
-                    ? 'A confirmation email is on its way to you, and Chetan has been notified.'
-                    : 'Your request has been sent to Chetan. Add the invite to your calendar below.';
-
-                if (ev && window.CalendarUtils) {
-                    widget.querySelector('.cal-slot').innerHTML =
-                        window.CalendarUtils.calendarLinksHTML(ev);
-                }
-
-                goStep(4);
-                if (window.lucide) window.lucide.createIcons();
-
+                state.done = await window.BookingTransport.submit(payload, state.eventObj);
+                state.step = 4;
+                render();
                 if (typeof window.gtag === 'function') {
-                    try { window.gtag('event', 'booking_submitted', { via: res.via, source: 'chat' }); } catch (err) { }
+                    try { window.gtag('event', 'booking_submitted', { via: state.done.via, source: 'chat' }); } catch (err) { }
                 }
-            } catch (error) {
-                console.error('Booking Error:', error);
-                const note = document.createElement('p');
-                note.className = 'booking-error';
-                note.textContent = 'Sorry, there was an issue sending your request. Please email chetanpayroll@gmail.com directly.';
-                form.appendChild(note);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = original;
+            } catch (err) {
+                console.error('Booking Error:', err);
+                btn.disabled = false;
+                btn.textContent = original;
+                state.sending = false;
+                let box = form.querySelector('.booking-error');
+                if (!box) {
+                    box = document.createElement('p');
+                    box.className = 'booking-error';
+                    form.appendChild(box);
+                }
+                box.textContent = 'Could not send the request. Please email chetanpayroll@gmail.com directly.';
             }
         });
+
+        /* ---------- go ---------- */
+        refreshSlots();
+        render();
     }
 }
 

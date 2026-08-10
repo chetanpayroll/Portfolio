@@ -188,6 +188,216 @@
         `;
     }
 
+    /* ================= Timezone engine =================
+     *
+     * Chetan works Indian Standard Time. Slots are therefore anchored to IST
+     * wall-clock hours and converted to the visitor's zone for display, so a
+     * visitor in London sees their own local time rather than mistaking an IST
+     * time for their own. Conversion uses Intl exclusively — never manual
+     * offset arithmetic, which breaks across DST boundaries.
+     */
+
+    const HOST_TZ = 'Asia/Kolkata';
+    // Chetan's real working window, including later slots that give the
+    // Americas a civilised morning (18:00 IST = 8:30am New York).
+    const HOST_SLOTS_IST = ['10:00', '11:30', '14:00', '16:30', '18:00', '20:00'];
+    const MIN_LEAD_HOURS = 24;   // don't offer anything sooner than this
+    const HORIZON_DAYS = 45;     // how far ahead to generate
+
+    // Never offer a visitor a slot in the middle of their night. Without this a
+    // New York visitor is shown 2:00 AM / 4:30 AM, because those are Chetan's
+    // normal IST morning hours.
+    const VISITOR_CIVIL_START = 7;   // inclusive
+    const VISITOR_CIVIL_END = 22;    // exclusive
+
+    /**
+     * Offset (ms) between UTC and `timeZone` at the given instant.
+     * Formats the instant in the zone, reads it back as if it were UTC, and
+     * takes the difference — the standard Intl-only technique.
+     */
+    function tzOffsetMs(instant, timeZone) {
+        const dtf = new Intl.DateTimeFormat('en-US', {
+            timeZone: timeZone,
+            hour12: false,
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+        const map = {};
+        dtf.formatToParts(instant).forEach(p => { map[p.type] = p.value; });
+        let hour = parseInt(map.hour, 10);
+        if (hour === 24) hour = 0; // some engines emit 24 for midnight
+        const asUTC = Date.UTC(
+            parseInt(map.year, 10), parseInt(map.month, 10) - 1, parseInt(map.day, 10),
+            hour, parseInt(map.minute, 10), parseInt(map.second, 10)
+        );
+        return asUTC - instant.getTime();
+    }
+
+    /**
+     * A wall-clock time in `timeZone` -> the exact UTC instant.
+     * Two passes so the offset used is the one actually in force at the
+     * resulting instant (matters on DST transition days).
+     */
+    function zonedWallClockToInstant(y, m, d, hh, mm, timeZone) {
+        const guess = Date.UTC(y, m - 1, d, hh, mm, 0, 0);
+        const o1 = tzOffsetMs(new Date(guess), timeZone);
+        let ts = guess - o1;
+        const o2 = tzOffsetMs(new Date(ts), timeZone);
+        if (o2 !== o1) ts = guess - o2;
+        return new Date(ts);
+    }
+
+    /** Calendar parts of an instant as seen in `timeZone`. */
+    function partsInZone(instant, timeZone) {
+        const dtf = new Intl.DateTimeFormat('en-CA', {
+            timeZone: timeZone, hour12: false,
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', weekday: 'short'
+        });
+        const map = {};
+        dtf.formatToParts(instant).forEach(p => { map[p.type] = p.value; });
+        let hour = parseInt(map.hour, 10);
+        if (hour === 24) hour = 0;
+        return {
+            year: parseInt(map.year, 10),
+            month: parseInt(map.month, 10),
+            day: parseInt(map.day, 10),
+            hour: hour,
+            minute: parseInt(map.minute, 10),
+            weekday: map.weekday,
+            key: `${map.year}-${map.month}-${map.day}`
+        };
+    }
+
+    function formatTimeInZone(instant, timeZone) {
+        return new Intl.DateTimeFormat('en-US', {
+            timeZone: timeZone, hour: 'numeric', minute: '2-digit', hour12: true
+        }).format(instant);
+    }
+
+    function formatDateInZone(instant, timeZone, opts) {
+        return new Intl.DateTimeFormat('en-US', Object.assign({
+            timeZone: timeZone, weekday: 'short', month: 'short', day: 'numeric'
+        }, opts || {})).format(instant);
+    }
+
+    /** Short zone label, e.g. "BST" / "GMT+5:30". */
+    function zoneAbbreviation(instant, timeZone) {
+        try {
+            const parts = new Intl.DateTimeFormat('en-US', {
+                timeZone: timeZone, timeZoneName: 'short'
+            }).formatToParts(instant);
+            const tzn = parts.find(p => p.type === 'timeZoneName');
+            return tzn ? tzn.value : timeZone;
+        } catch (e) {
+            return timeZone;
+        }
+    }
+
+    // Some engines still report legacy IANA aliases (Chrome returns
+    // "Asia/Calcutta" for India). Normalise so visitors see the modern city.
+    const ZONE_ALIASES = {
+        'Asia/Calcutta': 'Asia/Kolkata',
+        'Asia/Saigon': 'Asia/Ho_Chi_Minh',
+        'Asia/Rangoon': 'Asia/Yangon',
+        'Asia/Katmandu': 'Asia/Kathmandu',
+        'Asia/Dacca': 'Asia/Dhaka',
+        'Europe/Kiev': 'Europe/Kyiv',
+        'America/Buenos_Aires': 'America/Argentina/Buenos_Aires',
+        'Pacific/Ponape': 'Pacific/Pohnpei',
+        'Atlantic/Faeroe': 'Atlantic/Faroe'
+    };
+
+    function canonicalZone(tz) {
+        return ZONE_ALIASES[tz] || tz;
+    }
+
+    function visitorTimeZone() {
+        try {
+            return canonicalZone(Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC');
+        } catch (e) {
+            return 'UTC';
+        }
+    }
+
+    /**
+     * Every bookable slot as a concrete UTC instant, built from Chetan's IST
+     * working hours on IST weekdays, respecting the lead time.
+     * Grouping/labelling for the visitor happens downstream, so the visitor's
+     * calendar date can never disagree with the instant.
+     */
+    function generateSlots(now) {
+        const from = now || new Date();
+        const out = [];
+        const startParts = partsInZone(from, HOST_TZ);
+        const cursor = new Date(Date.UTC(startParts.year, startParts.month - 1, startParts.day));
+
+        for (let i = 0; i < HORIZON_DAYS; i++) {
+            const y = cursor.getUTCFullYear();
+            const m = cursor.getUTCMonth() + 1;
+            const d = cursor.getUTCDate();
+
+            for (let s = 0; s < HOST_SLOTS_IST.length; s++) {
+                const hhmm = HOST_SLOTS_IST[s].split(':');
+                const instant = zonedWallClockToInstant(
+                    y, m, d, parseInt(hhmm[0], 10), parseInt(hhmm[1], 10), HOST_TZ
+                );
+
+                // Weekday check uses the HOST calendar — Chetan's working week.
+                const hostParts = partsInZone(instant, HOST_TZ);
+                if (hostParts.weekday === 'Sat' || hostParts.weekday === 'Sun') continue;
+
+                if (instant.getTime() - from.getTime() < MIN_LEAD_HOURS * 3600000) continue;
+
+                out.push(instant);
+            }
+            cursor.setUTCDate(cursor.getUTCDate() + 1);
+        }
+        return out;
+    }
+
+    /** Slots grouped by the visitor's local calendar date. */
+    function slotsByVisitorDate(timeZone, now) {
+        const tz = timeZone || visitorTimeZone();
+        const all = generateSlots(now);
+
+        const civil = all.filter(instant => {
+            const h = partsInZone(instant, tz).hour;
+            return h >= VISITOR_CIVIL_START && h < VISITOR_CIVIL_END;
+        });
+
+        // Extreme zones may have no overlap at all with Chetan's working day;
+        // rather than show an empty calendar, fall back to the full set.
+        const list = civil.length ? civil : all;
+
+        const groups = Object.create(null);
+        list.forEach(instant => {
+            const p = partsInZone(instant, tz);
+            if (!groups[p.key]) groups[p.key] = [];
+            groups[p.key].push(instant);
+        });
+        return groups;
+    }
+
+    /** Common zones offered when Intl.supportedValuesOf is unavailable. */
+    const FALLBACK_ZONES = [
+        'Asia/Kolkata', 'Asia/Dubai', 'Asia/Singapore', 'Asia/Hong_Kong', 'Asia/Tokyo',
+        'Asia/Shanghai', 'Asia/Jakarta', 'Australia/Sydney', 'Europe/London', 'Europe/Dublin',
+        'Europe/Paris', 'Europe/Berlin', 'Europe/Amsterdam', 'Europe/Madrid', 'Europe/Warsaw',
+        'Africa/Cairo', 'Africa/Johannesburg', 'America/New_York', 'America/Chicago',
+        'America/Denver', 'America/Los_Angeles', 'America/Toronto', 'America/Sao_Paulo', 'UTC'
+    ];
+
+    function availableTimeZones() {
+        try {
+            if (typeof Intl.supportedValuesOf === 'function') {
+                const list = Intl.supportedValuesOf('timeZone');
+                if (list && list.length) return list;
+            }
+        } catch (e) { /* fall through */ }
+        return FALLBACK_ZONES.slice();
+    }
+
     /* ================= Booking transport ================= */
     /**
      * Sends a booking request. Tries the serverless endpoint first (which
@@ -265,7 +475,21 @@
         calendarLinksHTML,
         escapeText,
         toUtcStamp,
-        ORGANIZER_EMAIL
+        ORGANIZER_EMAIL,
+        // timezone engine
+        HOST_TZ,
+        DEFAULT_MINUTES,
+        tzOffsetMs,
+        zonedWallClockToInstant,
+        partsInZone,
+        formatTimeInZone,
+        formatDateInZone,
+        zoneAbbreviation,
+        visitorTimeZone,
+        canonicalZone,
+        generateSlots,
+        slotsByVisitorDate,
+        availableTimeZones
     };
 
 })(typeof window !== 'undefined' ? window : globalThis);
