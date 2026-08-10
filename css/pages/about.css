@@ -289,3 +289,48 @@
     display: flex;
     gap: var(--space-4);
 }
+/* ---- Certifications list (additive) ---- */
+.cert-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.cert-head .education-title {
+    margin: 0;
+}
+
+.cert-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cert-item {
+    padding-left: var(--space-4);
+    border-left: 3px solid var(--color-primary);
+}
+
+.cert-name {
+    display: block;
+    font-weight: 600;
+    color: var(--color-gray-900);
+    line-height: 1.4;
+}
+
+.cert-desc {
+    display: block;
+    margin-top: 4px;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .cert-list { grid-template-columns: 1fr; }
+    .cert-head { gap: var(--space-3); }
+}

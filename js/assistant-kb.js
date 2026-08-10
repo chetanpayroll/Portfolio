@@ -29,7 +29,7 @@
             intent: 'About Chetan',
             phrases: ['who is chetan', 'tell me about chetan', 'who are you', 'about chetan', 'tell me about him'],
             terms: ['who', 'introduce', 'introduction', 'bio', 'profile', 'summary', 'overview'],
-            answer: `**Chetan Sharma** is a Global Payroll Transformation Manager with **13+ years** of experience.\n\nHe currently works at **Vertiv**, where he leads global payroll transformation across **54 countries** and **179 legal entities** (~37,000 employees).\n\nPreviously at **Deel**, he led enterprise payroll implementations across **25+ countries** with **99.8% accuracy**, specializing in Hong Kong MPF, Singapore CPF, and UAE compliance, and was promoted **5 times in 4 years**.`,
+            answer: `**Chetan Sharma** is a Global Payroll Transformation Manager with **13+ years** of experience across **25+ countries** in APAC, EMEA and LATAM.\n\nHe currently works at **Vertiv**, where he leads global payroll transformation across **54 countries** and **179 legal entities** (36,720 employees) — with **99.8% accuracy across 1,500+ payroll cycles**.\n\nPreviously at **Deel**, he led enterprise payroll implementations across **25+ countries** with **99.8% accuracy**, specializing in Hong Kong MPF, Singapore CPF, and UAE compliance, and was promoted **5 times in 7 years**.`,
             followUps: ['What is his current role?', 'What are his skills?', 'Tell me about his projects'],
             link: { label: 'Read his full story', href: '/about' },
             weight: 1.1
@@ -39,7 +39,7 @@
             intent: 'Job title / role',
             phrases: ['what does chetan do', 'what is his job', 'his role', 'job title', 'current role', 'what is his position', 'what is his designation'],
             terms: ['role', 'position', 'title', 'designation', 'profession', 'occupation'],
-            answer: `Chetan is a **Global Payroll Transformation Manager** at Vertiv.\n\nHe leads global payroll transformation across 54 countries and 179 legal entities (~37,000 employees). Earlier, at Deel, he led multi-country payroll transitions, built automation solutions, managed compliance across APAC and Middle East regions, and mentored implementation teams.`,
+            answer: `Chetan is a **Global Payroll Transformation Manager** at Vertiv.\n\nHe leads global payroll transformation across 54 countries and 179 legal entities (36,720 employees). Earlier, at Deel, he led multi-country payroll transitions, built automation solutions, managed compliance across APAC and Middle East regions, and mentored implementation teams.`,
             followUps: ['How long has he been at Vertiv?', 'What is his experience?', 'What is his tech stack?'],
             link: { label: 'See his career journey', href: '/experience' },
             weight: 1.0
@@ -49,7 +49,7 @@
             intent: 'Location',
             phrases: ['where is chetan', 'where does he live', 'where is he based', 'work from', 'which city', 'which country is he in'],
             terms: ['location', 'based', 'city', 'located', 'residence', 'timezone', 'relocate'],
-            answer: `Chetan is based in **Alwar, Rajasthan, India**.\n\nHe has managed global payroll operations across multiple time zones throughout his career — currently with Vertiv and previously at Deel.`,
+            answer: `Chetan is based in **Pune, Maharashtra, India**.\n\nHe has managed global payroll operations across multiple time zones throughout his career — currently with Vertiv and previously at Deel.`,
             followUps: ['How can I contact Chetan?', 'Which countries has he worked with?'],
             weight: 1.0
         },
@@ -86,8 +86,8 @@
             intent: 'Current company / tenure',
             phrases: ['how long', 'current job', 'current company', 'where does he work now', 'tell me about vertiv', 'tell me about deel', 'how long at vertiv', 'how long at deel'],
             terms: ['vertiv', 'deel', 'safeguard', 'tenure', 'now', 'currently'],
-            answer: `Chetan currently works at **Vertiv** as Global Payroll Transformation Manager (since **March 2026**), leading transformation across 54 countries and 179 legal entities.\n\nBefore Vertiv, he was with **Deel** (formerly Safeguard Pay) from **October 2018 to March 2026** - over 7 years - where he received **5 promotions** and multiple awards including the Global Bolt Award.`,
-            followUps: ['What were his promotions?', 'What awards has he won?', 'What is his experience?'],
+            answer: `Chetan currently works at **Vertiv** as Global Payroll Transformation Manager (since **March 2026**), leading transformation across **54 countries** and **179 legal entities** covering **36,720 employees** for a NYSE-listed Fortune 500 organization.\n\nThe programme runs on a **21-month** window across 4 strategic batches and 11 tactical waves — consolidating **54 vendors to 4** (ADP GlobalView, ADP Celergo, SD Worx, Neeyamo) and **58 systems to under 5**, reducing PEPM from $12.92 to $10.73 for **$964K in annual savings**.\n\nBefore Vertiv, he was with **Deel** (formerly Safeguard Pay) from **October 2018 to March 2026** - over 7 years - where he received **5 promotions** and multiple awards including the Global Bolt Award.`,
+            followUps: ['What is the transformation programme?', 'What were his promotions?', 'What awards has he won?'],
             weight: 1.0
         },
         {
@@ -95,7 +95,7 @@
             intent: 'Countries / regions',
             phrases: ['which countries', 'what regions', 'international experience', 'global experience', 'countries has he worked'],
             terms: ['countries', 'country', 'regions', 'region', 'international', 'global', 'apac', 'emea', 'latam', 'worldwide'],
-            answer: `Chetan has hands-on expertise with payroll in:\n\n• **Hong Kong** - MPF, IR56B, ORSO\n• **Singapore** - CPF, SDL, IR8A\n• **UAE** - Gratuity, WPS, MOHRE\n• **Indonesia** - BPJS\n\nHe has managed implementations across **25+ countries** in APAC, EMEA, and LATAM regions.`,
+            answer: `Chetan has hands-on expertise with payroll in:\n\n• **Hong Kong** - MPF, ORSO, IR56B\n• **Singapore** - CPF, SDL, SHG, IR8A\n• **UAE** - Gratuity, WPS, MOHRE\n• **Indonesia** - BPJS, THR, PPh 21\n• **Egypt**, **Israel** and the **United Kingdom**\n\nHe has led **12+ multi-country implementations** with a 100% audit pass rate, across **25+ countries** in APAC, EMEA and LATAM. At Vertiv he now governs statutory compliance across **54 jurisdictions**.`,
             followUps: ['Tell me about Hong Kong MPF', 'Tell me about Singapore CPF', 'Tell me about UAE payroll'],
             weight: 1.0
         },
@@ -108,7 +108,7 @@
             intent: 'Skills',
             phrases: ['his skills', 'what is he good at', 'key skills', 'core competencies', 'what are his strengths', 'his expertise'],
             terms: ['skills', 'skill', 'expertise', 'abilities', 'competencies', 'capable', 'strengths', 'specialization', 'specialties'],
-            answer: `Chetan's key skills include:\n\n**Microsoft Power Platform:** Power Apps, Power Automate, SharePoint\n\n**Payroll Platforms:** Deel, Unity, Payroll2u\n\n**Compliance:** Hong Kong MPF/IR56B, Singapore CPF/SDL, UAE Gratuity/WPS\n\n**Automation:** Power Automate flows, Google Apps Script, Advanced Excel & Power Query, Data Migration\n\n**Leadership:** Global Payroll Transformation, Project Management, Stakeholder Management, Vendor Transitions, Team Leadership`,
+            answer: `Chetan's key skills include:\n\n**Transformation & Strategy:** Global payroll roadmap design, RFP-led vendor selection, vendor consolidation, wave planning & batch sequencing, platform migration, ADKAR change management\n\n**Governance & Controls:** Programme governance, RACI design, RAID log management, tollgate/go-no-go control, Steering Committee reporting, Control Tower design, SOX controls, PEPM & TCO modelling\n\n**Systems:** Oracle Fusion HCM, Oracle Integration Cloud, 5-point HCM integration, ADP GlobalView/Celergo, SD Worx, Neeyamo, Deel\n\n**Compliance:** Hong Kong MPF/ORSO/IR56B, Singapore CPF/SDL/SHG, UAE Gratuity/WPS, Indonesia BPJS/THR/PPh 21, Egypt, Israel\n\n**Automation:** Microsoft Power Platform, Google Apps Script, VBA & VBScript, Amazon Bedrock & QuickSight, Advanced Excel & Power Query`,
             followUps: ['What tools does he use?', 'Show me his automation work', 'Match a job description'],
             link: { label: 'Explore his expertise', href: '/expertise' },
             weight: 1.1
@@ -118,7 +118,7 @@
             intent: 'Tools & platforms',
             phrases: ['what tools', 'what software', 'which platforms', 'what systems', 'what technology does he use'],
             terms: ['tools', 'software', 'platforms', 'systems', 'technology', 'applications', 'apps'],
-            answer: `Chetan works with:\n\n**Microsoft Power Platform:** Power Apps, Power Automate, SharePoint\n**Payroll:** Deel, Unity, Payroll2u\n**Project Management:** Monday.com, Gainsight\n**Communication:** Microsoft Teams, Outlook, Slack\n**Automation:** Power Automate, Google Apps Script, Advanced Excel & Power Query`,
+            answer: `Chetan works with:\n\n**Core HCM:** Oracle Fusion HCM (system of record), Oracle Integration Cloud\n**Payroll vendors:** ADP GlobalView, ADP Celergo, SD Worx, Neeyamo, Deel, Unity, Payroll2u\n**Microsoft Power Platform:** Power Apps, Power Automate, SharePoint\n**Analytics & AI:** Amazon Bedrock, Amazon QuickSight\n**Project Management:** Monday.com, Gainsight\n**Communication:** Microsoft Teams, Outlook, Slack\n**Automation:** Google Apps Script, VBA & VBScript, Advanced Excel & Power Query`,
             followUps: ['Tell me about Power Platform', 'What are his skills?'],
             weight: 1.0
         },
@@ -191,6 +191,38 @@
         },
 
         // ============================================
+        // VERTIV TRANSFORMATION PROGRAMME
+        // ============================================
+        {
+            id: 'vertiv-programme',
+            intent: 'Vertiv transformation programme',
+            phrases: ['vendor consolidation', 'oracle fusion', 'oracle hcm', 'control tower', 'transformation programme',
+                'transformation program', 'how many vendors', 'cost savings', 'pepm', 'what is he doing at vertiv',
+                'current project', 'wave planning', 'change management'],
+            terms: ['oracle', 'fusion', 'vendors', 'consolidation', 'savings', 'pepm', 'adkar', 'waves', 'batches',
+                'bedrock', 'quicksight', 'sox', 'governance', 'tollgate', 'raci', 'raid'],
+            answer: `At **Vertiv**, Chetan is running an enterprise global payroll transformation across **54 countries**, **179 legal entities** and **36,720 employees** for a NYSE-listed Fortune 500 company:\n\n• **21-month** accelerated window — 4 strategic batches, 11 tactical waves\n• **Vendor consolidation 54 → 4** (ADP GlobalView, ADP Celergo, SD Worx, Neeyamo)\n• **Systems 58 → under 5**, PEPM $12.92 → $10.73 = **$964K annual savings**\n• **Oracle Fusion HCM** as system of record, 5-point integration (HRIS, Time, Absence, Finance, Outbound)\n• 35-tab self-validating **Control Tower** on SharePoint as single source of truth\n• Parallel-run strategy with a locked **0.5% variance** go/no-go gate\n• SOX-aligned governance, segregation-of-duties remediation across 54 jurisdictions\n• AI programme intelligence on **Amazon Bedrock + QuickSight**\n• **ADKAR** change management across 70+ stakeholders`,
+            followUps: ['What is his tech stack?', 'What are his skills?', 'Tell me about his projects'],
+            link: { label: 'See his career journey', href: '/experience' },
+            weight: 1.2
+        },
+
+        // ============================================
+        // CERTIFICATIONS
+        // ============================================
+        {
+            id: 'certifications',
+            intent: 'Certifications',
+            phrases: ['his certifications', 'what certifications', 'is he certified', 'professional development',
+                'what training', 'his credentials'],
+            terms: ['certifications', 'certification', 'certified', 'credentials', 'training', 'courses'],
+            answer: `Chetan's certifications and professional development:\n\n• **VBA & VBScript Automation** — advanced Excel macros for enterprise payroll data processing\n• **Microsoft Power Automate** — workflow automation across Microsoft 365\n• **Microsoft Ecosystem Expert** — Excel (Advanced), SharePoint, Teams, Outlook, Power Platform\n• **monday.com Platform Expert** — workspace configuration and automation recipes\n• **Gainsight Customer Success Platform** — client health scoring and lifecycle management\n• **Deel Application Expert** — payroll configuration, compliance setup, vendor management\n• **Google Apps Script Automation Specialist**\n• **AI Integration for Business Processes**\n\nHe holds a **B.Sc** from **Rajasthan University** (2008–2010).`,
+            followUps: ['What are his skills?', 'What is his education?', 'What tools does he use?'],
+            link: { label: 'See his background', href: '/about' },
+            weight: 1.1
+        },
+
+        // ============================================
         // AWARDS
         // ============================================
         {
@@ -198,7 +230,7 @@
             intent: 'Awards & recognition',
             phrases: ['his awards', 'what recognition', 'has he won', 'bolt award', 'spotlight award', 'his achievements', 'his accomplishments'],
             terms: ['awards', 'award', 'recognition', 'achievements', 'achievement', 'honors', 'accomplishments', 'accolades', 'won', 'winner'],
-            answer: `Chetan has received numerous awards:\n\n• **2024:** Global Bolt Award (Deel)\n• **2023:** Spotlight Award (Deel)\n• **2022:** Global Annual Bolt Award - 122 payrolls processed\n• **2021, 2020, 2019:** Annual Bolt Awards\n• **2018:** Spotlight Awards (Q1, Q2, Q3)\n\nHe's also been **promoted 5 times in 4 years**.`,
+            answer: `Chetan has received numerous awards:\n\n• **2024:** Global Bolt Award (Deel)\n• **2023:** Spotlight Award (Deel)\n• **2022:** Global Annual Bolt Award - 122 payrolls processed\n• **2021, 2020, 2019:** Annual Bolt Awards\n• **2018:** Spotlight Awards (Q1, Q2, Q3)\n\nHe's also been **promoted 5 times in 7 years**.`,
             followUps: ['Tell me about his promotions', 'What is his track record?', 'Show me his projects'],
             weight: 1.1
         },
@@ -207,7 +239,7 @@
             intent: 'Promotions / career growth',
             phrases: ['his promotions', 'was he promoted', 'career growth', 'career progression', 'how many promotions'],
             terms: ['promotions', 'promotion', 'promoted', 'advancement', 'progression', 'growth', 'ladder'],
-            answer: `Chetan has been **promoted 5 times in 4 years** (2020-2024):\n\nInternational Specialist → Senior Specialist → Implementation Consultant → Senior Implementation Consultant → **Implementation Manager**\n\nThis reflects his consistent excellence in payroll operations and leadership.`,
+            answer: `Chetan has been **promoted 5 times in 7 years**:\n\nInternational Specialist → Senior Specialist → Implementation Consultant → Senior Implementation Consultant → **Implementation Manager**\n\nThis reflects his consistent excellence in payroll operations and leadership.`,
             followUps: ['What awards has he won?', 'What is his experience?'],
             weight: 1.1
         },
@@ -216,7 +248,7 @@
             intent: 'Accuracy / track record',
             phrases: ['his accuracy', 'track record', 'success rate', 'error rate', 'how accurate', 'his performance'],
             terms: ['accuracy', 'accurate', 'performance', 'record', 'quality', 'reliability', 'sla', 'kpi'],
-            answer: `Chetan maintains a **99.8% accuracy rate** across all payroll operations.\n\nThis includes:\n• Managing **122 payrolls** in a single year\n• Implementations across **25+ countries**\n• Zero payroll disruption in major migrations`,
+            answer: `Chetan maintains a **99.8% accuracy rate** across **1,500+ payroll cycles**.\n\nThis includes:\n• Managing **122 payrolls** in a single year\n• Implementations across **25+ countries**\n• **90+ hours saved per month** through enterprise automation\n• Zero payroll disruption in major migrations`,
             followUps: ['What awards has he won?', 'Show me his projects'],
             weight: 1.0
         },
