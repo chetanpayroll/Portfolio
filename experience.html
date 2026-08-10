@@ -134,14 +134,14 @@
     <!-- ============================================
          FAVICONS & ICONS
          ============================================ -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png?v=garnet-v6">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png?v=garnet-v6">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=garnet-v6">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png?v=garnet-v6">
-    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/apple-touch-icon-152x152.png?v=garnet-v6">
-    <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/apple-touch-icon-120x120.png?v=garnet-v6">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png?v=garnet-v7">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png?v=garnet-v7">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=garnet-v7">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png?v=garnet-v7">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/apple-touch-icon-152x152.png?v=garnet-v7">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/apple-touch-icon-120x120.png?v=garnet-v7">
     <link rel="manifest" href="/manifest.json">
-    <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg?v=garnet-v6" color="#D11149">
+    <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg?v=garnet-v7" color="#D11149">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -151,12 +151,12 @@
         rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/main.css?v=garnet-v6">
-    <link rel="stylesheet" href="css/pages/experience.css?v=garnet-v6">
+    <link rel="stylesheet" href="css/main.css?v=garnet-v7">
+    <link rel="stylesheet" href="css/pages/experience.css?v=garnet-v7">
 
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
-    <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v6">
+    <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v7">
 </head>
 
 <body>
@@ -170,14 +170,19 @@
             </a>
 
             <nav class="desktop-nav d-none d-xl-flex">
-                <ul class="d-flex gap-8 align-center">
-                    <li><a href="/" class="nav-link">Home</a></li>
+                <ul class="d-flex gap-6 align-center">
                     <li><a href="/about" class="nav-link">About</a></li>
                     <li><a href="/expertise" class="nav-link">Expertise</a></li>
-                    <li><a href="/case-studies" class="nav-link">Portfolio</a></li>
-                    <li><a href="/experience" class="nav-link nav-link-active">Journey</a></li>
-                    <li><a href="/blog/posts/payroll-automation-google-sheets-apps-script"
-                            class="nav-link">Automation</a></li>
+                    <li class="has-dropdown">
+                        <button type="button" class="nav-link nav-dropdown-toggle nav-link-active"
+                            aria-expanded="false" aria-haspopup="true" aria-controls="nav-work-menu">Work <svg class="nav-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <ul class="dropdown-menu" id="nav-work-menu">
+                            <li><a href="/case-studies" class="dropdown-link">Portfolio</a></li>
+                            <li><a href="/experience" class="dropdown-link">Journey</a></li>
+                            <li><a href="/step-into-my-world" class="dropdown-link">Step Into</a></li>
+                            <li><a href="/blog/posts/payroll-automation-google-sheets-apps-script" class="dropdown-link">Automation</a></li>
+                        </ul>
+                    </li>
                     <li><a href="/blog" class="nav-link">Insights</a></li>
                     <li><a href="/contact" class="btn btn-primary">Connect</a></li>
                 </ul>
@@ -591,7 +596,7 @@
                 <h1>Professional Experience</h1>
                 <p>A timeline of impactful roles and projects delivering value for global organizations.</p>
                 <div class="btn-group">
-                    <a href="assets/documents/Chetan_Sharma_Resume.docx?v=garnet-v6" class="btn btn-primary btn-download"
+                    <a href="assets/documents/Chetan_Sharma_Resume.docx?v=garnet-v7" class="btn btn-primary btn-download"
                         download><i data-lucide="download"></i>
                         Download Resume</a>
                     <a href="/case-studies" class="btn btn-outline-white">View Project Portfolio</a>
@@ -679,9 +684,9 @@
     <script>
         lucide.createIcons();
     </script>
-    <script type="module" src="js/utils.js?v=garnet-v6"></script>
-    <script type="module" src="js/navigation.js?v=garnet-v6"></script>
-    <script type="module" src="js/main.js?v=garnet-v6"></script>
+    <script type="module" src="js/utils.js?v=garnet-v7"></script>
+    <script type="module" src="js/navigation.js?v=garnet-v7"></script>
+    <script type="module" src="js/main.js?v=garnet-v7"></script>
     <!-- AI Assistant Chat Widget -->
     <div id="ai-assistant-container">
 
@@ -705,7 +710,7 @@
             <div class="chat-header">
                 <div class="chat-header-info">
                     <div class="chat-avatar">
-                        <img src="assets/images/headshot.png?v=garnet-v6" alt="Chetan's Assistant"
+                        <img src="assets/images/headshot.png?v=garnet-v7" alt="Chetan's Assistant"
                             onerror="this.style.display='none'">
                         <span class="avatar-fallback">CS</span>
                     </div>
@@ -765,11 +770,11 @@
 
         </div>
     </div>
-    <script src="js/assistant-kb.js?v=garnet-v6"></script>
-    <script src="js/assistant-engine.js?v=garnet-v6"></script>
-    <script src="js/jd-matcher.js?v=garnet-v6"></script>
-    <script src="js/calendar-utils.js?v=garnet-v6"></script>
-    <script src="js/ai-assistant.js?v=garnet-v6"></script>
+    <script src="js/assistant-kb.js?v=garnet-v7"></script>
+    <script src="js/assistant-engine.js?v=garnet-v7"></script>
+    <script src="js/jd-matcher.js?v=garnet-v7"></script>
+    <script src="js/calendar-utils.js?v=garnet-v7"></script>
+    <script src="js/ai-assistant.js?v=garnet-v7"></script>
 </body>
 
 </html>

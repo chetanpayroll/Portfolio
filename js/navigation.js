@@ -41,6 +41,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Desktop "Work" dropdown: hover is handled in CSS; this adds click and
+    // keyboard operation so it is usable without a mouse.
+    document.querySelectorAll('.has-dropdown').forEach(group => {
+        const toggle = group.querySelector('.nav-dropdown-toggle');
+        const menu = group.querySelector('.dropdown-menu');
+        if (!toggle || !menu) return;
+
+        const items = () => Array.from(menu.querySelectorAll('.dropdown-link'));
+        const open = (focusFirst) => {
+            group.classList.add('is-open');
+            toggle.setAttribute('aria-expanded', 'true');
+            if (focusFirst && items()[0]) items()[0].focus();
+        };
+        const close = (returnFocus) => {
+            group.classList.remove('is-open');
+            toggle.setAttribute('aria-expanded', 'false');
+            if (returnFocus) toggle.focus();
+        };
+
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            group.classList.contains('is-open') ? close(false) : open(false);
+        });
+
+        toggle.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                open(true);
+            }
+        });
+
+        menu.addEventListener('keydown', (e) => {
+            const list = items();
+            const i = list.indexOf(document.activeElement);
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                (list[i + 1] || list[0]).focus();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (i <= 0) close(true); else list[i - 1].focus();
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                close(true);
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!group.contains(e.target)) close(false);
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && group.classList.contains('is-open')) close(true);
+        });
+    });
+
     // Mark active link
     const currentPath = window.location.pathname;
     const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
@@ -82,10 +136,11 @@ function createMobileMenu() {
             <a href="${root}index.html" class="mobile-nav-link">Home</a>
             <a href="${root}about.html" class="mobile-nav-link">About</a>
             <a href="${root}expertise.html" class="mobile-nav-link">Expertise</a>
-            <a href="${root}case-studies.html" class="mobile-nav-link">Portfolio</a>
-            <a href="${root}experience.html" class="mobile-nav-link">Journey</a>
-            <a href="${root}step-into-my-world/" class="mobile-nav-link">Step Into</a>
-            <a href="${root}blog/posts/payroll-automation-google-sheets-apps-script.html" class="mobile-nav-link">Automation</a>
+            <span class="mobile-nav-group-label">Work</span>
+            <a href="${root}case-studies.html" class="mobile-nav-link is-sub">Portfolio</a>
+            <a href="${root}experience.html" class="mobile-nav-link is-sub">Journey</a>
+            <a href="${root}step-into-my-world/" class="mobile-nav-link is-sub">Step Into</a>
+            <a href="${root}blog/posts/payroll-automation-google-sheets-apps-script.html" class="mobile-nav-link is-sub">Automation</a>
             <a href="${root}blog.html" class="mobile-nav-link">Insights</a>
             <a href="${root}contact.html" class="btn btn-primary" style="text-align: center; justify-content: center; margin-top: 1rem;">Connect</a>
         </div>

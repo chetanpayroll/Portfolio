@@ -302,7 +302,7 @@
 }
 
 .insight-title {
-    font-size: clamp(1.25rem, calc(1.1rem + 0.5vw), 1.5rem);
+    font-size: var(--font-size-xl);
     margin-bottom: var(--space-4);
     color: var(--color-white);
     font-weight: 700;
@@ -324,8 +324,10 @@
     background: transparent;
 }
 
+/* NOTE: .insight-title was declared twice; the duplicate below used to
+   override the size with --font-size-lg, which is why three different H3
+   sizes rendered on the homepage. Size now comes from the rule above. */
 .insight-title {
-    font-size: var(--font-size-lg);
     margin-bottom: var(--space-2);
 }
 
@@ -345,6 +347,7 @@
 }
 
 .recognition-title {
+    font-size: var(--font-size-xl);
     color: var(--color-primary);
     margin-bottom: 0.5rem;
 }
@@ -568,4 +571,129 @@
         grid-template-columns: 1fr;
         gap: var(--space-4);
     }
+}
+/* ============================================
+   METRIC BAND — figures already stated in the
+   hero copy, given the weight Big-4 sites use.
+   ============================================ */
+.metric-band {
+    background: var(--color-white);
+    border-top: 1px solid var(--color-gray-200);
+    border-bottom: 1px solid var(--color-gray-200);
+    padding: clamp(1.75rem, 4vw, 2.75rem) 0;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 3vw, 2.5rem);
+    margin: 0;
+}
+
+.metric {
+    text-align: center;
+    position: relative;
+}
+
+/* Hairline separators between figures, not around them */
+.metric + .metric::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * clamp(0.5rem, 1.5vw, 1.25rem));
+    top: 12%;
+    bottom: 12%;
+    width: 1px;
+    background: var(--color-gray-200);
+}
+
+.metric-value {
+    display: block;
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Fallback for engines without background-clip:text */
+    -webkit-text-fill-color: transparent;
+}
+
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+    .metric-value {
+        color: var(--color-primary);
+        -webkit-text-fill-color: currentColor;
+        background: none;
+    }
+}
+
+.metric-plus {
+    font-size: 0.55em;
+    vertical-align: super;
+    letter-spacing: 0;
+}
+
+.metric-label {
+    display: block;
+    margin: 0.6rem 0 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+    line-height: 1.35;
+}
+
+@media (max-width: 768px) {
+    .metric-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: clamp(1.25rem, 5vw, 2rem);
+    }
+
+    /* Separators only between the two columns, not across rows */
+    .metric + .metric::before { display: none; }
+    .metric:nth-child(even)::before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: calc(-1 * clamp(0.6rem, 2.5vw, 1rem));
+        top: 10%;
+        bottom: 10%;
+        width: 1px;
+        background: var(--color-gray-200);
+    }
+
+    .metric-label {
+        font-size: 0.6875rem;
+        letter-spacing: 0.12em;
+    }
+}
+
+/* ---- Hero action row: one primary, one secondary, one quiet link ---- */
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.hero-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.hero-link:hover,
+.hero-link:focus-visible {
+    color: var(--color-primary-dark);
+    border-bottom-color: currentColor;
 }

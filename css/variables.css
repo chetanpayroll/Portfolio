@@ -56,7 +56,7 @@
     --space-24: 6rem;
 
     /* Section padding - Fluid scaling */
-    --section-padding-y: clamp(3rem, 6vw, 5rem);
+    --section-padding-y: clamp(4rem, 7vw, 7rem);
     --section-padding-x: clamp(1rem, 3vw, 2rem);
 
     /* Shadows */

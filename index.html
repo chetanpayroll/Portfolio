@@ -108,10 +108,10 @@
     <!-- ============================================
          FAVICONS & ICONS
          ============================================ -->
-    <link rel="icon" type="image/png" href="/assets/images/favicon.png?v=garnet-v6">
-    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png?v=garnet-v6">
+    <link rel="icon" type="image/png" href="/assets/images/favicon.png?v=garnet-v7">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png?v=garnet-v7">
     <link rel="manifest" href="/manifest.json">
-    <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg?v=garnet-v6" color="#D11149">
+    <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg?v=garnet-v7" color="#D11149">
 
     <!-- ============================================
          STRUCTURED DATA - JSON-LD (SCHEMA.ORG)
@@ -265,10 +265,10 @@
     <!-- ============================================
          CSS STYLESHEETS
          ============================================ -->
-    <link rel="stylesheet" href="css/main.css?v=garnet-v6">
-    <link rel="stylesheet" href="css/pages/home.css?v=garnet-v6">
-    <link rel="stylesheet" href="css/booking-flow.css?v=garnet-v6">
-    <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v6">
+    <link rel="stylesheet" href="css/main.css?v=garnet-v7">
+    <link rel="stylesheet" href="css/pages/home.css?v=garnet-v7">
+    <link rel="stylesheet" href="css/booking-flow.css?v=garnet-v7">
+    <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v7">
 
     <!-- ============================================
          ICONS (Lucide)
@@ -287,14 +287,18 @@
 
             <nav class="desktop-nav d-none d-xl-flex">
                 <ul class="d-flex gap-6 align-center">
-                    <li><a href="/" class="nav-link nav-link-active">Home</a></li>
                     <li><a href="/about" class="nav-link">About</a></li>
                     <li><a href="/expertise" class="nav-link">Expertise</a></li>
-                    <li><a href="/case-studies" class="nav-link">Portfolio</a></li>
-                    <li><a href="/experience" class="nav-link">Journey</a></li>
-                    <li><a href="/step-into-my-world" class="nav-link">Step Into</a></li>
-                    <li><a href="/blog/posts/payroll-automation-google-sheets-apps-script"
-                            class="nav-link">Automation</a></li>
+                    <li class="has-dropdown">
+                        <button type="button" class="nav-link nav-dropdown-toggle"
+                            aria-expanded="false" aria-haspopup="true" aria-controls="nav-work-menu">Work <svg class="nav-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <ul class="dropdown-menu" id="nav-work-menu">
+                            <li><a href="/case-studies" class="dropdown-link">Portfolio</a></li>
+                            <li><a href="/experience" class="dropdown-link">Journey</a></li>
+                            <li><a href="/step-into-my-world" class="dropdown-link">Step Into</a></li>
+                            <li><a href="/blog/posts/payroll-automation-google-sheets-apps-script" class="dropdown-link">Automation</a></li>
+                        </ul>
+                    </li>
                     <li><a href="/blog" class="nav-link">Insights</a></li>
                     <li><a href="/contact" class="btn btn-primary">Connect</a></li>
                 </ul>
@@ -314,28 +318,28 @@
         <!-- Hero Section -->
         <section class="hero d-flex align-center">
             <div class="container">
-                <div class="grid-2 gap-12 align-center">
+                <div class="d-grid grid-2 gap-12 align-center">
                     <div class="hero-content">
                         <span class="badge mb-4">Global Payroll Transformation Manager</span>
                         <h1 class="hero-title">Transforming Multi-Country Payroll Operations.</h1>
                         <p class="hero-subtitle">13+ years of experience delivering 99.8% accuracy across 25+ countries.
                             Currently at Vertiv, leading global payroll transformation across 54 countries and 179
                             legal entities.</p>
-                        <div class="d-flex gap-4" style="flex-wrap: wrap;">
+                        <div class="hero-actions">
                             <a href="/case-studies" class="btn btn-primary">View My Work</a>
-                            <a href="https://www.linkedin.com/in/chetan-champ/" target="_blank"
-                                rel="noopener noreferrer" class="btn btn-secondary">Connect on
-                                LinkedIn</a>
-                            <a href="assets/documents/Chetan_Sharma_Resume.docx?v=garnet-v6" download class="btn btn-secondary">
+                            <a href="assets/documents/Chetan_Sharma_Resume.docx?v=garnet-v7" download class="btn btn-secondary">
                                 <i data-lucide="download" style="margin-right: 8px; width: 18px; height: 18px;"></i>
                                 Download Resume
                             </a>
+                            <a href="https://www.linkedin.com/in/chetan-champ/" target="_blank"
+                                rel="noopener noreferrer" class="hero-link">Connect on
+                                LinkedIn</a>
                         </div>
                     </div>
                     <div class="hero-image video-wrapper">
-                        <video id="hero-video" class="hero-video" poster="assets/images/og-image-v2.png?v=garnet-v6" playsinline
+                        <video id="hero-video" class="hero-video" poster="assets/images/og-image-v2.png?v=garnet-v7" playsinline
                             webkit-playsinline>
-                            <source src="assets/videos/hero-video.mp4?v=garnet-v6" type="video/mp4">
+                            <source src="assets/videos/hero-video.mp4?v=garnet-v7" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                         <button id="hero-play-btn" class="video-play-button" aria-label="Play Video">
@@ -346,6 +350,30 @@
                         </button>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Metric Band -->
+        <section class="metric-band" aria-label="Key figures">
+            <div class="container">
+                <dl class="metric-grid">
+                    <div class="metric">
+                        <dt class="metric-value">13<span class="metric-plus">+</span></dt>
+                        <dd class="metric-label">Years of experience</dd>
+                    </div>
+                    <div class="metric">
+                        <dt class="metric-value">54</dt>
+                        <dd class="metric-label">Countries</dd>
+                    </div>
+                    <div class="metric">
+                        <dt class="metric-value">179</dt>
+                        <dd class="metric-label">Legal entities</dd>
+                    </div>
+                    <div class="metric">
+                        <dt class="metric-value">99.8<span class="metric-plus">%</span></dt>
+                        <dd class="metric-label">Accuracy</dd>
+                    </div>
+                </dl>
             </div>
         </section>
 
@@ -369,6 +397,7 @@
         <section class="section-padding bg-light">
             <div class="container">
                 <div class="competency-header">
+                    <span class="section-eyebrow">Expertise</span>
                     <h2>Core Competencies</h2>
                     <p>Deep expertise developed
                         across 13+ years in global payroll operations.</p>
@@ -415,7 +444,7 @@
         <section class="section-padding stack-band">
             <div class="container">
                 <p class="stack-eyebrow">Technology Stack</p>
-                <h2 class="stack-heading">Built on Enterprise-Grade Platforms</h2>
+                    <h2 class="stack-heading">Built on Enterprise-Grade Platforms</h2>
                 <p class="stack-intro">From global payroll engines to the Microsoft Power Platform — the systems I use
                     to automate, validate, and scale operations across borders.</p>
 
@@ -465,7 +494,7 @@
                 <div class="featured-case-study d-grid grid-2">
                     <div class="case-study-content d-flex flex-col justify-center">
                         <span class="case-study-label">FEATURED ACHIEVEMENT</span>
-                        <h2 class="case-study-title">Enterprise ICP Service Dashboard</h2>
+                    <h2 class="case-study-title">Enterprise ICP Service Dashboard</h2>
                         <div class="case-study-metric">40%</div>
                         <p class="case-study-desc">Reduction in Planning Cycle Time</p>
                         <p class="case-study-metric-desc">Designed and built an
@@ -483,6 +512,7 @@
         <!-- Latest Insights -->
         <section class="section-padding">
             <div class="container">
+                <span class="section-eyebrow">Insights</span>
                 <div class="d-flex justify-between align-center mb-8">
                     <h2>Latest Insights</h2>
                     <a href="/blog" class="section-header-link">View All Posts</a>
@@ -492,7 +522,7 @@
                     <!-- Blog 1 -->
                     <article class="card insight-card">
                         <div class="insight-image">
-                            <img src="assets/images/blog-automation.png?v=garnet-v6" alt="Payroll Automation Abstract Visualization"
+                            <img src="assets/images/blog-automation.png?v=garnet-v7" alt="Payroll Automation Abstract Visualization"
                                 loading="lazy">
                         </div>
                         <div class="insight-content">
@@ -506,7 +536,7 @@
                     <!-- Blog 2 -->
                     <article class="card insight-card">
                         <div class="insight-image">
-                            <img src="assets/images/blog-compliance.png?v=garnet-v6" alt="Hong Kong MPF Compliance Visualization"
+                            <img src="assets/images/blog-compliance.png?v=garnet-v7" alt="Hong Kong MPF Compliance Visualization"
                                 loading="lazy">
                         </div>
                         <div class="insight-content">
@@ -519,7 +549,7 @@
                     <!-- Blog 3 -->
                     <article class="card insight-card">
                         <div class="insight-image">
-                            <img src="assets/images/blog-strategy.png?v=garnet-v6" alt="Vendor Transition Strategy Visualization"
+                            <img src="assets/images/blog-strategy.png?v=garnet-v7" alt="Vendor Transition Strategy Visualization"
                                 loading="lazy">
                         </div>
                         <div class="insight-content">
@@ -536,6 +566,7 @@
         <!-- Recognition Section -->
         <section class="section-padding bg-light">
             <div class="container container-sm text-center">
+                <span class="section-eyebrow">Recognition</span>
                 <h2 class="mb-12">Recognition & Awards</h2>
                 <div class="d-grid grid-2 gap-8">
                     <div class="recognition-card">
@@ -563,7 +594,8 @@
         <!-- CTA -->
         <section class="section-padding bg-dark text-white text-center">
             <div class="container">
-                <h2 class="cta-title">Open to New Opportunities</h2>
+                <span class="section-eyebrow">Contact</span>
+                    <h2 class="cta-title">Open to New Opportunities</h2>
                 <p class="cta-desc">Currently
                     exploring senior roles in global payroll operations, implementation leadership, and payroll
                     transformation.</p>
@@ -654,11 +686,11 @@
     <script>
         lucide.createIcons();
     </script>
-    <script type="module" src="js/utils.js?v=garnet-v6"></script>
-    <script type="module" src="js/navigation.js?v=garnet-v6"></script>
-    <script type="module" src="js/main.js?v=garnet-v6"></script>
+    <script type="module" src="js/utils.js?v=garnet-v7"></script>
+    <script type="module" src="js/navigation.js?v=garnet-v7"></script>
+    <script type="module" src="js/main.js?v=garnet-v7"></script>
     <!-- Booking Flow Script -->
-    <script src="js/booking-flow.js?v=garnet-v6" defer></script>
+    <script src="js/booking-flow.js?v=garnet-v7" defer></script>
     <!-- Enterprise Booking Modal (Shared Component) -->
     <div class="booking-modal-overlay" id="bookingModalOverlay">
         <div class="booking-modal">
@@ -869,7 +901,7 @@
             <div class="chat-header">
                 <div class="chat-header-info">
                     <div class="chat-avatar">
-                        <img src="assets/images/headshot.png?v=garnet-v6" alt="Chetan's Assistant"
+                        <img src="assets/images/headshot.png?v=garnet-v7" alt="Chetan's Assistant"
                             onerror="this.style.display='none'">
                         <span class="avatar-fallback">CS</span>
                     </div>
@@ -929,11 +961,11 @@
 
         </div>
     </div>
-    <script src="js/assistant-kb.js?v=garnet-v6"></script>
-    <script src="js/assistant-engine.js?v=garnet-v6"></script>
-    <script src="js/jd-matcher.js?v=garnet-v6"></script>
-    <script src="js/calendar-utils.js?v=garnet-v6"></script>
-    <script src="js/ai-assistant.js?v=garnet-v6"></script>
+    <script src="js/assistant-kb.js?v=garnet-v7"></script>
+    <script src="js/assistant-engine.js?v=garnet-v7"></script>
+    <script src="js/jd-matcher.js?v=garnet-v7"></script>
+    <script src="js/calendar-utils.js?v=garnet-v7"></script>
+    <script src="js/ai-assistant.js?v=garnet-v7"></script>
 </body>
 
 </html>

@@ -60,8 +60,8 @@
         rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../css/main.css?v=garnet-v6">
-    <link rel="stylesheet" href="../css/pages/case-studies.css?v=garnet-v6">
+    <link rel="stylesheet" href="../css/main.css?v=garnet-v7">
+    <link rel="stylesheet" href="../css/pages/case-studies.css?v=garnet-v7">
 
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -123,15 +123,20 @@
                 <span class="text-primary">GMP</span> Payroll
             </a>
 
-            <nav class="desktop-nav d-none d-lg-flex">
-                <ul class="d-flex gap-8 align-center">
-                    <li><a href="/" class="nav-link">Home</a></li>
+            <nav class="desktop-nav d-none d-xl-flex">
+                <ul class="d-flex gap-6 align-center">
                     <li><a href="/about" class="nav-link">About</a></li>
                     <li><a href="/expertise" class="nav-link">Expertise</a></li>
-                    <li><a href="/case-studies" class="nav-link nav-link-active">Portfolio</a></li>
-                    <li><a href="/experience" class="nav-link">Journey</a></li>
-                    <li><a href="../blog/posts/payroll-automation-google-sheets-apps-script.html"
-                            class="nav-link">Automation</a></li>
+                    <li class="has-dropdown">
+                        <button type="button" class="nav-link nav-dropdown-toggle nav-link-active"
+                            aria-expanded="false" aria-haspopup="true" aria-controls="nav-work-menu">Work <svg class="nav-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        <ul class="dropdown-menu" id="nav-work-menu">
+                            <li><a href="/case-studies" class="dropdown-link">Portfolio</a></li>
+                            <li><a href="/experience" class="dropdown-link">Journey</a></li>
+                            <li><a href="/step-into-my-world" class="dropdown-link">Step Into</a></li>
+                            <li><a href="/blog/posts/payroll-automation-google-sheets-apps-script" class="dropdown-link">Automation</a></li>
+                        </ul>
+                    </li>
                     <li><a href="/blog" class="nav-link">Insights</a></li>
                     <li><a href="/contact" class="btn btn-primary">Connect</a></li>
                 </ul>
@@ -311,9 +316,9 @@
     <script>
         lucide.createIcons();
     </script>
-    <script type="module" src="../js/utils.js?v=garnet-v6"></script>
-    <script type="module" src="../js/navigation.js?v=garnet-v6"></script>
-    <script type="module" src="../js/main.js?v=garnet-v6"></script>
+    <script type="module" src="../js/utils.js?v=garnet-v7"></script>
+    <script type="module" src="../js/navigation.js?v=garnet-v7"></script>
+    <script type="module" src="../js/main.js?v=garnet-v7"></script>
 </body>
 
 </html>
