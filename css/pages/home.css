@@ -1223,7 +1223,8 @@
     flex: none;
 }
 
-.wm-ico-vertiv { width: 30px; height: 30px; }
+/* The V pierces the circle's bottom edge, so the mark is taller than wide (100:114) */
+.wm-ico-vertiv { width: 30px; height: 34px; }
 
 .wm-ico-sg { width: 40px; height: 31px; }
 
