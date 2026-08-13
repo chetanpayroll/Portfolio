@@ -266,7 +266,7 @@
          CSS STYLESHEETS
          ============================================ -->
     <link rel="stylesheet" href="css/main.css?v=garnet-v9">
-    <link rel="stylesheet" href="css/pages/home.css?v=garnet-v9">
+    <link rel="stylesheet" href="css/pages/home.css?v=garnet-v10">
     <link rel="stylesheet" href="css/booking-flow.css?v=garnet-v9">
     <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v9">
 
@@ -317,15 +317,23 @@
     <main>
         <!-- Hero Section -->
         <section class="hero d-flex align-center">
+            <div class="hero-aurora" aria-hidden="true"><span class="aurora-a"></span><span
+                    class="aurora-b"></span></div>
             <div class="container">
                 <div class="d-grid grid-2 gap-12 align-center">
                     <div class="hero-content">
-                        <span class="badge mb-4">Global Payroll Transformation Manager</span>
-                        <h1 class="hero-title">Transforming Multi-Country Payroll Operations.</h1>
-                        <p class="hero-subtitle">13+ years of experience delivering 99.8% accuracy across 25+ countries.
+                        <div class="hero-badges mb-4 reveal reveal-1">
+                            <span class="badge">Global Payroll Transformation Manager</span>
+                            <button type="button" class="avail-chip trigger-booking-flow">
+                                <span class="avail-dot" aria-hidden="true"></span>
+                                Booking open &mdash; 30-min intro call
+                            </button>
+                        </div>
+                        <h1 class="hero-title reveal reveal-2">Transforming Multi-Country Payroll Operations.</h1>
+                        <p class="hero-subtitle reveal reveal-3">13+ years of experience delivering 99.8% accuracy across 25+ countries.
                             Currently at Vertiv, leading global payroll transformation across 54 countries and 179
                             legal entities.</p>
-                        <div class="hero-actions">
+                        <div class="hero-actions reveal reveal-4">
                             <a href="/case-studies" class="btn btn-primary">View My Work</a>
                             <a href="assets/documents/Chetan_Sharma_Resume.docx?v=garnet-v9" download class="btn btn-secondary">
                                 <i data-lucide="download" style="margin-right: 8px; width: 18px; height: 18px;"></i>
@@ -336,18 +344,80 @@
                                 LinkedIn</a>
                         </div>
                     </div>
-                    <div class="hero-image video-wrapper">
-                        <video id="hero-video" class="hero-video" poster="assets/images/og-image-v2.png?v=garnet-v9" playsinline
-                            webkit-playsinline>
-                            <source src="assets/videos/hero-video.mp4?v=garnet-v9" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <button id="hero-play-btn" class="video-play-button" aria-label="Play Video">
-                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
-                                fill="currentColor" stroke-linecap="round" stroke-linejoin="round" class="play-icon">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                        </button>
+                    <div class="ops-map-card reveal reveal-5">
+                        <div class="ops-map-head">
+                            <div>
+                                <span class="ops-map-eyebrow">Global Delivery Footprint</span>
+                                <span class="ops-map-sub">25+ countries &middot; APAC &middot; EMEA &middot; LATAM</span>
+                            </div>
+                            <span class="ops-live"><span class="ops-live-dot" aria-hidden="true"></span>54-country
+                                programme live</span>
+                        </div>
+                        <svg class="ops-map-svg" viewBox="0 0 840 400" role="img"
+                            aria-label="Global delivery map: Pune, India home base connected to United Kingdom, Egypt, Israel, UAE, Hong Kong, Singapore and Indonesia">
+                            <defs>
+                                <pattern id="ops-grid" width="26" height="26" patternUnits="userSpaceOnUse">
+                                    <circle cx="2" cy="2" r="1.3" fill="#E9E2E3"></circle>
+                                </pattern>
+                            </defs>
+                            <rect x="0" y="0" width="840" height="400" fill="url(#ops-grid)"></rect>
+                            <text class="ops-region" x="180" y="42">EMEA</text>
+                            <text class="ops-region" x="700" y="150">APAC</text>
+                            <!-- Arcs out of the Pune hub -->
+                            <path class="ops-arc" d="M482,237 Q300,60 153,90"></path>
+                            <path class="ops-arc" d="M482,237 Q385,150 292,186"></path>
+                            <path class="ops-arc" d="M482,237 Q395,140 308,166"></path>
+                            <path class="ops-arc" d="M482,237 Q440,190 399,207"></path>
+                            <path class="ops-arc" d="M482,237 Q575,170 661,220"></path>
+                            <path class="ops-arc" d="M482,237 Q550,270 615,313"></path>
+                            <path class="ops-arc" d="M482,237 Q560,300 628,346"></path>
+                            <!-- Delivery nodes -->
+                            <g class="ops-node">
+                                <circle class="ops-pulse" cx="153" cy="90" r="6"></circle>
+                                <circle class="ops-core" cx="153" cy="90" r="4"></circle>
+                                <text class="ops-label" x="153" y="72" text-anchor="middle">United Kingdom</text>
+                            </g>
+                            <g class="ops-node">
+                                <circle class="ops-pulse" cx="292" cy="186" r="6" style="animation-delay:.4s"></circle>
+                                <circle class="ops-core" cx="292" cy="186" r="4"></circle>
+                                <text class="ops-label" x="288" y="207" text-anchor="middle">Egypt</text>
+                            </g>
+                            <g class="ops-node">
+                                <circle class="ops-pulse" cx="308" cy="166" r="6" style="animation-delay:.8s"></circle>
+                                <circle class="ops-core" cx="308" cy="166" r="4"></circle>
+                                <text class="ops-label" x="322" y="158" text-anchor="start">Israel</text>
+                            </g>
+                            <g class="ops-node">
+                                <circle class="ops-pulse" cx="399" cy="207" r="6" style="animation-delay:1.2s"></circle>
+                                <circle class="ops-core" cx="399" cy="207" r="4"></circle>
+                                <text class="ops-label" x="399" y="192" text-anchor="middle">UAE</text>
+                            </g>
+                            <g class="ops-node">
+                                <circle class="ops-pulse" cx="661" cy="220" r="6" style="animation-delay:1.6s"></circle>
+                                <circle class="ops-core" cx="661" cy="220" r="4"></circle>
+                                <text class="ops-label" x="661" y="205" text-anchor="middle">Hong Kong</text>
+                            </g>
+                            <g class="ops-node">
+                                <circle class="ops-pulse" cx="615" cy="313" r="6" style="animation-delay:2s"></circle>
+                                <circle class="ops-core" cx="615" cy="313" r="4"></circle>
+                                <text class="ops-label" x="600" y="306" text-anchor="end">Singapore</text>
+                            </g>
+                            <g class="ops-node">
+                                <circle class="ops-pulse" cx="628" cy="346" r="6" style="animation-delay:2.4s"></circle>
+                                <circle class="ops-core" cx="628" cy="346" r="4"></circle>
+                                <text class="ops-label" x="628" y="371" text-anchor="middle">Indonesia</text>
+                            </g>
+                            <!-- Pune home base -->
+                            <g class="ops-node ops-hub-node">
+                                <circle class="ops-pulse ops-hub-pulse" cx="482" cy="237" r="9"></circle>
+                                <circle class="ops-hub-ring" cx="482" cy="237" r="10"></circle>
+                                <circle class="ops-hub" cx="482" cy="237" r="5.5"></circle>
+                                <text class="ops-label ops-hub-label" x="482" y="265" text-anchor="middle">Pune &middot;
+                                    Home Base</text>
+                            </g>
+                        </svg>
+                        <p class="ops-map-foot">Named hubs from hands-on implementations &mdash; part of 25+ countries
+                            delivered across APAC, EMEA &amp; LATAM.</p>
                     </div>
                 </div>
             </div>
@@ -358,22 +428,52 @@
             <div class="container">
                 <dl class="metric-grid">
                     <div class="metric">
-                        <dt class="metric-value">13<span class="metric-plus">+</span></dt>
+                        <dt class="metric-value"><span class="metric-num" data-target="13">13</span><span
+                                class="metric-plus">+</span></dt>
                         <dd class="metric-label">Years of experience</dd>
                     </div>
                     <div class="metric">
-                        <dt class="metric-value">54</dt>
+                        <dt class="metric-value"><span class="metric-num" data-target="54">54</span></dt>
                         <dd class="metric-label">Countries</dd>
                     </div>
                     <div class="metric">
-                        <dt class="metric-value">179</dt>
+                        <dt class="metric-value"><span class="metric-num" data-target="179">179</span></dt>
                         <dd class="metric-label">Legal entities</dd>
                     </div>
                     <div class="metric">
-                        <dt class="metric-value">99.8<span class="metric-plus">%</span></dt>
+                        <dt class="metric-value"><span class="metric-num" data-target="99.8"
+                                data-decimals="1">99.8</span><span class="metric-plus">%</span></dt>
                         <dd class="metric-label">Accuracy</dd>
                     </div>
                 </dl>
+            </div>
+            <div class="fact-ticker" aria-label="Career highlights">
+                <div class="ticker-track">
+                    <div class="ticker-group">
+                        <span class="tick">54 countries in live transformation</span>
+                        <span class="tick">179 legal entities</span>
+                        <span class="tick">36,720 employees in scope</span>
+                        <span class="tick">$964K annual savings</span>
+                        <span class="tick">99.8% payroll accuracy</span>
+                        <span class="tick">1,500+ payroll cycles</span>
+                        <span class="tick">12+ country implementations</span>
+                        <span class="tick">2,000+ employees migrated with zero disruption</span>
+                        <span class="tick">90+ hours saved monthly</span>
+                        <span class="tick">5 promotions at Deel</span>
+                    </div>
+                    <div class="ticker-group" aria-hidden="true">
+                        <span class="tick">54 countries in live transformation</span>
+                        <span class="tick">179 legal entities</span>
+                        <span class="tick">36,720 employees in scope</span>
+                        <span class="tick">$964K annual savings</span>
+                        <span class="tick">99.8% payroll accuracy</span>
+                        <span class="tick">1,500+ payroll cycles</span>
+                        <span class="tick">12+ country implementations</span>
+                        <span class="tick">2,000+ employees migrated with zero disruption</span>
+                        <span class="tick">90+ hours saved monthly</span>
+                        <span class="tick">5 promotions at Deel</span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -389,6 +489,29 @@
                     <div class="logo-text text-safeguard">SAFEGUARD</div>
                     <div class="logo-text text-xerox">XEROX</div>
                     <div class="logo-text text-aon">AON HEWITT</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Introduction Video (moved from the hero — the map card now leads the fold) -->
+        <section class="section-padding intro-video-band">
+            <div class="container">
+                <div class="text-center">
+                    <span class="section-eyebrow">Introduction</span>
+                    <h2 class="mb-8">A Quick Introduction</h2>
+                </div>
+                <div class="video-wrapper intro-video">
+                    <video id="hero-video" class="hero-video" poster="assets/images/og-image-v2.png?v=garnet-v9" playsinline
+                        webkit-playsinline>
+                        <source src="assets/videos/hero-video.mp4?v=garnet-v9" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button id="hero-play-btn" class="video-play-button" aria-label="Play Video">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                            fill="currentColor" stroke-linecap="round" stroke-linejoin="round" class="play-icon">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </section>
@@ -691,6 +814,8 @@
     <script type="module" src="js/main.js?v=garnet-v9"></script>
     <!-- Booking Flow Script -->
     <script src="js/booking-flow.js?v=garnet-v9" defer></script>
+    <!-- Hero metric count-up -->
+    <script src="js/home-hero.js?v=garnet-v10" defer></script>
     <!-- Enterprise Booking Modal (Shared Component) -->
     <div class="booking-modal-overlay" id="bookingModalOverlay">
         <div class="booking-modal">

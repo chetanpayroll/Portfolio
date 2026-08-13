@@ -697,3 +697,413 @@
     color: var(--color-primary-dark);
     border-bottom-color: currentColor;
 }
+
+/* ============================================
+   MISSION CONTROL FOLD — aurora background,
+   staggered reveal, availability chip, global
+   ops map card, count-up metrics, fact ticker.
+   All motion is gated behind
+   prefers-reduced-motion: no-preference.
+   ============================================ */
+
+/* ---- Aurora ambient background (transform-only, no filters) ---- */
+.hero-aurora {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-aurora span {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.aurora-a {
+    width: 560px;
+    height: 560px;
+    top: -200px;
+    right: -140px;
+    background: radial-gradient(circle, rgba(209, 17, 73, 0.10) 0%, rgba(209, 17, 73, 0.04) 42%, transparent 68%);
+}
+
+.aurora-b {
+    width: 680px;
+    height: 680px;
+    bottom: -300px;
+    left: -220px;
+    background: radial-gradient(circle, rgba(127, 16, 39, 0.08) 0%, rgba(127, 16, 39, 0.03) 45%, transparent 66%);
+}
+
+.hero > .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ---- Hero badge row + availability chip ---- */
+.hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.avail-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 4px 16px 4px 12px;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    background: rgba(16, 185, 129, 0.08);
+    color: #047857;
+    font-family: inherit;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.avail-chip:hover,
+.avail-chip:focus-visible {
+    background: rgba(16, 185, 129, 0.14);
+    border-color: rgba(16, 185, 129, 0.6);
+}
+
+@media (pointer: coarse) {
+    .avail-chip { min-height: 44px; }
+}
+
+.avail-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    flex: none;
+    border-radius: 50%;
+    background: #10B981;
+}
+
+.avail-dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(16, 185, 129, 0.5);
+    opacity: 0;
+}
+
+/* ---- Global ops map card (hero right column) ---- */
+.ops-map-card {
+    position: relative;
+    background: var(--color-white);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: var(--space-5) var(--space-5) var(--space-4);
+    min-width: 0;
+}
+
+.ops-map-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-3);
+}
+
+.ops-map-eyebrow {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gray-900);
+}
+
+.ops-map-sub {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--color-gray-500);
+}
+
+.ops-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.08);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #047857;
+    white-space: nowrap;
+}
+
+.ops-live-dot {
+    width: 7px;
+    height: 7px;
+    flex: none;
+    border-radius: 50%;
+    background: #10B981;
+}
+
+.ops-map-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.ops-map-foot {
+    margin: var(--space-3) 0 0;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-gray-100);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    letter-spacing: 0.03em;
+    color: var(--color-gray-500);
+}
+
+/* SVG internals */
+.ops-region {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    fill: var(--color-gray-300);
+}
+
+.ops-arc {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 3 7;
+    opacity: 0.3;
+}
+
+.ops-core {
+    fill: var(--color-primary);
+    stroke: var(--color-white);
+    stroke-width: 1.5;
+}
+
+.ops-pulse {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 1.5;
+    opacity: 0.35;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.ops-label {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    fill: var(--color-gray-600);
+}
+
+.ops-hub {
+    fill: var(--color-primary-dark, #7F1027);
+    stroke: var(--color-white);
+    stroke-width: 2;
+}
+
+.ops-hub-ring {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 1.2;
+    opacity: 0.55;
+}
+
+.ops-hub-label {
+    font-weight: 700;
+    fill: var(--color-primary);
+    letter-spacing: 0.06em;
+}
+
+/* ---- Fact ticker (below the metric band) ---- */
+.fact-ticker {
+    position: relative;
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+    border-top: 1px solid var(--color-gray-200);
+    padding-top: 0.9rem;
+    overflow: hidden;
+}
+
+.fact-ticker::before,
+.fact-ticker::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 56px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.fact-ticker::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--color-white), transparent);
+}
+
+.fact-ticker::after {
+    right: 0;
+    background: linear-gradient(270deg, var(--color-white), transparent);
+}
+
+.ticker-track {
+    display: flex;
+    width: max-content;
+}
+
+.ticker-group {
+    display: flex;
+    align-items: center;
+    flex: none;
+}
+
+.tick {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+}
+
+.tick::after {
+    content: "\00B7";
+    margin: 0 1.15rem;
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+/* ---- Relocated introduction video ---- */
+.intro-video-band {
+    background: var(--color-white);
+}
+
+.intro-video {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   MOTION — everything below runs only for
+   users who have not asked for reduced motion.
+   Static layouts above are complete without it.
+   ============================================ */
+@media (prefers-reduced-motion: no-preference) {
+
+    /* Staggered hero reveal (opacity/transform only — no layout shift) */
+    .hero .reveal {
+        opacity: 0;
+        animation: hero-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero .reveal-1 { animation-delay: 0.05s; }
+    .hero .reveal-2 { animation-delay: 0.16s; }
+    .hero .reveal-3 { animation-delay: 0.27s; }
+    .hero .reveal-4 { animation-delay: 0.38s; }
+    .hero .reveal-5 { animation-delay: 0.5s; }
+
+    @keyframes hero-rise {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: none; }
+    }
+
+    /* Aurora drift */
+    .aurora-a { animation: aurora-a 46s ease-in-out infinite alternate; }
+    .aurora-b { animation: aurora-b 58s ease-in-out infinite alternate; }
+
+    @keyframes aurora-a {
+        to { transform: translate(-90px, 60px) scale(1.15); }
+    }
+
+    @keyframes aurora-b {
+        to { transform: translate(110px, -70px) scale(1.08); }
+    }
+
+    /* Availability + live dots pulse */
+    .avail-dot::after { animation: avail-pulse 2.2s ease-out infinite; }
+    .ops-live-dot { animation: live-blink 2.2s ease-in-out infinite; }
+
+    @keyframes avail-pulse {
+        0% { transform: scale(0.55); opacity: 0.8; }
+        70% { transform: scale(1.35); opacity: 0; }
+        100% { transform: scale(1.35); opacity: 0; }
+    }
+
+    @keyframes live-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.35; }
+    }
+
+    /* Map: data flowing along arcs + sonar rings on nodes */
+    .ops-arc { animation: ops-flow 2.8s linear infinite; }
+
+    @keyframes ops-flow {
+        to { stroke-dashoffset: -40; }
+    }
+
+    .ops-pulse { animation: ops-pulse 2.8s ease-out infinite; }
+
+    @keyframes ops-pulse {
+        0% { transform: scale(0.6); opacity: 0.65; }
+        75% { transform: scale(2.1); opacity: 0; }
+        100% { transform: scale(2.1); opacity: 0; }
+    }
+
+    /* Fact ticker scroll (pauses on hover/focus) */
+    .ticker-track { animation: ticker-scroll 52s linear infinite; }
+
+    .fact-ticker:hover .ticker-track,
+    .fact-ticker:focus-within .ticker-track {
+        animation-play-state: paused;
+    }
+
+    @keyframes ticker-scroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+    }
+}
+
+/* Reduced motion: show every ticker fact statically, once */
+@media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+        width: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 0.5rem;
+    }
+
+    .ticker-group[aria-hidden="true"] { display: none; }
+
+    .ticker-group { flex-wrap: wrap; justify-content: center; row-gap: 0.5rem; }
+
+    .fact-ticker::before,
+    .fact-ticker::after { display: none; }
+}
+
+/* Mobile fold tuning */
+@media (max-width: 768px) {
+    .ops-map-card {
+        padding: var(--space-4) var(--space-4) var(--space-3);
+    }
+
+    .ops-label { font-size: 15px; }
+
+    .ops-region { display: none; }
+}
