@@ -30,6 +30,7 @@
             phrases: ['who is chetan', 'tell me about chetan', 'who are you', 'about chetan', 'tell me about him'],
             terms: ['who', 'introduce', 'introduction', 'bio', 'profile', 'summary', 'overview'],
             answer: `**Chetan Sharma** is a Global Payroll Transformation Manager with **13+ years** of experience across **25+ countries** in APAC, EMEA and LATAM.\n\nHe currently works at **Vertiv**, where he leads global payroll transformation across **54 countries** and **179 legal entities** (36,720 employees) — with **99.8% accuracy across 1,500+ payroll cycles**.\n\nPreviously at **Deel**, he led enterprise payroll implementations across **25+ countries** with **99.8% accuracy**, specializing in Hong Kong MPF, Singapore CPF, and UAE compliance, and was promoted **5 times in 7 years**.`,
+            more: `A little more depth on the journey:\n\n• **2011 — AON Hewitt**: maintained the Vantive HR Portal for 15+ enterprise clients managing 500,000+ employee records\n• **2014 — Xerex Business Services**: administered COBRA and QMCSO compliance for 500+ employees with zero violations\n• **2018 — Deel**: 12+ multi-country implementations, Project Unity (2,000+ employees, 18 countries, zero disruption), 122 payrolls in a single year\n• **2026 — Vertiv**: enterprise transformation across 54 countries and 179 legal entities on Oracle Fusion HCM`,
             followUps: ['What is his current role?', 'What are his skills?', 'Tell me about his projects'],
             link: { label: 'Read his full story', href: '/about' },
             weight: 1.1
@@ -77,6 +78,7 @@
             phrases: ['work history', 'his experience', 'career history', 'employment history', 'work background', 'previous companies', 'past roles'],
             terms: ['experience', 'career', 'worked', 'employment', 'background', 'history', 'journey', 'companies', 'years'],
             answer: `Chetan has **13+ years** of experience:\n\n• **Vertiv** (2026-Present): Global Payroll Transformation Manager\n• **Deel** (2018-2026): Global Payroll Implementation Manager\n• **Xerex Business Services** (2014-2017): Benefits Administrator\n• **AON Hewitt** (2011-2014): HR & Benefits Coordinator\n\nAt Vertiv he leads transformation across 54 countries and 179 legal entities; at Deel he led implementations across 25+ countries and managed 122 payrolls in a single year.`,
+            more: `Role by role:\n\n• **Vertiv** — vendor consolidation 54 → 4, systems 58 → under 5, $964K annual savings, Oracle Fusion HCM as system of record\n• **Deel** — 12+ implementations across HK, Singapore, Indonesia, UAE, Egypt, Israel and the UK at 99.8% accuracy; built the ICP Dashboard and Two-Way Validation Engine\n• **Xerex** — COBRA/QMCSO compliance for 500+ employees, zero violations\n• **AON Hewitt** — Vantive HR Portal for 15+ enterprise clients, 500,000+ employee records`,
             followUps: ['Tell me about Vertiv', 'What did he do at Deel?', 'What awards has he won?'],
             link: { label: 'View the full timeline', href: '/experience' },
             weight: 1.1
@@ -109,6 +111,7 @@
             phrases: ['his skills', 'what is he good at', 'key skills', 'core competencies', 'what are his strengths', 'his expertise'],
             terms: ['skills', 'skill', 'expertise', 'abilities', 'competencies', 'capable', 'strengths', 'specialization', 'specialties'],
             answer: `Chetan's key skills include:\n\n**Transformation & Strategy:** Global payroll roadmap design, RFP-led vendor selection, vendor consolidation, wave planning & batch sequencing, platform migration, ADKAR change management\n\n**Governance & Controls:** Programme governance, RACI design, RAID log management, tollgate/go-no-go control, Steering Committee reporting, Control Tower design, SOX controls, PEPM & TCO modelling\n\n**Systems:** Oracle Fusion HCM, Oracle Integration Cloud, 5-point HCM integration, ADP GlobalView/Celergo, SD Worx, Neeyamo, Deel\n\n**Compliance:** Hong Kong MPF/ORSO/IR56B, Singapore CPF/SDL/SHG, UAE Gratuity/WPS, Indonesia BPJS/THR/PPh 21, Egypt, Israel\n\n**Automation:** Microsoft Power Platform, Google Apps Script, VBA & VBScript, Amazon Bedrock & QuickSight, Advanced Excel & Power Query`,
+            more: `Deeper on the governance side: RACI design, RAID log management, tollgate / go-no-go control, Steering Committee reporting, Control Tower design, SOX controls and PEPM & TCO modelling.\n\nOn systems: Oracle Fusion HCM as system of record, Oracle Integration Cloud, ADP GlobalView / Celergo, SD Worx and Neeyamo — paired with the Microsoft Power Platform, Google Apps Script and VBA for automation.`,
             followUps: ['What tools does he use?', 'Show me his automation work', 'Match a job description'],
             link: { label: 'Explore his expertise', href: '/expertise' },
             weight: 1.1
@@ -132,6 +135,7 @@
             phrases: ['hong kong', 'hong kong payroll', 'mpf', 'ir56b', 'orso'],
             terms: ['hongkong', 'hk'],
             answer: `Yes! Chetan has deep expertise in **Hong Kong payroll** including:\n\n• **MPF** (Mandatory Provident Fund) setup and management\n• **IR56B and IR56E** tax filing workflows\n• **ORSO** pension schemes\n\nHe implemented end-to-end MPF compliance at Deel with **100% statutory compliance**.`,
+            more: `More on Hong Kong: the implementation covered **IR56B / IR56E** tax-filing workflows and **ORSO** pension schemes alongside MPF, delivered as part of **12+ multi-country implementations** completed 100% within SLA — with a **100% audit pass rate** across statutory filings.`,
             followUps: ['Tell me about Singapore CPF', 'What other countries?', 'Show me his projects'],
             link: { label: 'Read the case study', href: '/case-studies/hong-kong-mpf-implementation' },
             weight: 1.1
@@ -175,6 +179,7 @@
             phrases: ['project unity', 'unity migration', 'the migration', 'unity project'],
             terms: ['unity', 'migration', 'migrated', 'cutover'],
             answer: `**Project Unity** was a major migration initiative at Deel.\n\nChetan led the transition of **2,000+ employees** across **18+ countries** from a legacy system to a new platform.\n\n**Results:**\n• 100% data integrity\n• Zero payroll disruption\n• Completed in 3 months`,
+            more: `Going deeper on Project Unity: the migration moved **2,000+ employees** off a legacy system across **18 countries** in **3 months** with **100% data integrity**. The cutover cycle was reduced by **25%** through parallel-run optimization and data-validation automation, and **100+ critical data gaps** were identified and resolved before go-live.`,
             followUps: ['What other projects?', 'What is his experience?'],
             link: { label: 'Read the full case study', href: '/case-studies/project-unity-migration' },
             weight: 1.2

@@ -1,9 +1,9 @@
 /* Main Stylesheet */
-@import url('variables.css?v=garnet-v8');
-@import url('utilities.css?v=garnet-v8');
-@import url('components.css?v=garnet-v8');
-@import url('layout.css?v=garnet-v8');
-@import url('responsive.css?v=garnet-v8');
+@import url('variables.css?v=garnet-v9');
+@import url('utilities.css?v=garnet-v9');
+@import url('components.css?v=garnet-v9');
+@import url('layout.css?v=garnet-v9');
+@import url('responsive.css?v=garnet-v9');
 
 /* Dropdown Navigation */
 .has-dropdown {

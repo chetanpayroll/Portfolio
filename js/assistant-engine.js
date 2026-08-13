@@ -245,6 +245,7 @@
 
     function createEngine() {
         let lastEntityCardId = null;
+        let lastTopic = null; // 'country' after a country answer, enabling "and Singapore?"
 
         function rememberEntity(normalized) {
             for (const key of Object.keys(ENTITIES)) {
@@ -265,6 +266,31 @@
                 .filter(s => s.score > 0)
                 .sort((a, b) => b.score - a.score);
 
+            // Composed answers (tenure math, year lookup, comparisons, multi-intent,
+            // topic carry) take priority WHEN their strict detectors fire; otherwise
+            // this block is inert and behaviour is identical to the card engine.
+            if (global.AnswerComposer) {
+                const composed = global.AnswerComposer.compose(query, {
+                    topMatches: scored.slice(0, 2).map(s => ({ card: s.card.ref, score: s.score })),
+                    lastTopic: lastTopic,
+                    minScore: MIN_SCORE
+                });
+                if (composed) {
+                    lastTopic = /country/.test(composed.intent) ? 'country' : null;
+                    rememberEntity(normalized);
+                    return {
+                        card: null,
+                        composed: composed,
+                        intent: composed.intent,
+                        score: STRONG_SCORE,
+                        confidence: 1,
+                        matched: true,
+                        carried: false,
+                        suggestions: []
+                    };
+                }
+            }
+
             let best = scored[0] || null;
 
             // Pronoun follow-up: "how long has he been there?" after Vertiv.
@@ -278,6 +304,7 @@
             rememberEntity(normalized);
 
             if (best && best.score >= MIN_SCORE) {
+                lastTopic = best.card.id.indexOf('country-') === 0 ? 'country' : lastTopic;
                 return {
                     card: best.card.ref,
                     intent: best.card.ref.intent,
@@ -308,7 +335,7 @@
             };
         }
 
-        function reset() { lastEntityCardId = null; }
+        function reset() { lastEntityCardId = null; lastTopic = null; }
 
         return { match, reset };
     }

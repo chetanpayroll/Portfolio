@@ -59,6 +59,21 @@ class ProfileAssistant {
 
         // Quick action buttons (existing markup) + any added later.
         this.chatMessages.addEventListener('click', (e) => {
+            const more = e.target.closest('.more-chip');
+            if (more && more.dataset.moreId) {
+                const kbCard = (window.AssistantKB && window.AssistantKB.KB || [])
+                    .find(c => c.id === more.dataset.moreId);
+                more.closest('.suggestion-chips')?.remove();
+                if (kbCard && kbCard.more) {
+                    this.addMessage(kbCard.more, 'assistant', { followUps: kbCard.followUps });
+                }
+                return;
+            }
+            const persona = e.target.closest('.persona-chip');
+            if (persona && persona.dataset.persona) {
+                this.applyPersona(persona.dataset.persona);
+                return;
+            }
             const quick = e.target.closest('.quick-action-btn, .suggestion-chip');
             if (quick && quick.dataset.question) {
                 this.chatInput.value = quick.dataset.question;
@@ -86,6 +101,177 @@ class ProfileAssistant {
         this.setupVoice();
         this.applyPageContext();
         this.restoreTranscript();
+        this.setupNudge();
+        this.setupExport();
+    }
+
+    /* ================= Guided journeys ================= */
+
+    offerJourney() {
+        if (this.journeyOffered) return;
+        try { if (sessionStorage.getItem('cs-journey')) return; } catch (e) { }
+        // Only on a fresh conversation — never interrupt an ongoing one.
+        if (this.chatMessages.querySelector('.user-message')) return;
+        this.journeyOffered = true;
+
+        const div = document.createElement('div');
+        div.className = 'message assistant-message';
+        div.innerHTML = `
+            <div class="message-content">
+                <p>So I can point you to the right things — what brings you here?</p>
+                <div class="persona-chips">
+                    <button type="button" class="persona-chip" data-persona="recruiter">🎯 I'm a recruiter</button>
+                    <button type="button" class="persona-chip" data-persona="client">🏢 Potential client</button>
+                    <button type="button" class="persona-chip" data-persona="peer">🌏 Payroll professional</button>
+                    <button type="button" class="persona-chip" data-persona="browsing">👀 Just browsing</button>
+                </div>
+            </div>`;
+        this.chatMessages.appendChild(div);
+        this.scrollToBottom();
+    }
+
+    applyPersona(persona) {
+        try { sessionStorage.setItem('cs-journey', persona); } catch (e) { }
+        this.chatMessages.querySelector('.persona-chips')?.closest('.message')?.remove();
+
+        const JOURNEYS = {
+            recruiter: {
+                text: `Great — here's the fast track.\n\nChetan is a **Global Payroll Transformation Manager** at Vertiv, **13+ years**, **99.8% accuracy across 1,500+ payroll cycles**, and currently **open to senior opportunities**.\n\nThe quickest way to assess fit: paste your job description and I'll score it against his profile.`,
+                followUps: ['Match a job description', 'Can I see his resume?', 'What are his achievements?']
+            },
+            client: {
+                text: `Welcome. Chetan currently leads an enterprise payroll transformation at **Vertiv** — 54 countries, 179 legal entities, vendor consolidation from **54 to 4** with **$964K annual savings**.\n\nHappy to walk you through how he approaches programmes like yours.`,
+                followUps: ['What is the transformation programme?', 'Tell me about his projects', 'Book a meeting']
+            },
+            peer: {
+                text: `Nice to meet a fellow payroll person. Chetan's hands-on depth is in **APAC/EMEA statutory compliance** — Hong Kong MPF, Singapore CPF, UAE WPS, Indonesia BPJS — plus enterprise automation on the Power Platform and Apps Script.`,
+                followUps: ['Tell me about Hong Kong MPF', 'Compare Hong Kong vs Singapore', 'What automation has he built?']
+            },
+            browsing: {
+                text: `Take your time! The highlights: **13+ years** in global payroll, currently transforming **54 countries** of payroll at Vertiv, with a portfolio of migrations and automation projects to explore.`,
+                followUps: ['Who is Chetan?', 'Tell me about his projects', 'What awards has he won?']
+            }
+        };
+        const j = JOURNEYS[persona] || JOURNEYS.browsing;
+        this.addMessage(j.text, 'assistant', { followUps: j.followUps });
+
+        if (typeof window.gtag === 'function') {
+            try { window.gtag('event', 'chat_persona', { persona: persona }); } catch (e) { }
+        }
+    }
+
+    /* ================= Proactive nudge (subtle, once per session) ================= */
+
+    setupNudge() {
+        let done = null;
+        try { done = sessionStorage.getItem('cs-nudge'); } catch (e) { return; }
+        if (done) return;
+
+        const path = (window.location.pathname || '').toLowerCase();
+        const NUDGES = [
+            { test: 'case-stud', text: 'Want the 30-second Project Unity summary?', q: 'Tell me about Project Unity' },
+            { test: 'expertise', text: 'Curious how he automates payroll at enterprise scale?', q: 'What automation has he built?' },
+            { test: 'experience', text: 'Want a quick tour of his 13+ year journey?', q: 'What is his experience?' }
+        ];
+        const nudge = NUDGES.find(n => path.includes(n.test));
+        if (!nudge) return;
+
+        setTimeout(() => {
+            if (this.isOpen) return;
+            try { if (sessionStorage.getItem('cs-nudge')) return; } catch (e) { }
+            const host = this.chatToggle.parentElement;
+            const bubble = document.createElement('div');
+            bubble.className = 'nudge-bubble';
+            bubble.innerHTML = `
+                <button type="button" class="nudge-text">${nudge.text}</button>
+                <button type="button" class="nudge-close" aria-label="Dismiss">&times;</button>`;
+            host.insertBefore(bubble, this.chatToggle);
+
+            const dismiss = () => {
+                bubble.remove();
+                try { sessionStorage.setItem('cs-nudge', '1'); } catch (e) { }
+            };
+            bubble.querySelector('.nudge-close').addEventListener('click', dismiss);
+            bubble.querySelector('.nudge-text').addEventListener('click', () => {
+                dismiss();
+                this.openChat();
+                this.chatInput.value = nudge.q;
+                this.handleUserMessage();
+            });
+        }, 30000);
+    }
+
+    /* ================= Transcript export ================= */
+
+    setupExport() {
+        const header = this.chatWindow.querySelector('.chat-header');
+        if (!header || header.querySelector('.chat-export-btn')) return;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chat-export-btn';
+        btn.setAttribute('aria-label', 'Save this conversation');
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
+        const closeBtn = header.querySelector('#chat-close, .chat-close-btn');
+        header.insertBefore(btn, closeBtn);
+
+        btn.addEventListener('click', async () => {
+            const transcript = this.buildTranscript();
+            if (!transcript) return;
+
+            // Optional email copy via the serverless endpoint; falls back to
+            // a plain download when the endpoint is not configured.
+            const wantDownload = window.confirm('OK = download the transcript.\nCancel = email me a copy instead.');
+            if (wantDownload) {
+                this.downloadTranscript(transcript);
+                return;
+            }
+            const email = window.prompt('Where should we send the transcript?');
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+                if (email !== null) this.downloadTranscript(transcript);
+                return;
+            }
+            try {
+                const res = await fetch('/api/chat-summary', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email.trim(), transcript: transcript })
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.ok && data.success) {
+                    this.addMessage(`Done — the transcript is on its way to **${email.trim()}**.`, 'assistant');
+                    return;
+                }
+                throw new Error('not configured');
+            } catch (e) {
+                this.downloadTranscript(transcript);
+                this.addMessage('Email delivery isn\'t available right now, so I downloaded the transcript for you instead.', 'assistant');
+            }
+        });
+    }
+
+    buildTranscript() {
+        const lines = ['Conversation with Chetan Sharma\'s AI Assistant', 'www.chetanpayroll.com', ''];
+        this.chatMessages.querySelectorAll('.message').forEach(m => {
+            const content = m.querySelector('.message-content');
+            if (!content) return;
+            const who = m.classList.contains('user-message') ? 'You' : 'Assistant';
+            const text = content.innerText.replace(/\s*Copy\s*$/, '').trim();
+            if (text) lines.push(who + ': ' + text, '');
+        });
+        return lines.length > 3 ? lines.join('\n') : '';
+    }
+
+    downloadTranscript(transcript) {
+        const blob = new Blob([transcript], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'chetan-sharma-chat.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
     }
 
     /* ================= Accessibility ================= */
@@ -197,6 +383,8 @@ class ProfileAssistant {
         this.chatWindow.classList.remove('hidden');
         this.chatWindow.classList.add('visible');
         this.chatToggle.classList.add('active');
+        document.querySelector('.nudge-bubble')?.remove();
+        this.offerJourney();
         if (this.chatInput) this.chatInput.focus();
     }
 
@@ -239,6 +427,18 @@ class ProfileAssistant {
     renderResult(result) {
         const card = result.card;
 
+        // Composed answers (tenure math, comparisons, year lookup, multi-intent)
+        // built by AnswerComposer from the fact graph.
+        if (result.composed) {
+            const c = result.composed;
+            this.addMessage(c.answer, 'assistant', {
+                htmlExtra: c.htmlExtra,
+                source: c.source,
+                followUps: c.followUps
+            });
+            return;
+        }
+
         if (card && card.action === 'booking') {
             this.addMessage({ type: 'widget', widgetType: 'booking', text: card.answer }, 'assistant');
             return;
@@ -251,7 +451,8 @@ class ProfileAssistant {
         if (card) {
             this.addMessage(card.answer, 'assistant', {
                 link: card.link,
-                followUps: card.followUps
+                followUps: card.followUps,
+                moreId: card.more ? card.id : null
             });
             return;
         }
@@ -354,6 +555,22 @@ class ProfileAssistant {
     }
 
     decorateAnswer(body, opts) {
+        // Composer-built HTML (comparison tables) — trusted, escaped at build time.
+        if (opts.htmlExtra) {
+            const wrap = document.createElement('div');
+            wrap.innerHTML = opts.htmlExtra;
+            body.appendChild(wrap);
+        }
+
+        // Citation chip for composed answers.
+        if (opts.source && opts.source.href) {
+            const src = document.createElement('a');
+            src.className = 'src-chip';
+            src.href = opts.source.href;
+            src.textContent = 'Source: ' + opts.source.label + ' →';
+            body.appendChild(src);
+        }
+
         // Deep link into the site
         if (opts.link && opts.link.href) {
             const a = document.createElement('a');
@@ -375,6 +592,9 @@ class ProfileAssistant {
             ? opts.suggestions.map(s => ({ label: s.label, q: s.query }))
             : (opts.followUps || []).map(f => ({ label: f, q: f }));
 
+        // Depth chip: answers with a level-2 layer offer "Tell me more".
+        if (opts.moreId) chips.unshift({ label: 'Tell me more', moreId: opts.moreId });
+
         if (chips.length) this.renderChips(chips);
     }
 
@@ -384,8 +604,9 @@ class ProfileAssistant {
         chips.forEach(c => {
             const b = document.createElement('button');
             b.type = 'button';
-            b.className = 'suggestion-chip';
-            b.dataset.question = c.q;
+            b.className = 'suggestion-chip' + (c.moreId ? ' more-chip' : '');
+            if (c.moreId) b.dataset.moreId = c.moreId;
+            else b.dataset.question = c.q;
             b.textContent = c.label;
             wrap.appendChild(b);
         });

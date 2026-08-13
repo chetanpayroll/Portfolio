@@ -1357,3 +1357,186 @@
     .chat-form { gap: 6px; }
     .chat-send-btn { width: 44px; height: 44px; min-width: 44px; }
 }
+
+/* ============================================
+   INTELLIGENCE LAYER (additive)
+   Comparison tables, source chips, persona
+   journeys, nudge bubble, export button.
+   ============================================ */
+
+/* ---- Composed comparison tables ---- */
+.cmp-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 10px;
+    border: 1px solid #E6E0E1;
+    border-radius: 10px;
+}
+
+.cmp-table {
+    width: 100%;
+    min-width: 300px;
+    border-collapse: collapse;
+    font-size: 12px;
+    background: #ffffff;
+}
+
+.cmp-table thead th {
+    background: linear-gradient(135deg, #E11D48 0%, #7F1027 100%);
+    color: #ffffff;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.cmp-table tbody th {
+    background: #FAF8F8;
+    color: #6E6164;
+    font-weight: 600;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.cmp-table tbody td {
+    padding: 8px 10px;
+    color: #241D1F;
+    vertical-align: top;
+    border-top: 1px solid #F3EFEF;
+    line-height: 1.45;
+}
+
+/* ---- Source citation chip ---- */
+.src-chip {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px 10px;
+    background: #F3EFEF;
+    border: 1px solid #E6E0E1;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #6E6164 !important;
+    text-decoration: none;
+    transition: all 150ms ease;
+}
+
+.src-chip:hover {
+    border-color: #D11149;
+    color: #D11149 !important;
+}
+
+/* ---- Persona journey chips ---- */
+.persona-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.persona-chip {
+    text-align: left;
+    padding: 10px 14px;
+    min-height: 44px;
+    background: #ffffff;
+    border: 1px solid #E6E0E1;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #241D1F;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 150ms ease;
+}
+
+.persona-chip:hover,
+.persona-chip:focus-visible {
+    border-color: #D11149;
+    color: #D11149;
+    transform: translateX(2px);
+}
+
+/* ---- Nudge bubble (subtle, once per session) ---- */
+.nudge-bubble {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 250px;
+    background: #ffffff;
+    border: 1px solid #E6E0E1;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    padding: 4px 4px 4px 8px;
+    animation: nudgeIn 350ms ease;
+}
+
+.nudge-bubble::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 22px;
+    border: 7px solid transparent;
+    border-top-color: #ffffff;
+}
+
+.nudge-text {
+    background: none;
+    border: none;
+    padding: 8px 4px;
+    font-size: 13px;
+    line-height: 1.4;
+    font-family: inherit;
+    color: #241D1F;
+    text-align: left;
+    cursor: pointer;
+}
+
+.nudge-text:hover { color: #D11149; }
+
+.nudge-close {
+    background: none;
+    border: none;
+    align-self: flex-start;
+    padding: 4px 8px;
+    font-size: 16px;
+    line-height: 1;
+    color: #9C9092;
+    cursor: pointer;
+}
+
+.nudge-close:hover { color: #D11149; }
+
+@keyframes nudgeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nudge-bubble { animation: none; }
+    .persona-chip:hover { transform: none; }
+}
+
+/* ---- Export button in chat header ---- */
+.chat-export-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.chat-export-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
