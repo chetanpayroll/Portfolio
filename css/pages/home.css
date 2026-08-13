@@ -1217,12 +1217,32 @@
 /* Wordmarks — typographic brand treatments, no logo files */
 .wm { display: inline-block; line-height: 1; white-space: nowrap; }
 
+/* Logo marks recreated as inline SVG (Vertiv emblem, Safeguard Global S) */
+.wm-ico {
+    display: block;
+    flex: none;
+}
+
+.wm-ico-vertiv { width: 30px; height: 30px; }
+
+.wm-ico-sg { width: 40px; height: 31px; }
+
 .wm-vertiv {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
     font-family: 'Poppins', 'Inter', sans-serif;
     font-weight: 700;
     font-size: 1.45rem;
     letter-spacing: 0.06em;
     color: #231F20;
+}
+
+.wm-tm {
+    font-size: 0.55em;
+    vertical-align: super;
+    letter-spacing: 0;
+    margin-left: 1px;
 }
 
 .wm-aon {
@@ -1243,27 +1263,33 @@
 }
 
 .wm-safeguard {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wm-sg-text {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 2px;
 }
 
 .wm-sg-top {
     font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 0.1em;
+    font-size: 0.92rem;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #2B2B2B;
+    color: #33525C;
     line-height: 1;
 }
 
 .wm-sg-bottom {
-    font-weight: 600;
-    font-size: 0.72rem;
-    letter-spacing: 0.34em;
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #6E6164;
+    color: #33525C;
     line-height: 1;
 }
 
