@@ -68,3 +68,56 @@
 
     io.observe(band);
 })();
+
+/**
+ * Career constellation: draw the connection lines when the band scrolls
+ * into view, and let touch/keyboard users toggle the tenure tips (mouse
+ * users get them on hover via CSS).
+ */
+(function () {
+    'use strict';
+
+    var constellation = document.getElementById('constellation');
+    if (!constellation) return;
+
+    // Line draw-in. Without IntersectionObserver (or with reduced motion,
+    // where the CSS keeps lines fully drawn) the class is simply inert.
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            for (var i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) {
+                    constellation.classList.add('is-drawn');
+                    io.disconnect();
+                    break;
+                }
+            }
+        }, { threshold: 0.35 });
+        io.observe(constellation);
+    } else {
+        constellation.classList.add('is-drawn');
+    }
+
+    // Tenure tip toggle — one open at a time.
+    var cards = constellation.querySelectorAll('.const-card');
+
+    function closeAll(except) {
+        for (var i = 0; i < cards.length; i++) {
+            if (cards[i] !== except) {
+                cards[i].classList.remove('is-open');
+                cards[i].setAttribute('aria-expanded', 'false');
+            }
+        }
+    }
+
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].addEventListener('click', function () {
+            var open = this.classList.toggle('is-open');
+            this.setAttribute('aria-expanded', open ? 'true' : 'false');
+            closeAll(this);
+        });
+    }
+
+    document.addEventListener('click', function (e) {
+        if (!constellation.contains(e.target)) closeAll(null);
+    });
+})();

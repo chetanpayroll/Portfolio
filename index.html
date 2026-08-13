@@ -266,7 +266,7 @@
          CSS STYLESHEETS
          ============================================ -->
     <link rel="stylesheet" href="css/main.css?v=garnet-v9">
-    <link rel="stylesheet" href="css/pages/home.css?v=garnet-v10">
+    <link rel="stylesheet" href="css/pages/home.css?v=garnet-v11">
     <link rel="stylesheet" href="css/booking-flow.css?v=garnet-v9">
     <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v9">
 
@@ -477,18 +477,76 @@
             </div>
         </section>
 
-        <!-- Credibility Bar -->
-        <section class="credibility-bar">
+        <!-- Career Constellation — Professional Experience At -->
+        <section class="const-band">
             <div class="container">
-                <p class="credibility-label">
-                    Professional Experience At</p>
-                <div class="logo-grid">
-                    <!-- Proven track record at these organizations -->
-                    <div class="logo-text text-vertiv">VERTIV</div>
-                    <div class="logo-text text-deel">DEEL</div>
-                    <div class="logo-text text-safeguard">SAFEGUARD</div>
-                    <div class="logo-text text-xerox">XEROX</div>
-                    <div class="logo-text text-aon">AON HEWITT</div>
+                <p class="const-label">Professional Experience At</p>
+
+                <div class="constellation" id="constellation">
+                    <svg class="const-map" viewBox="0 0 880 440" aria-hidden="true" focusable="false"
+                        preserveAspectRatio="xMidYMid slice">
+                        <defs>
+                            <pattern id="const-dots" width="14" height="14" patternUnits="userSpaceOnUse">
+                                <circle cx="2" cy="2" r="1.5" fill="rgba(255,255,255,0.11)"></circle>
+                            </pattern>
+                            <clipPath id="const-continents">
+                                <path d="M70,150 Q60,90 120,70 Q200,40 250,80 Q280,100 250,130 Q230,150 200,160 Q160,200 140,190 Q100,180 70,150 Z"></path>
+                                <path d="M210,240 Q250,220 270,250 Q285,300 255,350 Q235,385 225,350 Q205,300 210,240 Z"></path>
+                                <path d="M395,120 Q400,80 440,70 Q480,60 480,95 Q470,120 445,125 Q415,135 395,120 Z"></path>
+                                <path d="M400,150 Q450,135 480,160 Q500,190 480,230 Q465,290 440,320 Q420,340 410,300 Q390,240 385,190 Q385,160 400,150 Z"></path>
+                                <path d="M490,70 Q560,40 650,60 Q760,70 780,120 Q790,160 740,170 Q700,180 670,210 Q640,240 620,210 Q590,190 560,170 Q510,150 495,120 Q480,90 490,70 Z"></path>
+                                <path d="M700,300 Q720,280 760,285 Q800,295 795,325 Q785,350 745,350 Q705,345 700,300 Z"></path>
+                            </clipPath>
+                        </defs>
+                        <rect width="880" height="440" fill="url(#const-dots)"
+                            clip-path="url(#const-continents)"></rect>
+                        <g class="const-links">
+                            <line class="const-line" x1="440" y1="220" x2="440" y2="64" style="--len:156"></line>
+                            <line class="const-line" x1="440" y1="220" x2="722" y2="220" style="--len:282"></line>
+                            <line class="const-line" x1="440" y1="220" x2="158" y2="220" style="--len:282"></line>
+                            <line class="const-line" x1="440" y1="220" x2="440" y2="376" style="--len:156"></line>
+                            <line class="const-flow" x1="440" y1="220" x2="440" y2="64"></line>
+                            <line class="const-flow" x1="440" y1="220" x2="722" y2="220"></line>
+                            <line class="const-flow" x1="440" y1="220" x2="158" y2="220"></line>
+                            <line class="const-flow" x1="440" y1="220" x2="440" y2="376"></line>
+                            <rect class="const-node" x="436" y="132" width="8" height="8"
+                                transform="rotate(45 440 136)"></rect>
+                            <rect class="const-node" x="577" y="216" width="8" height="8"
+                                transform="rotate(45 581 220)"></rect>
+                            <rect class="const-node" x="295" y="216" width="8" height="8"
+                                transform="rotate(45 299 220)"></rect>
+                            <rect class="const-node" x="436" y="300" width="8" height="8"
+                                transform="rotate(45 440 304)"></rect>
+                        </g>
+                    </svg>
+
+                    <div class="const-cards">
+                        <button type="button" class="const-card const-hub const-pos-center"
+                            aria-expanded="false">
+                            <span class="wm wm-vertiv">VERTIV</span>
+                            <span class="const-tip">2026 &ndash; Present &middot; Global Payroll Transformation
+                                Manager</span>
+                        </button>
+                        <button type="button" class="const-card const-pos-top" aria-expanded="false">
+                            <span class="wm wm-aon">AON</span>
+                            <span class="const-tip">2011 &ndash; 2014 &middot; AON Hewitt &middot; HR &amp;
+                                Benefits Coordinator</span>
+                        </button>
+                        <button type="button" class="const-card const-pos-right" aria-expanded="false">
+                            <span class="wm wm-deel">deel.</span>
+                            <span class="const-tip">2018 &ndash; 2026 &middot; 7+ years &middot; 5
+                                promotions</span>
+                        </button>
+                        <button type="button" class="const-card const-pos-left" aria-expanded="false">
+                            <span class="wm wm-safeguard"><span class="wm-sg-top">Safeguard</span><span
+                                    class="wm-sg-bottom">Global</span></span>
+                            <span class="const-tip">2018 &ndash; 2026 &middot; the Deel journey</span>
+                        </button>
+                        <button type="button" class="const-card const-pos-bottom" aria-expanded="false">
+                            <span class="wm wm-xerox">xerox</span>
+                            <span class="const-tip">2014 &ndash; 2017 &middot; Benefits Administrator</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -815,7 +873,7 @@
     <!-- Booking Flow Script -->
     <script src="js/booking-flow.js?v=garnet-v9" defer></script>
     <!-- Hero metric count-up -->
-    <script src="js/home-hero.js?v=garnet-v10" defer></script>
+    <script src="js/home-hero.js?v=garnet-v11" defer></script>
     <!-- Enterprise Booking Modal (Shared Component) -->
     <div class="booking-modal-overlay" id="bookingModalOverlay">
         <div class="booking-modal">
