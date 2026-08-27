@@ -137,7 +137,7 @@ class ProfileAssistant {
         const JOURNEYS = {
             recruiter: {
                 text: `Great — here's the fast track.\n\nChetan is a **Global Payroll Transformation Manager** at Vertiv, **13+ years**, **99.8% accuracy across 1,500+ payroll cycles**, and currently **open to senior opportunities**.\n\nThe quickest way to assess fit: paste your job description and I'll score it against his profile.`,
-                followUps: ['Match a job description', 'Can I see his resume?', 'What are his achievements?']
+                followUps: ['Match a job description', 'Book a meeting', 'What are his achievements?']
             },
             client: {
                 text: `Welcome. Chetan currently leads an enterprise payroll transformation at **Vertiv** — 54 countries, 179 legal entities, vendor consolidation from **54 to 4** with **$964K annual savings**.\n\nHappy to walk you through how he approaches programmes like yours.`,

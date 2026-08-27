@@ -267,7 +267,7 @@
             phrases: ['how can i contact', 'contact chetan', 'his email', 'get in touch', 'reach him', 'his phone', 'his linkedin', 'contact details'],
             terms: ['contact', 'email', 'phone', 'reach', 'connect', 'linkedin', 'mail', 'number', 'whatsapp'],
             answer: `You can reach Chetan through:\n\n📧 **Email:** chetanpayroll@gmail.com\n📱 **Phone:** +91 8619495587\n🔗 **LinkedIn:** linkedin.com/in/chetan-champ/\n🌐 **Website:** www.chetanpayroll.com\n\nHe's open to discussing career opportunities, speaking engagements, and professional collaboration.`,
-            followUps: ['Book a meeting', 'Can I see his resume?', 'Is he open to opportunities?'],
+            followUps: ['Book a meeting', 'How can I contact Chetan?', 'Is he open to opportunities?'],
             link: { label: 'Go to contact page', href: '/contact' },
             weight: 1.1
         },
@@ -277,7 +277,7 @@
             phrases: ['is he available', 'is he hiring', 'open to opportunities', 'looking for a job', 'is he open to work', 'can i hire him', 'job opportunity'],
             terms: ['available', 'availability', 'hire', 'hiring', 'opportunity', 'opportunities', 'recruiting', 'recruiter', 'vacancy', 'openings'],
             answer: `Yes! Chetan is currently **open to new opportunities**.\n\nHe's exploring senior roles in:\n• Global payroll operations\n• Implementation leadership\n• Payroll transformation\n\nFeel free to reach out at **chetanpayroll@gmail.com**.`,
-            followUps: ['Match a job description', 'Book a meeting', 'Can I see his resume?'],
+            followUps: ['Match a job description', 'Book a meeting', 'What are his achievements?'],
             weight: 1.1
         },
 
@@ -289,7 +289,7 @@
             intent: 'Resume / CV',
             phrases: ['his resume', 'his cv', 'download resume', 'download his cv', 'can i see his resume', 'send me his cv'],
             terms: ['resume', 'cv', 'download', 'curriculum', 'vitae', 'pdf', 'docx'],
-            answer: `Yes! You can download Chetan's resume directly here:\n\n<a href="https://www.chetanpayroll.com/assets/documents/Chetan_Sharma_Resume.docx" target="_blank" class="chat-resume-link">📄 Download Resume (DOCX)</a>\n\nThe resume includes his complete work history, skills, achievements, and contact information.`,
+            answer: `Chetan's resume is shared **on request** rather than as a public download.\n\n<a href="/contact" class="chat-resume-link">📨 Request it via the contact page</a>\n\nOr connect on <a href="https://www.linkedin.com/in/chetan-champ/" target="_blank" rel="noopener noreferrer">LinkedIn</a>. Meanwhile, everything the resume covers — experience, skills, projects and achievements — is right here on the site, and I can answer questions about all of it.`,
             followUps: ['Match a job description', 'How can I contact Chetan?', 'What is his experience?'],
             weight: 1.2
         },
@@ -371,7 +371,7 @@
 
     // Fallback shown when nothing scores above the confidence floor and we have
     // no near-miss suggestions to offer. Copied verbatim from the original bot.
-    const FALLBACK = `I'm Chetan's AI Assistant, focused specifically on his professional profile.\n\nI can help you with:\n• **Experience** - Work history and career journey\n• **Skills** - Technical and professional expertise\n• **Projects** - Notable achievements and implementations\n• **Contact** - How to reach Chetan\n• **Resume** - Download his CV\n\nWhat would you like to know about Chetan?`;
+    const FALLBACK = `I'm Chetan's AI Assistant, focused specifically on his professional profile.\n\nI can help you with:\n• **Experience** - Work history and career journey\n• **Skills** - Technical and professional expertise\n• **Projects** - Notable achievements and implementations\n• **Contact** - How to reach Chetan\n\nWhat would you like to know about Chetan?`;
 
     // Synonym expansion: query token -> additional tokens added before scoring.
     const SYNONYMS = {
