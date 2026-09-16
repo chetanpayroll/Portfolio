@@ -1535,3 +1535,582 @@
         top: 50%;
     }
 }
+
+/* ============================================================
+   PHASE 19 — HOMEPAGE DESIGN SYSTEM
+   Everything below is scoped to `.home` (the class on
+   index.html's <body>). css/pages/home.css is loaded by
+   index.html alone, and the scope makes the intent explicit:
+   no other page can inherit any of this.
+   ============================================================ */
+
+.home {
+    /* Display type tier — the scale contrast the page was missing */
+    --display-1: clamp(2.5rem, 5.4vw, 5rem);
+    --display-2: clamp(2rem, 3.4vw, 3.25rem);
+    --display-3: clamp(1.2rem, 1.5vw, 1.4rem);
+
+    /* Deliberate vertical pace, three steps instead of one flat value */
+    --pace-feature: clamp(5rem, 9vw, 8.5rem);
+    --pace-standard: clamp(4rem, 6.5vw, 6rem);
+
+    /* One radius language */
+    --r-control: 10px;
+    --r-card: 18px;
+    --r-pill: 999px;
+
+    /* One elevation ladder */
+    --raise-1: 0 1px 2px rgba(20, 15, 17, 0.06), 0 8px 24px -14px rgba(20, 15, 17, 0.22);
+    --raise-2: 0 2px 4px rgba(20, 15, 17, 0.06), 0 18px 44px -18px rgba(20, 15, 17, 0.3);
+    --raise-3: 0 4px 10px rgba(20, 15, 17, 0.08), 0 36px 70px -24px rgba(20, 15, 17, 0.45);
+}
+
+/* Buttons don't inherit font-family — that is why "Book an Appointment"
+   and the video play button were rendering in Arial. */
+.home button,
+.home input,
+.home select,
+.home textarea {
+    font-family: inherit;
+}
+
+/* ---- Type ---- */
+.home .hero-title {
+    font-size: var(--display-1);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+}
+
+.home .competency-header h2,
+.home .insights-head h2,
+.home .recognition-head h2,
+.home .cta-title,
+.home .case-study-title,
+.home .stack-heading,
+.home .intro-video-band h2 {
+    font-size: var(--display-2);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+}
+
+.home .competency-header p,
+.home .stack-intro,
+.home .cta-desc {
+    font-size: clamp(1rem, 1.15vw, 1.1875rem);
+    line-height: 1.65;
+}
+
+/* ---- Pace: replace the flat 64px rhythm ---- */
+.home .section-padding {
+    padding-top: var(--pace-standard);
+    padding-bottom: var(--pace-standard);
+}
+
+.home .is-feature {
+    padding-top: var(--pace-feature);
+    padding-bottom: var(--pace-feature);
+}
+
+/* ---- Material: collapse six radii into the three above ---- */
+.home .card,
+.home .platform-card,
+.home .recognition-card,
+.home .insight-card,
+.home .featured-case-study,
+.home .intro-video .video-wrapper,
+.home .intro-video {
+    border-radius: var(--r-card);
+}
+
+.home .btn,
+.home .booking-btn-primary {
+    border-radius: var(--r-control);
+}
+
+.home .badge,
+.home .tool-chip,
+.home .avail-chip,
+.home .insight-tag {
+    border-radius: var(--r-pill);
+}
+
+/* ---- Capability tiles (Core Competencies) ----
+   The 01/02/03 numerals are rendered from CSS so the page's text content
+   is unchanged; they are decoration, not copy. */
+.home .cap-tile {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    box-shadow: var(--raise-1);
+    padding: var(--space-8) var(--space-6) var(--space-6);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.home .cap-tile::before {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: 3.25rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--color-gray-900);
+    opacity: 0.06;
+    transition: opacity 0.4s ease, color 0.4s ease;
+}
+
+.home .cap-tile:nth-of-type(1)::before { content: "01"; }
+.home .cap-tile:nth-of-type(2)::before { content: "02"; }
+.home .cap-tile:nth-of-type(3)::before { content: "03"; }
+
+/* Hairline of brand colour along the top edge, revealed on hover */
+.home .cap-tile::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home .cap-tile:hover,
+.home .cap-tile:focus-visible {
+    transform: translateY(-6px);
+    box-shadow: var(--raise-2);
+    border-color: rgba(209, 17, 73, 0.32);
+}
+
+.home .cap-tile:hover::after,
+.home .cap-tile:focus-visible::after { transform: scaleX(1); }
+
+.home .cap-tile:hover::before {
+    opacity: 0.14;
+    color: var(--color-primary);
+}
+
+/* Icon sits in a gradient chip instead of floating loose */
+.home .cap-tile .competency-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--gradient-primary);
+    color: var(--color-white);
+    box-shadow: 0 10px 22px -10px rgba(209, 17, 73, 0.75);
+    margin-bottom: var(--space-5);
+}
+
+.home .cap-tile .competency-icon i,
+.home .cap-tile .competency-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.home .competency-title {
+    font-size: var(--display-3);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+}
+
+.home .cap-tile .competency-link i,
+.home .cap-tile .competency-link svg {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home .cap-tile:hover .competency-link i,
+.home .cap-tile:hover .competency-link svg { transform: translateX(5px); }
+
+/* ---- Featured achievement: the panel that used to be an empty red block ---- */
+.home .featured-case-study {
+    box-shadow: var(--raise-3);
+}
+
+.home .case-study-content { padding: clamp(2rem, 4vw, 3.5rem); }
+
+.home .case-study-metric {
+    font-size: clamp(3.25rem, 6vw, 5rem);
+    letter-spacing: -0.04em;
+}
+
+.home .case-study-image {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(120% 90% at 78% 12%, rgba(255, 255, 255, 0.22) 0%, transparent 55%),
+        linear-gradient(135deg, #E11D48 0%, #7F1027 100%);
+}
+
+.home .cs-viz {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: 460px;
+    display: block;
+}
+
+.home .cs-grid line {
+    stroke: rgba(255, 255, 255, 0.16);
+    stroke-width: 1;
+}
+
+.home .cs-track {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 16;
+}
+
+.home .cs-value {
+    fill: none;
+    stroke: #FFFFFF;
+    stroke-width: 16;
+    stroke-linecap: round;
+    transform-box: view-box;
+    transform-origin: 210px 152px;
+    transform: rotate(-90deg);
+    /* 2πr = 402.12; the visible run is 40% of it */
+    stroke-dasharray: 402.12;
+    stroke-dashoffset: 241.27;
+}
+
+.home .cs-hub { fill: rgba(255, 255, 255, 0.9); }
+
+.home .cs-bars rect {
+    fill: rgba(255, 255, 255, 0.82);
+    transform-box: fill-box;
+    transform-origin: bottom;
+    rx: 3;
+}
+
+.home .cs-bars rect:nth-child(1) { transform: scaleY(0.34); }
+.home .cs-bars rect:nth-child(2) { transform: scaleY(0.56); }
+.home .cs-bars rect:nth-child(3) { transform: scaleY(0.82); }
+.home .cs-bars rect:nth-child(4) { transform: scaleY(0.63); }
+.home .cs-bars rect:nth-child(5) { transform: scaleY(1); }
+
+.home .cs-spark {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.95);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* `.btn-outline-white` had no definition anywhere in the stylesheets, which is
+   why these two calls to action rendered as loose text. */
+.home .btn-outline-white {
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    color: var(--color-white);
+    background: transparent;
+    align-self: flex-start;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast),
+                transform var(--transition-fast);
+}
+
+.home .btn-outline-white:hover,
+.home .btn-outline-white:focus-visible {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--color-white);
+    transform: translateY(-2px);
+}
+
+.home .cta-band .d-flex .btn-outline-white { align-self: center; }
+
+/* ---- Recognition: trophy shelf ---- */
+.home .recognition-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    box-shadow: var(--raise-1);
+    padding: var(--space-8) var(--space-6);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+
+.home .recognition-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    opacity: 0.85;
+}
+
+.home .recognition-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--raise-2);
+}
+
+/* Slow shine sweeping across the card on hover */
+.home .recognition-card::after {
+    content: "";
+    position: absolute;
+    top: -60%;
+    bottom: -60%;
+    left: -40%;
+    width: 36%;
+    background: linear-gradient(100deg, transparent, rgba(209, 17, 73, 0.1), transparent);
+    transform: translateX(-140%) rotate(8deg);
+    pointer-events: none;
+}
+
+.home .award-mark {
+    display: inline-flex;
+    margin-bottom: var(--space-4);
+}
+
+.home .award-mark svg {
+    width: 52px;
+    height: 52px;
+    overflow: visible;
+}
+
+.home .laurel {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0.3;
+}
+
+.home .award-disc { fill: var(--color-primary); }
+.home .award-star { fill: var(--color-white); }
+
+.home .award-tail {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 2.4;
+    stroke-linejoin: round;
+    opacity: 0.75;
+}
+
+.home .is-stat .stat-number {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: clamp(2.75rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+    .home .is-stat .stat-number {
+        color: var(--color-primary);
+        -webkit-text-fill-color: currentColor;
+        background: none;
+    }
+}
+
+.home .is-stat .stat-label {
+    margin-top: var(--space-3);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+}
+
+/* ---- Insights: give the cards real hover choreography ---- */
+.home .insight-card {
+    box-shadow: var(--raise-2);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+}
+
+.home .insight-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--raise-3);
+}
+
+.home .insight-image::after {
+    transition: opacity 0.45s ease;
+}
+
+.home .insight-card:hover .insight-image::after { opacity: 0.82; }
+
+.home .insight-btn::after {
+    content: "→";
+    display: inline-block;
+    margin-left: 8px;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home .insight-card:hover .insight-btn::after { transform: translateX(6px); }
+
+/* ---- CTA band: aurora mesh so the closing section isn't flat black ---- */
+.home .cta-band {
+    position: relative;
+    overflow: hidden;
+}
+
+.home .cta-aurora {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.home .cta-aurora span {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.home .cta-aurora span:first-child {
+    width: 620px;
+    height: 620px;
+    top: -320px;
+    left: -180px;
+    background: radial-gradient(circle, rgba(209, 17, 73, 0.3) 0%, rgba(209, 17, 73, 0.08) 45%, transparent 68%);
+}
+
+.home .cta-aurora span:last-child {
+    width: 560px;
+    height: 560px;
+    bottom: -300px;
+    right: -140px;
+    background: radial-gradient(circle, rgba(225, 29, 72, 0.22) 0%, rgba(127, 16, 39, 0.08) 45%, transparent 66%);
+}
+
+.home .cta-band > .container { position: relative; z-index: 1; }
+
+/* ---- Section transitions: soften the hard light↔dark cuts ---- */
+.home .stack-band,
+.home .cta-band,
+.home .const-band {
+    position: relative;
+}
+
+.home .stack-band::before,
+.home .cta-band::before,
+.home .const-band::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 140px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Fine grain so the dark bands read as material, not flat ink */
+.home .stack-band::after,
+.home .cta-band::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+.home .stack-band > .container { position: relative; z-index: 1; }
+
+/* ============================================================
+   CHOREOGRAPHY — content arrives as you scroll.
+   Everything is inside prefers-reduced-motion: no-preference,
+   so reduced-motion and no-JS visitors get the finished layout
+   with no hidden content (same contract as the hero/timeline).
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+
+    .js-reveal .home [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+            opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: calc(var(--d, 0) * 95ms);
+        will-change: opacity, transform;
+    }
+
+    .js-reveal .home [data-reveal].is-in {
+        opacity: 1;
+        transform: none;
+    }
+
+    /* Stagger siblings inside any grid row */
+    .home .d-grid > [data-reveal]:nth-child(2) { --d: 1; }
+    .home .d-grid > [data-reveal]:nth-child(3) { --d: 2; }
+    .home .d-grid > [data-reveal]:nth-child(4) { --d: 3; }
+    .home .platform-grid > [data-reveal]:nth-child(2) { --d: 1; }
+    .home .platform-grid > [data-reveal]:nth-child(3) { --d: 2; }
+    .home .stack-heading { --d: 1; }
+    .home .stack-intro { --d: 2; }
+    .home .tool-grid { --d: 3; }
+
+    /* Dashboard: arc draws, bars grow, sparkline runs — on entry, once */
+    .home .cs-viz .cs-value {
+        stroke-dashoffset: 402.12;
+        transition: stroke-dashoffset 1.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s;
+    }
+
+    .home .cs-viz.is-in .cs-value { stroke-dashoffset: 241.27; }
+
+    .home .cs-viz .cs-bars rect {
+        transform: scaleY(0);
+        transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .home .cs-viz.is-in .cs-bars rect:nth-child(1) { transform: scaleY(0.34); transition-delay: 0.45s; }
+    .home .cs-viz.is-in .cs-bars rect:nth-child(2) { transform: scaleY(0.56); transition-delay: 0.55s; }
+    .home .cs-viz.is-in .cs-bars rect:nth-child(3) { transform: scaleY(0.82); transition-delay: 0.65s; }
+    .home .cs-viz.is-in .cs-bars rect:nth-child(4) { transform: scaleY(0.63); transition-delay: 0.75s; }
+    .home .cs-viz.is-in .cs-bars rect:nth-child(5) { transform: scaleY(1);    transition-delay: 0.85s; }
+
+    .home .cs-viz .cs-spark {
+        stroke-dasharray: 420;
+        stroke-dashoffset: 420;
+        transition: stroke-dashoffset 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.7s;
+    }
+
+    .home .cs-viz.is-in .cs-spark { stroke-dashoffset: 0; }
+
+    .home .cs-hub {
+        opacity: 0;
+        transition: opacity 0.6s ease 0.3s;
+    }
+
+    .home .cs-viz.is-in .cs-hub { opacity: 1; }
+
+    /* Award shine sweep */
+    .home .recognition-card::after {
+        transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .home .recognition-card:hover::after {
+        transform: translateX(430%) rotate(8deg);
+    }
+}
+
+/* Mobile: soften the pace so the page doesn't feel airy-empty on a phone */
+@media (max-width: 640px) {
+    .home .cap-tile::before { font-size: 2.5rem; }
+
+    .home .case-study-image { min-height: 280px; }
+
+    .home .cs-viz { max-height: 300px; }
+
+    .home .award-mark svg { width: 44px; height: 44px; }
+}
+
+/* <picture> wrapper must not interrupt the fill behaviour of .insight-image img */
+.home .insight-image picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

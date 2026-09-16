@@ -14,6 +14,7 @@
     <!-- ============================================
          CHARACTER SET & VIEWPORT
          ============================================ -->
+    <script>document.documentElement.classList.add('js-reveal');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -108,8 +109,8 @@
     <!-- ============================================
          FAVICONS & ICONS
          ============================================ -->
-    <link rel="icon" type="image/png" href="/assets/images/favicon.png?v=garnet-v9">
-    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png?v=garnet-v9">
+    <link rel="icon" type="image/png" href="/assets/images/favicon.png?v=garnet-v17">
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png?v=garnet-v17">
     <link rel="manifest" href="/manifest.json">
     <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg?v=garnet-v9" color="#D11149">
 
@@ -266,7 +267,7 @@
          CSS STYLESHEETS
          ============================================ -->
     <link rel="stylesheet" href="css/main.css?v=garnet-v9">
-    <link rel="stylesheet" href="css/pages/home.css?v=garnet-v15">
+    <link rel="stylesheet" href="css/pages/home.css?v=garnet-v17">
     <link rel="stylesheet" href="css/booking-flow.css?v=garnet-v9">
     <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v9">
 
@@ -276,7 +277,7 @@
     <script src="https://unpkg.com/lucide@latest" defer></script>
 </head>
 
-<body>
+<body class="home">
 
     <!-- Navigation -->
     <header class="site-header">
@@ -544,13 +545,13 @@
         <!-- Introduction Video (moved from the hero — the map card now leads the fold) -->
         <section class="section-padding intro-video-band">
             <div class="container">
-                <div class="text-center">
+                <div class="text-center" data-reveal>
                     <span class="section-eyebrow">Introduction</span>
                     <h2 class="mb-8">A Quick Introduction</h2>
                 </div>
-                <div class="video-wrapper intro-video">
-                    <video id="hero-video" class="hero-video" poster="assets/images/og-image-v2.png?v=garnet-v9" playsinline
-                        webkit-playsinline>
+                <div class="video-wrapper intro-video" data-reveal>
+                    <video id="hero-video" class="hero-video" poster="assets/images/hero-poster.webp?v=garnet-v17" playsinline
+                        webkit-playsinline preload="none">
                         <source src="assets/videos/hero-video.mp4?v=garnet-v9" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -567,7 +568,7 @@
         <!-- Competencies Section -->
         <section class="section-padding bg-light">
             <div class="container">
-                <div class="competency-header">
+                <div class="competency-header" data-reveal>
                     <span class="section-eyebrow">Expertise</span>
                     <h2>Core Competencies</h2>
                     <p>Deep expertise developed
@@ -576,7 +577,7 @@
 
                 <div class="d-grid grid-3 gap-8">
                     <!-- Competency 1 -->
-                    <a href="/expertise" class="card">
+                    <a href="/expertise" class="card cap-tile" data-reveal>
                         <div class="competency-icon"><i data-lucide="globe"></i></div>
                         <h3 class="competency-title">Multi-Country Payroll Operations</h3>
                         <p class="competency-desc">End-to-end management of payroll across 25+ countries
@@ -587,7 +588,7 @@
                     </a>
 
                     <!-- Competency 2 -->
-                    <a href="/expertise" class="card">
+                    <a href="/expertise" class="card cap-tile" data-reveal>
                         <div class="competency-icon"><i data-lucide="cpu"></i></div>
                         <h3 class="competency-title">Process Automation & AI</h3>
                         <p class="competency-desc">Building custom validation engines and automation tools
@@ -598,7 +599,7 @@
                     </a>
 
                     <!-- Competency 3 -->
-                    <a href="/expertise" class="card">
+                    <a href="/expertise" class="card cap-tile" data-reveal>
                         <div class="competency-icon"><i data-lucide="shield-check"></i></div>
                         <h3 class="competency-title">Compliance & Risk Management</h3>
                         <p class="competency-desc">Navigating statutory requirements across EMEA, APAC,
@@ -614,28 +615,28 @@
         <!-- Technology Stack -->
         <section class="section-padding stack-band">
             <div class="container">
-                <p class="stack-eyebrow">Technology Stack</p>
-                    <h2 class="stack-heading">Built on Enterprise-Grade Platforms</h2>
-                <p class="stack-intro">From global payroll engines to the Microsoft Power Platform — the systems I use
+                <p class="stack-eyebrow" data-reveal>Technology Stack</p>
+                    <h2 class="stack-heading" data-reveal>Built on Enterprise-Grade Platforms</h2>
+                <p class="stack-intro" data-reveal>From global payroll engines to the Microsoft Power Platform — the systems I use
                     to automate, validate, and scale operations across borders.</p>
 
                 <div class="platform-tier-label"><span>Microsoft Power Platform</span></div>
                 <div class="platform-grid">
-                    <article class="platform-card">
+                    <article class="platform-card" data-reveal>
                         <div class="platform-ico"><i data-lucide="layout-grid"></i></div>
                         <span class="platform-tag">Low-Code Apps</span>
                         <h3 class="platform-name">Power Apps</h3>
                         <p class="platform-desc">Custom apps for payroll intake, approvals and audit trails — unifying
                             data across 54 countries and 179 legal entities.</p>
                     </article>
-                    <article class="platform-card">
+                    <article class="platform-card" data-reveal>
                         <div class="platform-ico"><i data-lucide="workflow"></i></div>
                         <span class="platform-tag">Automation</span>
                         <h3 class="platform-name">Power Automate</h3>
                         <p class="platform-desc">Automated flows that validate calculations, route approvals and sync
                             systems — eliminating manual touchpoints end to end.</p>
                     </article>
-                    <article class="platform-card">
+                    <article class="platform-card" data-reveal>
                         <div class="platform-ico"><i data-lucide="share-2"></i></div>
                         <span class="platform-tag">Governance</span>
                         <h3 class="platform-name">SharePoint</h3>
@@ -645,7 +646,7 @@
                 </div>
 
                 <div class="platform-tier-label"><span>Platforms &amp; Tools</span></div>
-                <div class="tool-grid">
+                <div class="tool-grid" data-reveal>
                     <div class="tool-chip"><i data-lucide="globe"></i>Deel</div>
                     <div class="tool-chip"><i data-lucide="git-merge"></i>Unity</div>
                     <div class="tool-chip"><i data-lucide="calculator"></i>Payroll2u</div>
@@ -660,9 +661,9 @@
         </section>
 
         <!-- Featured Achievement -->
-        <section class="section-padding">
+        <section class="section-padding is-feature">
             <div class="container">
-                <div class="featured-case-study d-grid grid-2">
+                <div class="featured-case-study d-grid grid-2" data-reveal>
                     <div class="case-study-content d-flex flex-col justify-center">
                         <span class="case-study-label">FEATURED ACHIEVEMENT</span>
                     <h2 class="case-study-title">Enterprise ICP Service Dashboard</h2>
@@ -674,7 +675,32 @@
                         <a href="/case-studies" class="btn btn-outline-white">View Project Details</a>
                     </div>
                     <div class="case-study-image">
-                        <i data-lucide="bar-chart-2" class="case-study-icon"></i>
+                        <!-- Purely geometric visualisation of the figures already
+                             stated in the copy: a 40% arc and the comparison bars.
+                             No text nodes, no new claims. -->
+                        <svg class="cs-viz" data-reveal viewBox="0 0 420 420" role="img"
+                            aria-label="Abstract dashboard illustration: a forty percent progress arc above a row of comparison bars">
+                            <g class="cs-grid" aria-hidden="true">
+                                <line x1="40" y1="96" x2="380" y2="96"></line>
+                                <line x1="40" y1="164" x2="380" y2="164"></line>
+                                <line x1="40" y1="232" x2="380" y2="232"></line>
+                                <line x1="40" y1="300" x2="380" y2="300"></line>
+                                <line x1="40" y1="348" x2="380" y2="348"></line>
+                            </g>
+                            <g class="cs-dial">
+                                <circle class="cs-track" cx="210" cy="152" r="64"></circle>
+                                <circle class="cs-value" cx="210" cy="152" r="64"></circle>
+                                <circle class="cs-hub" cx="210" cy="152" r="7"></circle>
+                            </g>
+                            <g class="cs-bars">
+                                <rect x="109" y="246" width="26" height="102"></rect>
+                                <rect x="153" y="246" width="26" height="102"></rect>
+                                <rect x="197" y="246" width="26" height="102"></rect>
+                                <rect x="241" y="246" width="26" height="102"></rect>
+                                <rect x="285" y="246" width="26" height="102"></rect>
+                            </g>
+                            <path class="cs-spark" d="M60,332 L108,312 L156,320 L204,286 L252,296 L300,258 L348,232"></path>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -691,10 +717,14 @@
 
                 <div class="d-grid grid-3 gap-8">
                     <!-- Blog 1 -->
-                    <article class="card insight-card">
+                    <article class="card insight-card" data-reveal>
                         <div class="insight-image">
-                            <img src="assets/images/blog-automation.png?v=garnet-v9" alt="Payroll Automation Abstract Visualization"
-                                loading="lazy">
+                            <picture>
+                                <source type="image/webp"
+                                    srcset="assets/images/blog-automation.webp?v=garnet-v17">
+                                <img src="assets/images/blog-automation.png?v=garnet-v17" alt="Payroll Automation Abstract Visualization"
+                                    loading="lazy" decoding="async" width="900" height="900">
+                            </picture>
                         </div>
                         <div class="insight-content">
                             <div class="insight-tag">AUTOMATION</div>
@@ -705,10 +735,14 @@
                         </div>
                     </article>
                     <!-- Blog 2 -->
-                    <article class="card insight-card">
+                    <article class="card insight-card" data-reveal>
                         <div class="insight-image">
-                            <img src="assets/images/blog-compliance.png?v=garnet-v9" alt="Hong Kong MPF Compliance Visualization"
-                                loading="lazy">
+                            <picture>
+                                <source type="image/webp"
+                                    srcset="assets/images/blog-compliance.webp?v=garnet-v17">
+                                <img src="assets/images/blog-compliance.png?v=garnet-v17" alt="Hong Kong MPF Compliance Visualization"
+                                    loading="lazy" decoding="async" width="900" height="900">
+                            </picture>
                         </div>
                         <div class="insight-content">
                             <div class="insight-tag">COMPLIANCE</div>
@@ -718,10 +752,14 @@
                         </div>
                     </article>
                     <!-- Blog 3 -->
-                    <article class="card insight-card">
+                    <article class="card insight-card" data-reveal>
                         <div class="insight-image">
-                            <img src="assets/images/blog-strategy.png?v=garnet-v9" alt="Vendor Transition Strategy Visualization"
-                                loading="lazy">
+                            <picture>
+                                <source type="image/webp"
+                                    srcset="assets/images/blog-strategy.webp?v=garnet-v17">
+                                <img src="assets/images/blog-strategy.png?v=garnet-v17" alt="Vendor Transition Strategy Visualization"
+                                    loading="lazy" decoding="async" width="900" height="900">
+                            </picture>
                         </div>
                         <div class="insight-content">
                             <div class="insight-tag">STRATEGY</div>
@@ -740,22 +778,41 @@
                 <span class="section-eyebrow">Recognition</span>
                 <h2 class="mb-12">Recognition & Awards</h2>
                 <div class="d-grid grid-2 gap-8">
-                    <div class="recognition-card">
+                    <div class="recognition-card is-award" data-reveal>
+                        <span class="award-mark" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" focusable="false">
+                                <path class="laurel" d="M17,40 C7,34 6,20 15,10"></path>
+                                <path class="laurel" d="M31,40 C41,34 42,20 33,10"></path>
+                                <circle class="award-disc" cx="24" cy="21" r="10"></circle>
+                                <path class="award-star" d="M24,15.6 L25.9,19.4 L30.1,20 L27,23 L27.8,27.2 L24,25.2 L20.2,27.2 L21,23 L17.9,20 L22.1,19.4 Z"></path>
+                                <path class="award-tail" d="M20,31 L20,40 L24,37 L28,40 L28,31"></path>
+                            </svg>
+                        </span>
                         <h3 class="recognition-title">Global Bolt Award 2024</h3>
                         <p class="recognition-org">Deel</p>
                     </div>
-                    <div class="recognition-card">
+                    <div class="recognition-card is-award" data-reveal>
+                        <span class="award-mark" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" focusable="false">
+                                <path class="laurel" d="M17,40 C7,34 6,20 15,10"></path>
+                                <path class="laurel" d="M31,40 C41,34 42,20 33,10"></path>
+                                <circle class="award-disc" cx="24" cy="21" r="10"></circle>
+                                <path class="award-star" d="M24,15.6 L25.9,19.4 L30.1,20 L27,23 L27.8,27.2 L24,25.2 L20.2,27.2 L21,23 L17.9,20 L22.1,19.4 Z"></path>
+                                <path class="award-tail" d="M20,31 L20,40 L24,37 L28,40 L28,31"></path>
+                            </svg>
+                        </span>
                         <h3 class="recognition-title">Spotlight Award 2023</h3>
                         <p class="recognition-org">Deel</p>
                     </div>
                 </div>
-                <div class="d-grid grid-2 gap-8 mt-8">
-                    <div class="recognition-card">
-                        <div class="stat-number">5</div>
+                <div class="d-grid grid-2 gap-8 mt-8 recognition-stats">
+                    <div class="recognition-card is-stat" data-reveal>
+                        <div class="stat-number"><span class="rec-num" data-target="5">5</span></div>
                         <div class="stat-label">Promotions in 8 Years</div>
                     </div>
-                    <div class="recognition-card">
-                        <div class="stat-number">99.8%</div>
+                    <div class="recognition-card is-stat" data-reveal>
+                        <div class="stat-number"><span class="rec-num" data-target="99.8"
+                                data-decimals="1">99.8</span>%</div>
                         <div class="stat-label">Accuracy Record</div>
                     </div>
                 </div>
@@ -763,7 +820,8 @@
         </section>
 
         <!-- CTA -->
-        <section class="section-padding bg-dark text-white text-center">
+        <section class="section-padding is-feature bg-dark text-white text-center cta-band">
+            <div class="cta-aurora" aria-hidden="true"><span></span><span></span></div>
             <div class="container">
                 <span class="section-eyebrow">Contact</span>
                     <h2 class="cta-title">Open to New Opportunities</h2>
@@ -863,7 +921,7 @@
     <!-- Booking Flow Script -->
     <script src="js/booking-flow.js?v=garnet-v9" defer></script>
     <!-- Hero metric count-up -->
-    <script src="js/home-hero.js?v=garnet-v15" defer></script>
+    <script src="js/home-hero.js?v=garnet-v17" defer></script>
     <!-- Enterprise Booking Modal (Shared Component) -->
     <div class="booking-modal-overlay" id="bookingModalOverlay">
         <div class="booking-modal">
@@ -1074,7 +1132,7 @@
             <div class="chat-header">
                 <div class="chat-header-info">
                     <div class="chat-avatar">
-                        <img src="assets/images/headshot.png?v=garnet-v9" alt="Chetan's Assistant"
+                        <img src="assets/images/headshot-avatar.webp?v=garnet-v17" alt="Chetan's Assistant"
                             onerror="this.style.display='none'">
                         <span class="avatar-fallback">CS</span>
                     </div>
