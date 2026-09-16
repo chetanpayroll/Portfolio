@@ -1546,13 +1546,15 @@
 
 .home {
     /* Display type tier — the scale contrast the page was missing */
-    --display-1: clamp(2.5rem, 5.4vw, 5rem);
-    --display-2: clamp(2rem, 3.4vw, 3.25rem);
+    /* Ramps 46px @390 -> 60px @820 -> 80px @1440, so phones and tablets get the
+       new scale too rather than sitting on the clamp minimum. */
+    --display-1: clamp(2.875rem, 2.09rem + 3.24vw, 5rem);
+    --display-2: clamp(2.125rem, 1.71rem + 1.71vw, 3.25rem);
     --display-3: clamp(1.2rem, 1.5vw, 1.4rem);
 
     /* Deliberate vertical pace, three steps instead of one flat value */
-    --pace-feature: clamp(5rem, 9vw, 8.5rem);
-    --pace-standard: clamp(4rem, 6.5vw, 6rem);
+    --pace-feature: clamp(5.5rem, 9vw, 8.5rem);
+    --pace-standard: clamp(4.5rem, 6.5vw, 6rem);
 
     /* One radius language */
     --r-control: 10px;
@@ -1577,8 +1579,8 @@
 /* ---- Type ---- */
 .home .hero-title {
     font-size: var(--display-1);
-    line-height: 1.04;
-    letter-spacing: -0.035em;
+    line-height: 1.02;
+    letter-spacing: -0.038em;
 }
 
 .home .competency-header h2,
@@ -2113,4 +2115,15 @@
     display: block;
     width: 100%;
     height: 100%;
+}
+
+/* The metric band sits high on a phone, so it carries a lot of the first
+   impression — give the figures real presence there too. */
+.home .metric-value {
+    font-size: clamp(2.6rem, 5vw, 3.25rem);
+}
+
+@media (max-width: 640px) {
+    .home .hero-subtitle { font-size: 1.0625rem; line-height: 1.6; }
+    .home .competency-header { margin-bottom: var(--space-8); }
 }
