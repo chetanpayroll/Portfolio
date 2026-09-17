@@ -1540,3 +1540,21 @@
 .chat-export-btn:hover {
     background: rgba(255, 255, 255, 0.2);
 }
+
+/* Reasoning label on composed answers — says how the reply was arrived at
+   ("The case, from the record", "Not documented") rather than presenting
+   every answer as if it came from the same place. */
+.reason-chip {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(209, 17, 73, 0.08);
+    border: 1px solid rgba(209, 17, 73, 0.22);
+    color: #9E1038;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+}

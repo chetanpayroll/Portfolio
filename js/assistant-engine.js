@@ -243,9 +243,25 @@
 
     /* ================= Public API ================= */
 
+    /** Cards that answer the same underlying question, for the confidence gate. */
+    const TOPIC_FAMILIES = {
+        exp: 'work', vertiv: 'work', projects: 'work', awards: 'work',
+        skills: 'capability', tech: 'capability', certifications: 'capability', education: 'capability',
+        country: 'geography',
+        contact: 'contact', action: 'contact', resume: 'contact',
+        profile: 'identity', media: 'identity', greeting: 'identity', thanks: 'identity'
+    };
+
+    function topicFamily(cardId) {
+        const prefix = String(cardId).split('-')[0];
+        return TOPIC_FAMILIES[prefix] || prefix;
+    }
+
     function createEngine() {
         let lastEntityCardId = null;
         let lastTopic = null; // 'country' after a country answer, enabling "and Singapore?"
+        let lastAnswerText = null;   // lets "summarise that" work
+        let usedEvidence = [];       // lets "tell me more" advance instead of repeating
 
         function rememberEntity(normalized) {
             for (const key of Object.keys(ENTITIES)) {
@@ -277,11 +293,45 @@
                 });
                 if (composed) {
                     lastTopic = /country/.test(composed.intent) ? 'country' : null;
+                    lastAnswerText = composed.answer;
                     rememberEntity(normalized);
                     return {
                         card: null,
                         composed: composed,
                         intent: composed.intent,
+                        score: STRONG_SCORE,
+                        confidence: 1,
+                        matched: true,
+                        carried: false,
+                        suggestions: []
+                    };
+                }
+            }
+
+            // The reasoner answers question *kinds* the cards were never written
+            // for — "why hire him", "first 90 days", "has he used Workday",
+            // "tell me more" — by composing from the fact graph. Like the
+            // composer above, its detectors are strict: when none fires this
+            // block is inert.
+            if (global.AssistantReasoner) {
+                const reasoned = global.AssistantReasoner.reason(query, {
+                    lastAnswerText: lastAnswerText,
+                    usedEvidence: usedEvidence
+                });
+                if (reasoned) {
+                    lastAnswerText = reasoned.answer;
+                    if (reasoned.evidenceUsed) {
+                        usedEvidence = usedEvidence.concat(reasoned.evidenceUsed);
+                    } else {
+                        const marks = reasoned.answer.match(/^• .+$/gm);
+                        if (marks) usedEvidence = usedEvidence.concat(
+                            marks.map(m => m.replace(/^• /, '')));
+                    }
+                    rememberEntity(normalized);
+                    return {
+                        card: null,
+                        composed: reasoned,
+                        intent: reasoned.intent,
                         score: STRONG_SCORE,
                         confidence: 1,
                         matched: true,
@@ -303,8 +353,35 @@
 
             rememberEntity(normalized);
 
+            // Confidence gate. A near-tie only matters when the two candidates are
+            // about genuinely different subjects — "Vertiv programme" losing
+            // narrowly to "current role" is the same answer either way, and
+            // asking there would be worse than answering.
+            if (best && best.score >= MIN_SCORE && best.score < STRONG_SCORE && !best.carried) {
+                const runnerUp = scored[1];
+                if (runnerUp && runnerUp.card.id !== best.card.id &&
+                    runnerUp.score / best.score > 0.85 &&
+                    topicFamily(best.card.id) !== topicFamily(runnerUp.card.id)) {
+                    return {
+                        card: null,
+                        intent: 'needs-clarification',
+                        score: best.score,
+                        confidence: 0,
+                        matched: false,
+                        carried: false,
+                        ambiguous: true,
+                        suggestions: scored.slice(0, 3).map(s2 => ({
+                            label: s2.card.ref.intent,
+                            query: (s2.card.ref.phrases && s2.card.ref.phrases[0]) || s2.card.ref.intent
+                        })),
+                        answer: 'I can read that a couple of ways and I would rather ask than answer the wrong question. Which of these did you mean?'
+                    };
+                }
+            }
+
             if (best && best.score >= MIN_SCORE) {
                 lastTopic = best.card.id.indexOf('country-') === 0 ? 'country' : lastTopic;
+                lastAnswerText = best.card.ref.answer;
                 return {
                     card: best.card.ref,
                     intent: best.card.ref.intent,
@@ -335,7 +412,7 @@
             };
         }
 
-        function reset() { lastEntityCardId = null; lastTopic = null; }
+        function reset() { lastEntityCardId = null; lastTopic = null; lastAnswerText = null; usedEvidence = []; }
 
         return { match, reset };
     }

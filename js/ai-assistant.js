@@ -434,7 +434,8 @@ class ProfileAssistant {
             this.addMessage(c.answer, 'assistant', {
                 htmlExtra: c.htmlExtra,
                 source: c.source,
-                followUps: c.followUps
+                followUps: c.followUps,
+                reasoning: c.intent
             });
             return;
         }
@@ -555,6 +556,16 @@ class ProfileAssistant {
     }
 
     decorateAnswer(body, opts) {
+        // A short label saying how the answer was arrived at. Composed answers
+        // are assembled from the fact graph rather than looked up, and showing
+        // that is both more honest and more interesting than hiding it.
+        if (opts.reasoning && !/^(greeting|thanks)$/i.test(opts.reasoning)) {
+            const tag = document.createElement('span');
+            tag.className = 'reason-chip';
+            tag.textContent = opts.reasoning;
+            body.insertBefore(tag, body.firstChild);
+        }
+
         // Composer-built HTML (comparison tables) — trusted, escaped at build time.
         if (opts.htmlExtra) {
             const wrap = document.createElement('div');
