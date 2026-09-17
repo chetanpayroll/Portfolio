@@ -2127,3 +2127,345 @@
     .home .hero-subtitle { font-size: 1.0625rem; line-height: 1.6; }
     .home .competency-header { margin-bottom: var(--space-8); }
 }
+
+/* ============================================================
+   DARK CINEMATIC HERO
+   The page now opens on a lit, moving scene instead of a flat
+   light panel. Everything here is scoped to .home.
+   ============================================================ */
+
+.home .hero-dark {
+    position: relative;
+    isolation: isolate;
+    min-height: min(92vh, 860px);
+    padding-top: calc(80px + clamp(2.5rem, 6vw, 5rem));
+    padding-bottom: clamp(3rem, 7vw, 6rem);
+    background: radial-gradient(120% 90% at 20% 0%, #241019 0%, #140C10 45%, #0B0709 100%);
+    color: var(--color-white);
+    overflow: hidden;
+}
+
+/* ---- Atmosphere layers ---- */
+.home .hero-atmos {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.home .atmos-grid {
+    position: absolute;
+    inset: -10%;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 74px 74px;
+    mask-image: radial-gradient(70% 60% at 50% 40%, #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(70% 60% at 50% 40%, #000 0%, transparent 78%);
+}
+
+.home .atmos-glow {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+}
+
+.home .atmos-a {
+    width: 760px;
+    height: 760px;
+    top: -340px;
+    left: -180px;
+    background: radial-gradient(circle, rgba(225, 29, 72, 0.4) 0%, rgba(225, 29, 72, 0.1) 42%, transparent 68%);
+}
+
+.home .atmos-b {
+    width: 680px;
+    height: 680px;
+    bottom: -360px;
+    right: -120px;
+    background: radial-gradient(circle, rgba(127, 16, 39, 0.46) 0%, rgba(127, 16, 39, 0.12) 45%, transparent 70%);
+}
+
+.home .atmos-c {
+    width: 520px;
+    height: 520px;
+    top: 12%;
+    right: 26%;
+    background: radial-gradient(circle, rgba(255, 94, 130, 0.16) 0%, transparent 65%);
+}
+
+.home .atmos-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
+
+.home .hero-dark > .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ---- Hero type on dark ---- */
+.home .hero-dark .hero-title {
+    color: var(--color-white);
+}
+
+.home .hero-dark .hero-subtitle {
+    color: rgba(255, 255, 255, 0.72);
+    max-width: 34rem;
+}
+
+.home .hero-dark .badge {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(6px);
+}
+
+.home .hero-dark .avail-chip {
+    background: rgba(16, 185, 129, 0.14);
+    border-color: rgba(16, 185, 129, 0.45);
+    color: #6EE7B7;
+}
+
+.home .hero-dark .avail-chip:hover,
+.home .hero-dark .avail-chip:focus-visible {
+    background: rgba(16, 185, 129, 0.22);
+    border-color: rgba(16, 185, 129, 0.7);
+}
+
+.home .hero-dark .hero-link {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.home .hero-dark .hero-link:hover,
+.home .hero-dark .hero-link:focus-visible {
+    color: var(--color-white);
+    border-bottom-color: currentColor;
+}
+
+.home .hero-dark .btn-primary {
+    box-shadow: 0 12px 34px -12px rgba(225, 29, 72, 0.9);
+}
+
+/* ---- Kinetic headline: each word rides up from behind a mask ---- */
+.home .hero-title.kinetic .kw {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    /* room for descenders so the mask never clips a 'y' or 'g' */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+}
+
+.home .hero-title.kinetic .kw > span {
+    display: inline-block;
+}
+
+/* ---- Globe card ---- */
+.home .globe-card {
+    position: relative;
+    border-radius: var(--r-card);
+    padding: var(--space-5) var(--space-5) var(--space-4);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.025) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(8px);
+    min-width: 0;
+}
+
+.home .globe-card .ops-map-eyebrow { color: rgba(255, 255, 255, 0.92); }
+.home .globe-card .ops-map-sub { color: rgba(255, 255, 255, 0.5); }
+
+.home .globe-card .ops-live {
+    background: rgba(16, 185, 129, 0.14);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #6EE7B7;
+}
+
+.home .globe-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 0.82;
+    max-height: 340px;
+}
+
+.home #heroGlobe {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Legend keeps every place name as real text, laid out as two regions.
+   DOM order is preserved exactly; the grid does the visual arrangement. */
+.home .globe-legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--space-4);
+    row-gap: 5px;
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.home .gl-region {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-primary-light, #FF6B8F);
+    padding-bottom: 2px;
+}
+
+.home .gl-hub,
+.home .gl-base {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.62);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.home .gl-hub::before,
+.home .gl-base::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    flex: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.home .gl-base {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+    padding-top: 7px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 600;
+}
+
+.home .gl-base::before {
+    background: var(--color-primary);
+    box-shadow: 0 0 9px rgba(225, 29, 72, 0.9);
+}
+
+/* Explicit placement keeps the source order (EMEA, APAC, then the hubs)
+   while rendering as two tidy region columns. */
+.home .gl-emea { grid-column: 1; grid-row: 1; }
+.home .gl-apac { grid-column: 2; grid-row: 1; }
+.home .gl-e1 { grid-column: 1; grid-row: 2; }
+.home .gl-e2 { grid-column: 1; grid-row: 3; }
+.home .gl-e3 { grid-column: 1; grid-row: 4; }
+.home .gl-e4 { grid-column: 1; grid-row: 5; }
+.home .gl-a1 { grid-column: 2; grid-row: 2; }
+.home .gl-a2 { grid-column: 2; grid-row: 3; }
+.home .gl-a3 { grid-column: 2; grid-row: 4; }
+
+.home .globe-card .ops-map-foot {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.42);
+}
+
+/* ---- Header rides transparent over the hero, then solidifies ---- */
+.home .site-header {
+    background-color: transparent;
+    border-bottom-color: transparent;
+    transition: background-color 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
+}
+
+.home .site-header .logo,
+.home .site-header .nav-link,
+.home .site-header .mobile-menu-toggle {
+    color: rgba(255, 255, 255, 0.88);
+    transition: color 0.35s ease;
+}
+
+.home .site-header .logo .text-primary { color: var(--color-primary-light, #FF6B8F); }
+
+.home .site-header .nav-link:hover { color: var(--color-white); }
+
+.home.is-scrolled .site-header {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-bottom-color: var(--color-gray-100);
+}
+
+.home.is-scrolled .site-header .logo,
+.home.is-scrolled .site-header .mobile-menu-toggle { color: var(--color-primary-dark); }
+
+.home.is-scrolled .site-header .nav-link { color: var(--color-gray-700); }
+.home.is-scrolled .site-header .nav-link:hover { color: var(--color-primary); }
+.home.is-scrolled .site-header .logo .text-primary { color: var(--color-primary); }
+
+/* Dropdown panel stays legible in both header states */
+.home .site-header .dropdown-menu { color: var(--color-gray-700); }
+
+/* ---- Motion ---- */
+@media (prefers-reduced-motion: no-preference) {
+    .js-reveal .home .hero-title.kinetic .kw > span {
+        transform: translateY(105%);
+        opacity: 0;
+        transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+                    opacity 0.6s ease;
+        transition-delay: calc(var(--kd, 0) * 105ms);
+    }
+
+    .js-reveal .home .hero-title.kinetic.is-in .kw > span {
+        transform: none;
+        opacity: 1;
+    }
+
+    .home .hero-title.kinetic .kw:nth-child(2) { --kd: 1; }
+    .home .hero-title.kinetic .kw:nth-child(3) { --kd: 2; }
+    .home .hero-title.kinetic .kw:nth-child(4) { --kd: 3; }
+
+    /* Cursor parallax — the JS only sets these two custom properties */
+    .home .atmos-glow,
+    .home .globe-stage {
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .home .atmos-a { transform: translate3d(calc(var(--px, 0) * 26px), calc(var(--py, 0) * 20px), 0); }
+    .home .atmos-b { transform: translate3d(calc(var(--px, 0) * -32px), calc(var(--py, 0) * -22px), 0); }
+    .home .atmos-c { transform: translate3d(calc(var(--px, 0) * 18px), calc(var(--py, 0) * -14px), 0); }
+    .home .globe-stage { transform: translate3d(calc(var(--px, 0) * -9px), calc(var(--py, 0) * -7px), 0); }
+
+    /* The kinetic headline opts out of the generic fade-up; its word masks
+       carry the motion instead. */
+    .js-reveal .home .hero-title.kinetic {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 991px) {
+    .home .hero-dark {
+        min-height: 0;
+        padding-top: calc(80px + 2rem);
+    }
+
+    .home .globe-stage { max-height: 300px; }
+}
+
+@media (max-width: 640px) {
+    .home .globe-card { padding: var(--space-4) var(--space-4) var(--space-3); }
+    .home .globe-stage { aspect-ratio: 1 / 0.9; max-height: 260px; }
+    .home .gl-hub, .home .gl-base { font-size: 0.7rem; }
+}
+
+/* The 44px touch-target rule for this button lives in ios-patch.css, which no
+   main page actually loads — so on the homepage it was only as tall as its
+   icon. Scoped here rather than site-wide to keep this change to the front page. */
+.home .mobile-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+}

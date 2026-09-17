@@ -267,7 +267,7 @@
          CSS STYLESHEETS
          ============================================ -->
     <link rel="stylesheet" href="css/main.css?v=garnet-v9">
-    <link rel="stylesheet" href="css/pages/home.css?v=garnet-v18">
+    <link rel="stylesheet" href="css/pages/home.css?v=garnet-v19">
     <link rel="stylesheet" href="css/booking-flow.css?v=garnet-v9">
     <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v9">
 
@@ -317,9 +317,14 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="hero d-flex align-center">
-            <div class="hero-aurora" aria-hidden="true"><span class="aurora-a"></span><span
-                    class="aurora-b"></span></div>
+        <section class="hero hero-dark d-flex align-center">
+            <div class="hero-atmos" aria-hidden="true">
+                <span class="atmos-grid"></span>
+                <span class="atmos-glow atmos-a"></span>
+                <span class="atmos-glow atmos-b"></span>
+                <span class="atmos-glow atmos-c"></span>
+                <span class="atmos-grain"></span>
+            </div>
             <div class="container">
                 <div class="d-grid grid-2 gap-12 align-center">
                     <div class="hero-content">
@@ -330,7 +335,7 @@
                                 Booking open &mdash; 30-min intro call
                             </button>
                         </div>
-                        <h1 class="hero-title reveal reveal-2">Transforming Multi-Country Payroll Operations.</h1>
+                        <h1 class="hero-title kinetic" data-reveal><span class="kw"><span>Transforming</span></span> <span class="kw"><span>Multi-Country</span></span> <span class="kw"><span>Payroll</span></span> <span class="kw"><span>Operations.</span></span></h1>
                         <p class="hero-subtitle reveal reveal-3">13+ years of experience delivering 99.8% accuracy across 25+ countries.
                             Currently at Vertiv, leading global payroll transformation across 54 countries and 179
                             legal entities.</p>
@@ -341,7 +346,7 @@
                                 LinkedIn</a>
                         </div>
                     </div>
-                    <div class="ops-map-card reveal reveal-5">
+                    <div class="globe-card reveal reveal-5">
                         <div class="ops-map-head">
                             <div>
                                 <span class="ops-map-eyebrow">Global Delivery Footprint</span>
@@ -350,69 +355,23 @@
                             <span class="ops-live"><span class="ops-live-dot" aria-hidden="true"></span>54-country
                                 programme live</span>
                         </div>
-                        <svg class="ops-map-svg" viewBox="0 0 840 400" role="img"
-                            aria-label="Global delivery map: Pune, India home base connected to United Kingdom, Egypt, Israel, UAE, Hong Kong, Singapore and Indonesia">
-                            <defs>
-                                <pattern id="ops-grid" width="26" height="26" patternUnits="userSpaceOnUse">
-                                    <circle cx="2" cy="2" r="1.3" fill="#E9E2E3"></circle>
-                                </pattern>
-                            </defs>
-                            <rect x="0" y="0" width="840" height="400" fill="url(#ops-grid)"></rect>
-                            <text class="ops-region" x="180" y="42">EMEA</text>
-                            <text class="ops-region" x="700" y="150">APAC</text>
-                            <!-- Arcs out of the Pune hub -->
-                            <path class="ops-arc" d="M482,237 Q300,60 153,90"></path>
-                            <path class="ops-arc" d="M482,237 Q385,150 292,186"></path>
-                            <path class="ops-arc" d="M482,237 Q395,140 308,166"></path>
-                            <path class="ops-arc" d="M482,237 Q440,190 399,207"></path>
-                            <path class="ops-arc" d="M482,237 Q575,170 661,220"></path>
-                            <path class="ops-arc" d="M482,237 Q550,270 615,313"></path>
-                            <path class="ops-arc" d="M482,237 Q560,300 628,346"></path>
-                            <!-- Delivery nodes -->
-                            <g class="ops-node">
-                                <circle class="ops-pulse" cx="153" cy="90" r="6"></circle>
-                                <circle class="ops-core" cx="153" cy="90" r="4"></circle>
-                                <text class="ops-label" x="153" y="72" text-anchor="middle">United Kingdom</text>
-                            </g>
-                            <g class="ops-node">
-                                <circle class="ops-pulse" cx="292" cy="186" r="6" style="animation-delay:.4s"></circle>
-                                <circle class="ops-core" cx="292" cy="186" r="4"></circle>
-                                <text class="ops-label" x="288" y="207" text-anchor="middle">Egypt</text>
-                            </g>
-                            <g class="ops-node">
-                                <circle class="ops-pulse" cx="308" cy="166" r="6" style="animation-delay:.8s"></circle>
-                                <circle class="ops-core" cx="308" cy="166" r="4"></circle>
-                                <text class="ops-label" x="322" y="158" text-anchor="start">Israel</text>
-                            </g>
-                            <g class="ops-node">
-                                <circle class="ops-pulse" cx="399" cy="207" r="6" style="animation-delay:1.2s"></circle>
-                                <circle class="ops-core" cx="399" cy="207" r="4"></circle>
-                                <text class="ops-label" x="399" y="192" text-anchor="middle">UAE</text>
-                            </g>
-                            <g class="ops-node">
-                                <circle class="ops-pulse" cx="661" cy="220" r="6" style="animation-delay:1.6s"></circle>
-                                <circle class="ops-core" cx="661" cy="220" r="4"></circle>
-                                <text class="ops-label" x="661" y="205" text-anchor="middle">Hong Kong</text>
-                            </g>
-                            <g class="ops-node">
-                                <circle class="ops-pulse" cx="615" cy="313" r="6" style="animation-delay:2s"></circle>
-                                <circle class="ops-core" cx="615" cy="313" r="4"></circle>
-                                <text class="ops-label" x="600" y="306" text-anchor="end">Singapore</text>
-                            </g>
-                            <g class="ops-node">
-                                <circle class="ops-pulse" cx="628" cy="346" r="6" style="animation-delay:2.4s"></circle>
-                                <circle class="ops-core" cx="628" cy="346" r="4"></circle>
-                                <text class="ops-label" x="628" y="371" text-anchor="middle">Indonesia</text>
-                            </g>
-                            <!-- Pune home base -->
-                            <g class="ops-node ops-hub-node">
-                                <circle class="ops-pulse ops-hub-pulse" cx="482" cy="237" r="9"></circle>
-                                <circle class="ops-hub-ring" cx="482" cy="237" r="10"></circle>
-                                <circle class="ops-hub" cx="482" cy="237" r="5.5"></circle>
-                                <text class="ops-label ops-hub-label" x="482" y="265" text-anchor="middle">Pune &middot;
-                                    Home Base</text>
-                            </g>
-                        </svg>
+                        <div class="globe-stage">
+                            <canvas id="heroGlobe" role="img"
+                                aria-label="Rotating globe showing delivery hubs connected to the Pune home base"></canvas>
+                        </div>
+                        <div class="globe-legend">
+                            <span class="gl-region gl-emea">EMEA</span>
+                            <span class="gl-region gl-apac">APAC</span>
+                            <span class="gl-hub gl-e1">United Kingdom</span>
+                            <span class="gl-hub gl-e2">Egypt</span>
+                            <span class="gl-hub gl-e3">Israel</span>
+                            <span class="gl-hub gl-e4">UAE</span>
+                            <span class="gl-hub gl-a1">Hong Kong</span>
+                            <span class="gl-hub gl-a2">Singapore</span>
+                            <span class="gl-hub gl-a3">Indonesia</span>
+                            <span class="gl-base">Pune &middot;
+                                Home Base</span>
+                        </div>
                         <p class="ops-map-foot">Named hubs from hands-on implementations &mdash; part of 25+ countries
                             delivered across APAC, EMEA &amp; LATAM.</p>
                     </div>
@@ -921,7 +880,9 @@
     <!-- Booking Flow Script -->
     <script src="js/booking-flow.js?v=garnet-v9" defer></script>
     <!-- Hero metric count-up -->
-    <script src="js/home-hero.js?v=garnet-v17" defer></script>
+    <script src="js/home-hero.js?v=garnet-v19" defer></script>
+    <!-- Hero globe -->
+    <script src="js/globe.js?v=garnet-v19" defer></script>
     <!-- Enterprise Booking Modal (Shared Component) -->
     <div class="booking-modal-overlay" id="bookingModalOverlay">
         <div class="booking-modal">

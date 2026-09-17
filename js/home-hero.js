@@ -120,4 +120,53 @@
 
         for (var i = 0; i < items.length; i++) io.observe(items[i]);
     })();
+
+    /* ---------- 5. Header: transparent over the dark hero, solid after ----------
+       The class lives on <body>, so CSS handles every colour change. */
+    (function () {
+        var body = document.body;
+        if (!body.classList.contains('home')) return;
+        var ticking = false;
+
+        function apply() {
+            body.classList.toggle('is-scrolled', window.scrollY > 60);
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function () {
+            if (!ticking) { ticking = true; requestAnimationFrame(apply); }
+        }, { passive: true });
+
+        apply();
+    })();
+
+    /* ---------- 6. Cursor parallax on the hero ----------
+       Sets two custom properties; all the movement is described in CSS, and
+       only for devices with a real pointer. */
+    (function () {
+        if (reduced) return;
+        var hero = document.querySelector('.hero-dark');
+        if (!hero) return;
+        if (!(window.matchMedia && window.matchMedia('(pointer: fine)').matches)) return;
+
+        var pending = false, px = 0, py = 0;
+
+        function apply() {
+            hero.style.setProperty('--px', px.toFixed(3));
+            hero.style.setProperty('--py', py.toFixed(3));
+            pending = false;
+        }
+
+        hero.addEventListener('mousemove', function (e) {
+            var r = hero.getBoundingClientRect();
+            px = (e.clientX - r.left) / r.width * 2 - 1;     // -1 .. 1
+            py = (e.clientY - r.top) / r.height * 2 - 1;
+            if (!pending) { pending = true; requestAnimationFrame(apply); }
+        });
+
+        hero.addEventListener('mouseleave', function () {
+            px = 0; py = 0;
+            if (!pending) { pending = true; requestAnimationFrame(apply); }
+        });
+    })();
 })();
