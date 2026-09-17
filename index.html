@@ -14,7 +14,14 @@
     <!-- ============================================
          CHARACTER SET & VIEWPORT
          ============================================ -->
-    <script>document.documentElement.classList.add('js-reveal');</script>
+    <script>/* Hide-before-reveal is only safe while a controller is alive to undo it:
+       if none reports ready, drop the flag so nothing can stay invisible. */
+        (function (d) {
+            d.classList.add('js-reveal');
+            setTimeout(function () {
+                if (!d.hasAttribute('data-reveal-ready')) d.classList.remove('js-reveal');
+            }, 2500);
+        })(document.documentElement);</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -871,14 +878,18 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>/* unpkg is a third party. If it is blocked or slow this must not throw,
+       and if it arrives late the icons still need drawing. */
+        (function () {
+            function icons() { if (window.lucide) window.lucide.createIcons(); }
+            icons();
+            window.addEventListener('load', icons);
+        })();</script>
     <script type="module" src="js/utils.js?v=garnet-v9"></script>
     <script type="module" src="js/navigation.js?v=garnet-v9"></script>
     <script type="module" src="js/main.js?v=garnet-v9"></script>
     <!-- Booking Flow Script -->
-    <script src="js/booking-flow.js?v=garnet-v9" defer></script>
+    <script src="js/booking-flow.js?v=garnet-v22" defer></script>
     <!-- Hero metric count-up -->
     <script src="js/home-hero.js?v=garnet-v19" defer></script>
     <!-- Hero globe -->

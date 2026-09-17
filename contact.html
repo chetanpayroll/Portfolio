@@ -14,6 +14,14 @@
     <!-- ============================================
          CHARACTER SET & VIEWPORT
          ============================================ -->
+    <script>/* Hide-before-reveal is only safe while a controller is alive to undo it:
+       if none reports ready, drop the flag so nothing can stay invisible. */
+        (function (d) {
+            d.classList.add('js-reveal');
+            setTimeout(function () {
+                if (!d.hasAttribute('data-reveal-ready')) d.classList.remove('js-reveal');
+            }, 2500);
+        })(document.documentElement);</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -158,18 +166,18 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/main.css?v=garnet-v9">
-    <link rel="stylesheet" href="css/pages/contact.css?v=garnet-v9">
+    <link rel="stylesheet" href="css/pages/contact.css?v=garnet-v22">
     <link rel="stylesheet" href="css/google-calendar-override.css?v=garnet-v9">
 
     <link rel="stylesheet" href="css/booking-flow.css?v=garnet-v9">
 
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
-    <script src="js/booking-flow.js?v=garnet-v9" defer></script>
+    <script src="js/booking-flow.js?v=garnet-v22" defer></script>
     <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v21">
 </head>
 
-<body>
+<body class="contact-page">
 
     <!-- Navigation -->
     <header class="site-header">
@@ -210,65 +218,115 @@
 
     <main>
         <!-- contact-hero -->
-        <section class="contact-hero">
+        <!-- ============ CONTACT CONSOLE ============ -->
+        <section class="cc-hero">
+            <div class="cc-atmos" aria-hidden="true">
+                <span class="cc-grid-lines"></span>
+                <span class="cc-glow cc-glow-a"></span>
+                <span class="cc-glow cc-glow-b"></span>
+                <span class="cc-grain"></span>
+            </div>
             <div class="container">
-                <h1>Let's Start a Conversation</h1>
-                <p>I am currently exploring new leadership opportunities where I can leverage my global payroll
+                <p class="cc-eyebrow" data-reveal>Contact</p>
+                <h1 data-reveal>Let's Start a Conversation</h1>
+                <p class="cc-lede" data-reveal>I am currently exploring new leadership opportunities where I can leverage my global payroll
                     expertise to drive transformation and operational excellence.</p>
+                <div class="cc-status" id="ccStatus" data-reveal>
+                    <span class="cc-status-dot" aria-hidden="true"></span>
+                    <span class="cc-status-text">Checking local time&hellip;</span>
+                </div>
             </div>
         </section>
 
-        <!-- Main Content -->
-        <section class="section-padding">
+        <!-- Live signal strip: real clocks, real overlap, honest expectation -->
+        <section class="cc-signals">
             <div class="container">
-
-                <!-- Contact Methods Grid -->
-                <!-- (Methods grid content unchanged) -->
-                <div class="contact-methods d-grid grid-3 gap-8 mb-12">
-                    <a href="mailto:chetanpayroll@gmail.com" class="method-card">
-                        <div class="method-icon"><i data-lucide="mail"></i></div>
-                        <h4>Email Me</h4>
-                        <p class="method-label">chetanpayroll@gmail.com</p>
-                    </a>
-                    <a href="tel:+918619495587" class="method-card">
-                        <div class="method-icon"><i data-lucide="phone"></i></div>
-                        <h4>Direct Line</h4>
-                        <p class="method-label">+91 8619495587</p>
-                    </a>
-                    <a href="https://www.linkedin.com/in/chetan-champ/" target="_blank" rel="noopener noreferrer"
-                        class="method-card">
-                        <div class="method-icon"><i data-lucide="linkedin"></i></div>
-                        <h4>LinkedIn</h4>
-                        <p class="method-label">Connect Professionally</p>
-                    </a>
+                <div class="cc-signal-grid">
+                    <div class="cc-signal" data-reveal>
+                        <p class="cc-signal-label">His time &mdash; Pune, India</p>
+                        <p class="cc-signal-value" id="ccHostClock">&mdash;&mdash;:&mdash;&mdash;</p>
+                        <p class="cc-signal-sub" id="ccHostNote">Asia/Kolkata</p>
+                    </div>
+                    <div class="cc-signal" data-reveal>
+                        <p class="cc-signal-label">Your time</p>
+                        <p class="cc-signal-value" id="ccVisitorClock">&mdash;&mdash;:&mdash;&mdash;</p>
+                        <p class="cc-signal-sub" id="ccVisitorNote">Detecting your timezone&hellip;</p>
+                    </div>
+                    <div class="cc-signal" data-reveal>
+                        <p class="cc-signal-label">Typical reply</p>
+                        <p class="cc-signal-value">Same day</p>
+                        <p class="cc-signal-sub">Email and LinkedIn are both read daily.</p>
+                    </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Form & Calendar Split -->
-                <div class="d-grid grid-2 gap-12 align-center">
+        <!-- Route chooser: picks the topic and tailors the next step -->
+        <section class="cc-routes">
+            <div class="container">
+                <p class="cc-section-label">What brings you here?</p>
+                <h2 class="cc-section-title" data-reveal>Let's Connect</h2>
+                <div class="cc-route-grid" id="ccRoutes">
+                    <button type="button" class="cc-route" data-topic="Leadership Opportunity"
+                        data-hint="Tell me the role, the countries in scope, and the timeline. He will come back with a straight answer on fit."
+                        data-reveal>
+                        <span class="cc-route-ico" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </span>
+                        <span class="cc-route-name">Discuss potential roles</span>
+                        <span class="cc-route-note">Hiring or shortlisting</span>
+                    </button>
+                    <button type="button" class="cc-route" data-topic="Networking"
+                        data-hint="No agenda needed. Thirty minutes, a coffee, and whatever you are curious about."
+                        data-reveal>
+                        <span class="cc-route-ico" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                        </span>
+                        <span class="cc-route-name">Virtual Coffee Chat</span>
+                        <span class="cc-route-note">Just say hello</span>
+                    </button>
+                    <button type="button" class="cc-route" data-topic="Collaboration"
+                        data-hint="Payroll people welcome. Country statutory detail, vendor transitions, control design &mdash; ask anything."
+                        data-reveal>
+                        <span class="cc-route-ico" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        </span>
+                        <span class="cc-route-name">Network &amp; Knowledge Share</span>
+                        <span class="cc-route-note">Peer to peer</span>
+                    </button>
+                </div>
+                <p class="cc-route-hint" id="ccRouteHint">I am always open to discussing industry trends, sharing insights, or exploring potential
+                    synergies. Feel free to schedule a brief introductory call.</p>
+            </div>
+        </section>
 
-                    <!-- Contact Form -->
-                    <div class="contact-form-container">
-                        <h2 class="mb-6">Send a Message</h2>
-                        <form action="https://api.web3forms.com/submit" method="POST">
+        <!-- Message + live booking -->
+        <section class="cc-main">
+            <div class="container">
+                <div class="cc-main-grid">
+
+                    <div class="cc-panel cc-form-panel" data-reveal>
+                        <h2>Send a Message</h2>
+                        <form action="https://api.web3forms.com/submit" method="POST" id="ccForm" novalidate>
                             <input type="hidden" name="access_key" value="f526a9f2-266b-43d8-9b49-41f03a7776b6">
                             <div class="form-group">
                                 <label for="name" class="form-label">Full Name <span
                                         class="form-required">*</span></label>
                                 <input type="text" id="name" name="name" class="form-control" required
-                                    placeholder="Your Name">
+                                    placeholder="Your Name" autocomplete="name">
                             </div>
 
-                            <div class="d-grid grid-2 gap-4">
+                            <div class="cc-field-row">
                                 <div class="form-group">
                                     <label for="email" class="form-label">Email Address <span
                                             class="form-required">*</span></label>
                                     <input type="email" id="email" name="email" class="form-control" required
-                                        placeholder="email@organization.com">
+                                        placeholder="email@organization.com" autocomplete="email">
                                 </div>
                                 <div class="form-group">
                                     <label for="phone" class="form-label">Phone Number</label>
                                     <input type="tel" id="phone" name="phone" class="form-control"
-                                        placeholder="+1 (555) 000-0000">
+                                        placeholder="+1 (555) 000-0000" autocomplete="tel">
                                 </div>
                             </div>
 
@@ -289,45 +347,131 @@
                                         class="form-required">*</span></label>
                                 <textarea id="message" name="message" class="form-control" required
                                     placeholder="I'm interested in discussing..."></textarea>
+                                <p class="cc-jd-nudge" id="ccJdNudge" hidden>
+                                    That reads like a job description &mdash; want it scored against his record first?
+                                    <button type="button" class="cc-jd-go" id="ccJdGo">Run the JD match</button>
+                                </p>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-width-full">Send Message</button>
                         </form>
                     </div>
 
-                    <!-- Calendar / Pitch -->
-                    <div class="calendar-container">
-                        <div class="mb-8">
-                            <h2 class="mb-4">Let's Connect</h2>
-                            <p class="mb-6 calendar-text">
-                                I am always open to discussing industry trends, sharing insights, or exploring potential
-                                synergies. Feel free to schedule a brief introductory call.
-                            </p>
-
-                            <ul class="calendar-list">
-                                <li class="calendar-list-item">
-                                    <i data-lucide="user-check" class="calendar-icon"></i>
-                                    <span>Discuss potential roles</span>
-                                </li>
-                                <li class="calendar-list-item">
-                                    <i data-lucide="coffee" class="calendar-icon"></i>
-                                    <span>Virtual Coffee Chat</span>
-                                </li>
-                                <li class="calendar-list-item">
-                                    <i data-lucide="share-2" class="calendar-icon"></i>
-                                    <span>Network & Knowledge Share</span>
-                                </li>
-                            </ul>
-
-                            <!-- Fortune 100 Booking Trigger -->
-                            <div class="booking-trigger-container" style="margin-top: 2rem;">
-                                <button class="trigger-booking-flow btn btn-primary"
-                                    style="width: 100%; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; padding: 18px; border-radius: 8px; background: white; color: #D11149; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
-                                    Book an Appointment
-                                </button>
+                    <div class="cc-side">
+                        <div class="cc-panel cc-slots-panel" data-reveal>
+                            <p class="cc-panel-title">Next available &mdash; in your timezone</p>
+                            <div class="cc-slots" id="ccSlots">
+                                <p class="cc-slots-loading">Finding open slots&hellip;</p>
                             </div>
+                            <button class="trigger-booking-flow btn btn-primary btn-width-full cc-book-btn">
+                                Book an Appointment
+                            </button>
+                            <p class="cc-slots-foot">Thirty minutes. No payment, no forms beyond your name and email.</p>
+                        </div>
 
-                            <!-- Enterprise Booking Modal -->
+                        <div class="cc-panel cc-channels" data-reveal>
+                            <p class="cc-panel-title">Direct channels</p>
+                            <div class="cc-channel">
+                                <a href="mailto:chetanpayroll@gmail.com" class="cc-channel-main">
+                                    <span class="cc-channel-ico" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg>
+                                    </span>
+                                    <span class="cc-channel-text">
+                                        <span class="cc-channel-name">Email Me</span>
+                                        <span class="cc-channel-value">chetanpayroll@gmail.com</span>
+                                    </span>
+                                </a>
+                                <button type="button" class="cc-copy" data-copy="chetanpayroll@gmail.com"
+                                    aria-label="Copy email address">Copy</button>
+                            </div>
+                            <div class="cc-channel">
+                                <a href="tel:+918619495587" class="cc-channel-main">
+                                    <span class="cc-channel-ico" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"></path></svg>
+                                    </span>
+                                    <span class="cc-channel-text">
+                                        <span class="cc-channel-name">Direct Line</span>
+                                        <span class="cc-channel-value">+91 8619495587</span>
+                                    </span>
+                                </a>
+                                <button type="button" class="cc-copy" data-copy="+918619495587"
+                                    aria-label="Copy phone number">Copy</button>
+                            </div>
+                            <div class="cc-channel">
+                                <a href="https://www.linkedin.com/in/chetan-champ/" target="_blank"
+                                    rel="noopener noreferrer" class="cc-channel-main">
+                                    <span class="cc-channel-ico" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                    </span>
+                                    <span class="cc-channel-text">
+                                        <span class="cc-channel-name">LinkedIn</span>
+                                        <span class="cc-channel-value">Connect Professionally</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What happens after you hit send -->
+        <section class="cc-steps">
+            <div class="container">
+                <p class="cc-section-label">What happens next</p>
+                <ol class="cc-step-list">
+                    <li class="cc-step" data-reveal><span class="cc-step-n">1</span>
+                        <span class="cc-step-body"><strong>You send this</strong>It lands in his inbox straight away &mdash; nothing sits in a queue.</span>
+                    </li>
+                    <li class="cc-step" data-reveal><span class="cc-step-n">2</span>
+                        <span class="cc-step-body"><strong>He reads it himself</strong>No assistant, no screening layer. Usually the same day.</span>
+                    </li>
+                    <li class="cc-step" data-reveal><span class="cc-step-n">3</span>
+                        <span class="cc-step-body"><strong>Thirty minutes, your timezone</strong>If it is worth a call, you pick a slot above and the invite arrives by email.</span>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="section-padding bg-light cc-faq">
+            <div class="container container-sm">
+                <h2 class="text-center mb-8">Common Questions</h2>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        Are you open to relocation?
+                        <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, I am open to relocation for the right opportunity, particularly in major tech hubs
+                            across EMEA and North America. Global mobility is a key part of my career strategy.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        What is your notice period?
+                        <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>I am available to start with a standard notice period. Specific details can be discussed
+                            during the interview process.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        Do you require visa sponsorship?
+                        <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Please contact me directly to discuss specific work authorization requirements for your
+                            location.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
                             <div class="booking-modal-overlay" id="bookingModalOverlay">
                                 <div class="booking-modal">
                                     <!-- Header -->
@@ -520,54 +664,6 @@
 
                                 </div>
                             </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section class="section-padding bg-light">
-            <div class="container container-sm">
-                <h2 class="text-center mb-8">Common Questions</h2>
-
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        Are you open to relocation?
-                        <i data-lucide="chevron-down" class="faq-icon"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes, I am open to relocation for the right opportunity, particularly in major tech hubs
-                            across EMEA and North America. Global mobility is a key part of my career strategy.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        What is your notice period?
-                        <i data-lucide="chevron-down" class="faq-icon"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>I am available to start with a standard notice period. Specific details can be discussed
-                            during the interview process.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        Do you require visa sponsorship?
-                        <i data-lucide="chevron-down" class="faq-icon"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Please contact me directly to discuss specific work authorization requirements for your
-                            location.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <footer class="footer-dark">
@@ -645,9 +741,13 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>/* unpkg is a third party. If it is blocked or slow this must not throw,
+       and if it arrives late the icons still need drawing. */
+        (function () {
+            function icons() { if (window.lucide) window.lucide.createIcons(); }
+            icons();
+            window.addEventListener('load', icons);
+        })();</script>
     <script type="module" src="js/utils.js?v=garnet-v9"></script>
     <script type="module" src="js/navigation.js?v=garnet-v9"></script>
     <script type="module" src="js/main.js?v=garnet-v9"></script>
@@ -740,7 +840,9 @@
     <script src="js/assistant-kb.js?v=garnet-v20"></script>
     <script src="js/assistant-engine.js?v=garnet-v20"></script>
     <script src="js/jd-matcher.js?v=garnet-v9"></script>
-    <script src="js/calendar-utils.js?v=garnet-v9"></script>
+    <script src="js/calendar-utils.js?v=garnet-v22"></script>
+    <!-- Contact console: live clocks, real slots, route chooser -->
+    <script src="js/contact-console.js?v=garnet-v22" defer></script>
     <script src="js/ai-assistant.js?v=garnet-v21"></script>
 </body>
 

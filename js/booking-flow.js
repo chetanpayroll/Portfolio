@@ -42,11 +42,13 @@ class BookingFlow {
 
     init() {
         // Event Listeners for Open/Close
-        document.querySelectorAll('.trigger-booking-flow').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.open();
-            });
+        // Delegated, so triggers rendered after load — the live slot buttons on
+        // the contact page, for instance — open the flow too.
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.trigger-booking-flow');
+            if (!btn) return;
+            e.preventDefault();
+            this.open();
         });
 
         this.closeBtn.addEventListener('click', () => this.close());

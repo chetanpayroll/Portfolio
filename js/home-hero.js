@@ -100,6 +100,7 @@
        `.js-reveal` (set by an inline script in the head), so a failed or
        blocked script can never leave content invisible. */
     (function () {
+        document.documentElement.setAttribute('data-reveal-ready', '');
         var items = document.querySelectorAll('[data-reveal]');
         if (!items.length) return;
 
