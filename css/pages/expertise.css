@@ -474,3 +474,570 @@
     padding: var(--space-16) 0 var(--space-8);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
+/* ============================================================================
+   PHASE 20 — Expertise as a capability system
+   ----------------------------------------------------------------------------
+   Everything below is scoped to `.expertise-page`, which only expertise.html
+   carries, so these rules beat main.css on specificity without reaching any
+   other page. Words are untouched throughout; this is presentation only.
+   ========================================================================== */
+
+.expertise-page {
+    /* Type ramp computed from two anchors (390px and 1440px) rather than
+       guessed, so the mobile end genuinely lands smaller than it used to. */
+    --xp-display: clamp(2.25rem, 1.229rem + 4.19vw, 5rem);
+    --xp-h2: clamp(1.875rem, 1.364rem + 2.1vw, 3.25rem);
+    --xp-lede: clamp(1rem, 0.95rem + 0.22vw, 1.1875rem);
+
+    --xp-pace: clamp(4.5rem, 7.5vw, 7.5rem);
+    --xp-pace-tight: clamp(3rem, 5vw, 4.5rem);
+
+    --xp-r: 18px;
+    --xp-r-sm: 10px;
+
+    --xp-line: rgba(255, 255, 255, 0.09);
+    --xp-line-lit: rgba(225, 29, 72, 0.5);
+    --xp-dim: rgba(255, 255, 255, 0.58);
+    --xp-dimmer: rgba(255, 255, 255, 0.42);
+}
+
+.expertise-page button,
+.expertise-page input,
+.expertise-page select,
+.expertise-page textarea {
+    font-family: inherit;
+}
+
+/* ---- Hero: atmosphere + two columns ---- */
+
+.expertise-page .expertise-hero {
+    min-height: auto;
+    padding: clamp(7rem, 11vw, 10rem) 0 var(--xp-pace);
+    background: radial-gradient(120% 90% at 15% 0%, #241820 0%, #140F11 58%, #0E0A0C 100%);
+}
+
+.xp-atmos {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.xp-grid-lines {
+    position: absolute;
+    inset: -10%;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 68px 68px;
+    mask-image: radial-gradient(70% 60% at 50% 35%, #000 0%, transparent 100%);
+    -webkit-mask-image: radial-gradient(70% 60% at 50% 35%, #000 0%, transparent 100%);
+}
+
+.xp-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+}
+
+.xp-glow-a {
+    width: 46vw;
+    height: 46vw;
+    max-width: 640px;
+    max-height: 640px;
+    top: -14%;
+    left: -8%;
+    background: rgba(225, 29, 72, 0.22);
+}
+
+.xp-glow-b {
+    width: 38vw;
+    height: 38vw;
+    max-width: 520px;
+    max-height: 520px;
+    bottom: -20%;
+    right: -6%;
+    background: rgba(127, 16, 39, 0.28);
+}
+
+.xp-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.expertise-page .container {
+    position: relative;
+    z-index: 1;
+}
+
+.xp-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+}
+
+.expertise-page .hero-title {
+    font-size: var(--xp-display);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+}
+
+.expertise-page .hero-subtitle {
+    font-size: var(--xp-lede);
+    line-height: 1.6;
+    color: var(--xp-dim);
+    max-width: 34rem;
+}
+
+/* ---- Capability graph ---- */
+
+.cap-graph {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.cap-graph.is-ready {
+    opacity: 1;
+}
+
+.cap-svg {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    overflow: visible;
+}
+
+.cap-orbit-outer {
+    stroke: rgba(255, 255, 255, 0.055);
+}
+
+.cap-tick {
+    stroke: rgba(255, 255, 255, 0.14);
+    stroke-width: 1;
+}
+
+.cap-tick-major {
+    stroke: rgba(255, 255, 255, 0.28);
+    stroke-width: 1.4;
+}
+
+.cap-sweep {
+    transform-origin: 230px 230px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .cap-sweep {
+        animation: capSweep 14s linear infinite;
+    }
+
+    .cap-ticks {
+        transform-origin: 230px 230px;
+        animation: capSweep 220s linear infinite reverse;
+    }
+
+    @keyframes capSweep {
+        to { transform: rotate(360deg); }
+    }
+}
+
+.cap-orbit {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 1;
+}
+
+.cap-orbit-inner {
+    stroke-dasharray: 3 7;
+    stroke: rgba(255, 255, 255, 0.06);
+}
+
+.cap-spoke {
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 1;
+    transition: stroke 0.45s ease, stroke-width 0.45s ease;
+}
+
+.cap-spoke.is-on {
+    stroke: var(--xp-line-lit);
+    stroke-width: 1.8;
+}
+
+.cap-core {
+    fill: rgba(20, 14, 17, 0.92);
+    stroke: rgba(225, 29, 72, 0.55);
+    stroke-width: 1.2;
+}
+
+.cap-core-fig {
+    fill: #fff;
+    font-size: 26px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+.cap-core-sub {
+    fill: rgba(255, 255, 255, 0.45);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.cap-node {
+    cursor: pointer;
+}
+
+.cap-node-halo {
+    fill: rgba(225, 29, 72, 0.12);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.cap-node-dot {
+    fill: rgba(255, 255, 255, 0.35);
+    transition: fill 0.4s ease, r 0.4s ease;
+}
+
+.cap-node.is-on .cap-node-halo {
+    opacity: 1;
+    transform: scale(1.25);
+}
+
+.cap-node.is-on .cap-node-dot {
+    fill: #fff;
+}
+
+.cap-node:hover .cap-node-dot {
+    fill: #fff;
+}
+
+.cap-readout {
+    margin-top: -0.75rem;
+    text-align: center;
+    min-height: 5.5rem;
+}
+
+.cap-readout-label {
+    margin: 0 0 0.55rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #fff;
+}
+
+.cap-readout-proofs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+}
+
+.cap-readout-fig {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2.125rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-primary-light, #FF6B8F);
+}
+
+/* The readout swaps content rather than sliding a carousel, so it needs a
+   cue that something changed. Motion only where motion is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+    .cap-readout.is-swap .cap-readout-label,
+    .cap-readout.is-swap .cap-readout-fig {
+        animation: capSwap 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .cap-readout.is-swap .cap-readout-fig:nth-child(2) {
+        animation-delay: 0.06s;
+    }
+
+    @keyframes capSwap {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: none; }
+    }
+}
+
+/* ---- Competency cards ---- */
+
+.expertise-page .core-leadership-section {
+    padding: var(--xp-pace) 0;
+}
+
+.expertise-page .capability-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.expertise-page .capability-card {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.5rem, 2.4vw, 2.125rem);
+    border-radius: var(--xp-r);
+    border: 1px solid var(--xp-line);
+    background: linear-gradient(168deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 100%);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.45s ease, box-shadow 0.45s ease;
+}
+
+.expertise-page .capability-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(225, 29, 72, 0.8), transparent);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+}
+
+.expertise-page .capability-card:hover,
+.expertise-page .capability-card.is-linked {
+    transform: translateY(-5px);
+    border-color: rgba(225, 29, 72, 0.42);
+    box-shadow: 0 22px 48px -26px rgba(0, 0, 0, 0.85);
+}
+
+.expertise-page .capability-card:hover::before,
+.expertise-page .capability-card.is-linked::before {
+    opacity: 1;
+}
+
+.expertise-page .capability-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: var(--space-5);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(140deg, rgba(225, 29, 72, 0.9), rgba(127, 16, 39, 0.75));
+    color: #fff;
+    flex: none;
+}
+
+.expertise-page .capability-icon i,
+.expertise-page .capability-icon svg {
+    width: 23px;
+    height: 23px;
+}
+
+.expertise-page .capability-title {
+    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.3125rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: var(--space-3);
+}
+
+.expertise-page .capability-desc {
+    font-size: 0.9375rem;
+    line-height: 1.68;
+    color: var(--xp-dim);
+    flex: 1 1 auto;
+}
+
+/* The proof block used to be 11px grey fine print at the bottom of the card.
+   It is the strongest thing in the card, so it now reads like evidence. */
+.expertise-page .capability-metrics {
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--xp-line);
+    display: grid;
+    gap: 0.875rem;
+}
+
+.expertise-page .metric-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.expertise-page .metric-mark {
+    flex: none;
+    width: 6px;
+    height: 6px;
+    margin-top: 0.45em;
+    border-radius: 50%;
+    background: var(--color-primary, #E11D48);
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.16);
+}
+
+.expertise-page .metric-item.is-qual .metric-mark {
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+.expertise-page .metric-text {
+    min-width: 0;
+}
+
+.expertise-page .metric-text .fig {
+    font-size: 1.3em;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-primary-light, #FF6B8F);
+}
+
+/* ---- Technology stack ---- */
+
+.expertise-page .tech-stack-section {
+    padding: var(--xp-pace) 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.expertise-page .stack-heading {
+    font-size: var(--xp-h2);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+}
+
+.expertise-page .stack-intro {
+    font-size: var(--xp-lede);
+    line-height: 1.65;
+    color: var(--xp-dim);
+}
+
+.expertise-page .platform-card {
+    border-radius: var(--xp-r);
+    border: 1px solid var(--xp-line);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.45s ease, box-shadow 0.45s ease;
+}
+
+.expertise-page .platform-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(225, 29, 72, 0.42);
+    box-shadow: 0 22px 48px -26px rgba(0, 0, 0, 0.85);
+}
+
+.expertise-page .platform-ico {
+    border-radius: 14px;
+}
+
+.expertise-page .tool-grid {
+    gap: 0.6rem;
+}
+
+.expertise-page .tool-chip {
+    border-radius: var(--xp-r-sm);
+    border: 1px solid var(--xp-line);
+    background: rgba(255, 255, 255, 0.035);
+    font-size: 0.8125rem;
+    transition: transform 0.3s ease, border-color 0.3s ease,
+                background-color 0.3s ease, color 0.3s ease;
+}
+
+.expertise-page .tool-chip:hover {
+    transform: translateY(-2px);
+    border-color: rgba(225, 29, 72, 0.5);
+    background: rgba(225, 29, 72, 0.12);
+    color: #fff;
+}
+
+/* ---- Philosophy + CTA ---- */
+
+.expertise-page .philosophy-section {
+    padding: var(--xp-pace-tight) 0;
+    background:
+        radial-gradient(90% 140% at 50% 0%, rgba(225, 29, 72, 0.07) 0%, transparent 70%),
+        #F7F5F6;
+}
+
+.expertise-page .philosophy-quote {
+    font-size: clamp(1.1875rem, 1rem + 0.85vw, 1.75rem);
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+}
+
+.expertise-page .cta-dark-section {
+    padding: var(--xp-pace-tight) 0;
+    background:
+        radial-gradient(80% 120% at 50% 0%, rgba(225, 29, 72, 0.22) 0%, transparent 70%),
+        #170F13;
+}
+
+.expertise-page .cta-dark-section h2 {
+    font-size: var(--xp-h2);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+/* ---- Reveal ---- */
+
+@media (prefers-reduced-motion: no-preference) {
+    .js-reveal .expertise-page [data-reveal] {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .js-reveal .expertise-page [data-reveal].is-in {
+        opacity: 1;
+        transform: none;
+        transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--d, 0ms);
+    }
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 1100px) {
+    .xp-hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: clamp(2rem, 6vw, 3rem);
+    }
+
+    .cap-svg {
+        max-width: 420px;
+    }
+
+    .expertise-page .capability-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .expertise-page .capability-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cap-svg {
+        max-width: 330px;
+    }
+
+    .cap-readout {
+        min-height: 4.75rem;
+    }
+
+    .expertise-page .capability-icon {
+        width: 46px;
+        height: 46px;
+    }
+}
+
+/* ios-patch.css is loaded by a single blog post, so this page never received
+   its 44px touch target. Measured at 16px before this rule. */
+.expertise-page .mobile-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    color: #fff;
+}

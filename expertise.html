@@ -14,6 +14,14 @@
     <!-- ============================================
          CHARACTER SET & VIEWPORT
          ============================================ -->
+    <script>/* Hide-before-reveal is only safe while a controller is alive to undo it:
+       if none reports ready, drop the flag so nothing can stay invisible. */
+        (function (d) {
+            d.classList.add('js-reveal');
+            setTimeout(function () {
+                if (!d.hasAttribute('data-reveal-ready')) d.classList.remove('js-reveal');
+            }, 2500);
+        })(document.documentElement);</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -132,14 +140,14 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/main.css?v=garnet-v9">
-    <link rel="stylesheet" href="css/pages/expertise.css?v=garnet-v9">
+    <link rel="stylesheet" href="css/pages/expertise.css?v=garnet-v23">
 
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v21">
 </head>
 
-<body class="bg-deep-dark">
+<body class="bg-deep-dark expertise-page">
 
     <!-- Navigation (Dark Mode Override for this page) -->
     <header class="site-header expert-header">
@@ -180,18 +188,30 @@
     <main>
         <!-- Hero Section -->
         <section class="expertise-hero d-flex align-center">
+            <div class="xp-atmos" aria-hidden="true">
+                <span class="xp-grid-lines"></span>
+                <span class="xp-glow xp-glow-a"></span>
+                <span class="xp-glow xp-glow-b"></span>
+                <span class="xp-grain"></span>
+            </div>
             <div class="container">
-                <div class="hero-content-wrapper">
-                    <span class="hero-label">
-                        Executive Competencies
-                    </span>
-                    <h1 class="hero-title">
-                        Architecting the Future of <br>Global Payroll Operations.
-                    </h1>
-                    <p class="hero-subtitle">
-                        Delivering operational excellence through strategic transformation, scalable system
-                        architecture, and data-driven leadership.
-                    </p>
+                <div class="xp-hero-grid">
+                    <div class="hero-content-wrapper">
+                        <span class="hero-label" data-reveal>
+                            Executive Competencies
+                        </span>
+                        <h1 class="hero-title" data-reveal>
+                            Architecting the Future of <br>Global Payroll Operations.
+                        </h1>
+                        <p class="hero-subtitle" data-reveal>
+                            Delivering operational excellence through strategic transformation, scalable system
+                            architecture, and data-driven leadership.
+                        </p>
+                    </div>
+                    <!-- Capability graph. Built entirely in JS and hidden from assistive
+                         tech: it is a navigation layer over the six cards below, which
+                         remain the readable, no-JS source of the same information. -->
+                    <div class="cap-graph" id="capGraph" aria-hidden="true"></div>
                 </div>
             </div>
         </section>
@@ -202,7 +222,7 @@
                 <div class="capability-grid">
 
                     <!-- Capability 1 -->
-                    <div class="capability-card">
+                    <div class="capability-card" id="cap-transformation" data-cap="transformation" data-reveal>
                         <div class="capability-icon">
                             <i data-lucide="globe-2"></i>
                         </div>
@@ -214,18 +234,18 @@
                         </p>
                         <div class="capability-metrics">
                             <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>54 vendors consolidated to 4 strategic partners</span>
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text"><b class="fig">54</b> vendors consolidated to 4 strategic partners</span>
                             </div>
                             <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>58 systems rationalized to under 5 &mdash; $964K annual savings</span>
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text">58 systems rationalized to under 5 &mdash; <b class="fig">$964K</b> annual savings</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Capability 2 -->
-                    <div class="capability-card">
+                    <div class="capability-card" id="cap-architecture" data-cap="architecture" data-reveal>
                         <div class="capability-icon">
                             <i data-lucide="layers"></i>
                         </div>
@@ -239,18 +259,18 @@
                         </p>
                         <div class="capability-metrics">
                             <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>99.8% Payroll Accuracy Achieved</span>
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text"><b class="fig">99.8%</b> Payroll Accuracy Achieved</span>
                             </div>
                             <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>Reduced manual touchpoints by 40%</span>
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text">Reduced manual touchpoints by <b class="fig">40%</b></span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Capability 3 -->
-                    <div class="capability-card">
+                    <div class="capability-card" id="cap-compliance" data-cap="compliance" data-reveal>
                         <div class="capability-icon">
                             <i data-lucide="shield"></i>
                         </div>
@@ -261,18 +281,18 @@
                         </p>
                         <div class="capability-metrics">
                             <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>Zero non-compliance penalties in 5 years</span>
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text"><b class="fig">Zero</b> non-compliance penalties in 5 years</span>
                             </div>
                             <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>100% Audit Success Rate</span>
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text"><b class="fig">100%</b> Audit Success Rate</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Capability 4 -->
-                    <div class="capability-card">
+                    <div class="capability-card" id="cap-vendor" data-cap="vendor" data-reveal>
                         <div class="capability-icon">
                             <i data-lucide="users"></i>
                         </div>
@@ -283,18 +303,18 @@
                         </p>
                         <div class="capability-metrics">
                             <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>Managed $5M+ Vendor Contracts</span>
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text">Managed <b class="fig">$5M+</b> Vendor Contracts</span>
                             </div>
                             <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>Optimized service costs by 15%</span>
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text">Optimized service costs by <b class="fig">15%</b></span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Capability 5 -->
-                    <div class="capability-card">
+                    <div class="capability-card" id="cap-change" data-cap="change" data-reveal>
                         <div class="capability-icon">
                             <i data-lucide="trending-up"></i>
                         </div>
@@ -305,18 +325,18 @@
                         </p>
                         <div class="capability-metrics">
                             <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>Seamless transition for 5,000+ users</span>
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text">Seamless transition for <b class="fig">5,000+</b> users</span>
                             </div>
                             <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>Hosted 50+ enablement workshops</span>
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text">Hosted <b class="fig">50+</b> enablement workshops</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Capability 6 -->
-                    <div class="capability-card">
+                    <div class="capability-card" id="cap-analytics" data-cap="analytics" data-reveal>
                         <div class="capability-icon">
                             <i data-lucide="bar-chart-2"></i>
                         </div>
@@ -326,13 +346,13 @@
                             headcount planning, budget variance analysis, and operational efficiency tracking.
                         </p>
                         <div class="capability-metrics">
-                            <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>Real-time Global Cost Visibility</span>
+                            <div class="metric-item is-qual">
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text">Real-time Global Cost Visibility</span>
                             </div>
-                            <div class="metric-item">
-                                <i data-lucide="check" class="metric-icon"></i>
-                                <span>Automated Monthly Variance Reports</span>
+                            <div class="metric-item is-qual">
+                                <span class="metric-mark" aria-hidden="true"></span>
+                                <span class="metric-text">Automated Monthly Variance Reports</span>
                             </div>
                         </div>
                     </div>
@@ -344,29 +364,29 @@
         <!-- Tech Stack -->
         <section class="tech-stack-section">
             <div class="container">
-                <p class="stack-eyebrow">Technology Stack</p>
-                <h2 class="stack-heading">Built on Enterprise-Grade Platforms</h2>
-                <p class="stack-intro">From global payroll engines to the Microsoft Power Platform — the systems I
+                <p class="stack-eyebrow" data-reveal>Technology Stack</p>
+                <h2 class="stack-heading" data-reveal>Built on Enterprise-Grade Platforms</h2>
+                <p class="stack-intro" data-reveal>From global payroll engines to the Microsoft Power Platform — the systems I
                     use to automate, validate, and scale operations across borders.</p>
 
                 <!-- Featured tier: Microsoft Power Platform -->
-                <div class="platform-tier-label"><span>Microsoft Power Platform</span></div>
+                <div class="platform-tier-label" data-reveal><span>Microsoft Power Platform</span></div>
                 <div class="platform-grid">
-                    <article class="platform-card">
+                    <article class="platform-card" data-reveal>
                         <div class="platform-ico"><i data-lucide="layout-grid"></i></div>
                         <span class="platform-tag">Low-Code Apps</span>
                         <h3 class="platform-name">Power Apps</h3>
                         <p class="platform-desc">Custom apps for payroll intake, approvals and audit trails — unifying
                             data across 54 countries and 179 legal entities.</p>
                     </article>
-                    <article class="platform-card">
+                    <article class="platform-card" data-reveal>
                         <div class="platform-ico"><i data-lucide="workflow"></i></div>
                         <span class="platform-tag">Automation</span>
                         <h3 class="platform-name">Power Automate</h3>
                         <p class="platform-desc">Automated flows that validate calculations, route approvals and sync
                             systems — eliminating manual touchpoints end to end.</p>
                     </article>
-                    <article class="platform-card">
+                    <article class="platform-card" data-reveal>
                         <div class="platform-ico"><i data-lucide="share-2"></i></div>
                         <span class="platform-tag">Governance</span>
                         <h3 class="platform-name">SharePoint</h3>
@@ -376,8 +396,8 @@
                 </div>
 
                 <!-- Tools tier -->
-                <div class="platform-tier-label"><span>Platforms &amp; Tools</span></div>
-                <div class="tool-grid">
+                <div class="platform-tier-label" data-reveal><span>Platforms &amp; Tools</span></div>
+                <div class="tool-grid" data-reveal>
                     <div class="tool-chip"><i data-lucide="database"></i>Oracle Fusion HCM</div>
                     <div class="tool-chip"><i data-lucide="git-merge"></i>Oracle Integration Cloud</div>
                     <div class="tool-chip"><i data-lucide="building-2"></i>ADP GlobalView</div>
@@ -403,7 +423,7 @@
         <!-- Philosophy Quote -->
         <section class="philosophy-section">
             <div class="container">
-                <blockquote class="philosophy-quote">
+                <blockquote class="philosophy-quote" data-reveal>
                     "True operational excellence isn't just about paying people on time. It's about building a
                     resilient, data-centric infrastructure that empowers global expansion."
                 </blockquote>
@@ -504,9 +524,13 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>/* unpkg is a third party. If it is blocked or slow this must not throw,
+       and if it arrives late the icons still need drawing. */
+        (function () {
+            function icons() { if (window.lucide) window.lucide.createIcons(); }
+            icons();
+            window.addEventListener('load', icons);
+        })();</script>
     <script type="module" src="js/utils.js?v=garnet-v9"></script>
     <script type="module" src="js/navigation.js?v=garnet-v9"></script>
     <script type="module" src="js/main.js?v=garnet-v9"></script>
@@ -592,6 +616,8 @@
 
         </div>
     </div>
+    <!-- Capability graph + scroll reveal -->
+    <script src="js/capability-graph.js?v=garnet-v23" defer></script>
     <script src="js/profile-facts.js?v=garnet-v20"></script>
     <script src="js/answer-composer.js?v=garnet-v20"></script>
     <script src="js/assistant-reasoner.js?v=garnet-v20"></script>

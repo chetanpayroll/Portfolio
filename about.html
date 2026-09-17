@@ -14,6 +14,14 @@
     <!-- ============================================
          CHARACTER SET & VIEWPORT
          ============================================ -->
+    <script>/* Hide-before-reveal is only safe while a controller is alive to undo it:
+       if none reports ready, drop the flag so nothing can stay invisible. */
+        (function (d) {
+            d.classList.add('js-reveal');
+            setTimeout(function () {
+                if (!d.hasAttribute('data-reveal-ready')) d.classList.remove('js-reveal');
+            }, 2500);
+        })(document.documentElement);</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -124,14 +132,14 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/main.css?v=garnet-v9">
-    <link rel="stylesheet" href="css/pages/about.css?v=garnet-v9">
+    <link rel="stylesheet" href="css/pages/about.css?v=garnet-v23">
 
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v21">
 </head>
 
-<body>
+<body class="about-page">
 
     <!-- Navigation -->
     <header class="site-header">
@@ -172,18 +180,24 @@
     <main>
         <!-- Hero Section -->
         <section class="about-hero">
+            <div class="ab-atmos" aria-hidden="true">
+                <span class="ab-grid-lines"></span>
+                <span class="ab-glow ab-glow-a"></span>
+                <span class="ab-glow ab-glow-b"></span>
+                <span class="ab-grain"></span>
+            </div>
             <div class="container">
                 <div class="d-grid grid-2 gap-12 align-center">
                     <div>
-                        <span class="badge mb-4">About Me</span>
-                        <h1 class="mb-4 about-heading">Hi, I'm Chetan Sharma.</h1>
-                        <p class="mb-6 about-intro-text">
+                        <span class="badge mb-4" data-reveal>About Me</span>
+                        <h1 class="mb-4 about-heading" data-reveal>Hi, I'm Chetan Sharma.</h1>
+                        <p class="mb-6 about-intro-text" data-reveal>
                             A payroll professional passionate about operational excellence, process automation, and
                             building systems that scale.
                         </p>
                         <div class="mb-6">
                         </div>
-                        <div class="about-stats-container">
+                        <div class="about-stats-container" data-reveal>
                             <div class="about-stat-item">
                                 <span class="about-stat-number">13+</span>
                                 <span class="about-stat-label">Years Experience</span>
@@ -200,7 +214,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="about-hero-image-container">
+                    <div class="about-hero-image-container" data-reveal>
                         <img src="assets/images/headshot.png?v=garnet-v9" alt="Chetan Sharma - Global Payroll Expert"
                             class="about-hero-img">
                     </div>
@@ -211,8 +225,8 @@
         <!-- My Story -->
         <section class="section-padding">
             <div class="container container-sm">
-                <h2 class="text-center mb-8">My Story</h2>
-                <div class="story-content">
+                <h2 class="text-center mb-8" data-reveal>My Story</h2>
+                <div class="story-content" data-reveal>
                     <p>
                         With over 13 years in global payroll operations, I've had the privilege of working with some of
                         the world's leading organizations to build, migrate, and optimize payroll systems across
@@ -243,8 +257,8 @@
         <!-- What I'm Looking For -->
         <section class="section-padding bg-white section-divider">
             <div class="container container-sm">
-                <h2 class="text-center mb-8">What I'm Looking For</h2>
-                <div class="opportunities-box">
+                <h2 class="text-center mb-8" data-reveal>What I'm Looking For</h2>
+                <div class="opportunities-box" data-reveal>
                     <p class="mb-4 opportunities-intro">I'm currently exploring
                         opportunities where I can:</p>
                     <ul class="opportunities-list">
@@ -265,23 +279,48 @@
             </div>
         </section>
 
-        <!-- Timeline -->
-        <section class="section-padding bg-light">
+                <!-- Career Journey — a scrollytelling spine. Each role's identity lives
+             once, in the sticky stage; the track carries only that role's own
+             record. Nothing is repeated and nothing is hidden from a reader
+             without JavaScript: the stage then simply shows all four in order. -->
+        <section class="section-padding bg-light story-section">
             <div class="container">
-                <h2 class="text-center mb-12">Career Journey</h2>
-                <div class="timeline">
-                    <!-- Vertiv (Current) -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker promotion"><i data-lucide="briefcase"></i>
-                        </div>
-                        <div class="timeline-content">
-                            <div class="timeline-header">
-                                <div>
-                                    <div class="timeline-role">Global Payroll Transformation Manager</div>
-                                    <div class="timeline-company">Vertiv</div>
-                                </div>
-                                <div class="timeline-duration">Mar 2026 - Present</div>
+                <h2 class="text-center mb-12" data-reveal>Career Journey</h2>
+                <div class="story-scroll" id="storyScroll">
+                    <aside class="story-stage">
+                        <div class="story-stage-inner">
+                            <p class="story-index" aria-hidden="true">
+                                <span class="story-index-now">01</span><span class="story-index-of">/ 04</span>
+                            </p>
+                            <div class="story-ids">
+                            <div class="story-id is-on" data-i="0">
+                                <p class="story-id-company">Vertiv</p>
+                                <p class="story-id-role">Global Payroll Transformation Manager</p>
+                                <p class="story-id-date">Mar 2026 - Present</p>
                             </div>
+                            <div class="story-id" data-i="1">
+                                <p class="story-id-company">Deel (formerly Safeguard Pay)</p>
+                                <p class="story-id-role">Global Payroll Implementation Manager</p>
+                                <p class="story-id-date">Oct 2018 - Mar 2026 (7+ Years)</p>
+                            </div>
+                            <div class="story-id" data-i="2">
+                                <p class="story-id-company">Xerex Business Services</p>
+                                <p class="story-id-role">Benefits Administrator</p>
+                                <p class="story-id-date">May 2014 - Jan 2017 (3 Years)</p>
+                            </div>
+                            <div class="story-id" data-i="3">
+                                <p class="story-id-company">AON Hewitt</p>
+                                <p class="story-id-role">HR & Benefits Coordinator</p>
+                                <p class="story-id-date">Apr 2011 - May 2014 (3 Years)</p>
+                            </div>
+                            </div>
+                            <ol class="story-rail" aria-hidden="true">
+                                <li></li><li></li><li></li><li></li>
+                            </ol>
+                        </div>
+                    </aside>
+                    <div class="story-track">
+                        <article class="story-chapter is-on" data-i="0">
                             <ul class="timeline-desc-list">
                                 <li class="mb-2">Leading enterprise global payroll transformation across 54 countries and 179
                                     legal entities, covering 36,720 employees for a NYSE-listed Fortune 500 organization, within a
@@ -302,21 +341,8 @@
                                 <li class="mb-2">Leading ADKAR-based change management across 70+ stakeholders spanning IT, HR,
                                     Finance, Procurement and Operations</li>
                             </ul>
-                        </div>
-                    </div>
-
-                    <!-- Deel (Consolidated) -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker"><i data-lucide="briefcase"></i>
-                        </div>
-                        <div class="timeline-content">
-                            <div class="timeline-header">
-                                <div>
-                                    <div class="timeline-role">Global Payroll Implementation Manager</div>
-                                    <div class="timeline-company">Deel (formerly Safeguard Pay)</div>
-                                </div>
-                                <div class="timeline-duration">Oct 2018 - Mar 2026 (7+ Years)</div>
-                            </div>
+                        </article>
+                        <article class="story-chapter" data-i="1">
                             <ul class="timeline-desc-list">
                                 <li class="mb-2">Led 12+ multi-country payroll implementations (Hong Kong, Singapore,
                                     Indonesia, UAE, Egypt, Israel, United Kingdom), completing 100% within SLA at
@@ -357,20 +383,8 @@
                                     GL/finance systems, banking platforms, and government portals for automated filings
                                 </li>
                             </ul>
-                        </div>
-                    </div>
-
-                    <!-- Xerex -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker"><i data-lucide="briefcase"></i></div>
-                        <div class="timeline-content">
-                            <div class="timeline-header">
-                                <div>
-                                    <div class="timeline-role">Benefits Administrator</div>
-                                    <div class="timeline-company">Xerex Business Services</div>
-                                </div>
-                                <div class="timeline-duration">May 2014 - Jan 2017 (3 Years)</div>
-                            </div>
+                        </article>
+                        <article class="story-chapter" data-i="2">
                             <ul class="timeline-desc-list">
                                 <li class="mb-2">Performed complex benefit processes and calculations on legacy systems
                                     with 99%+ accuracy</li>
@@ -382,20 +396,8 @@
                                     LOA, enrollment, and Medicare eligibility</li>
                                 <li class="mb-2">Processed data for 500+ employees with zero compliance violations</li>
                             </ul>
-                        </div>
-                    </div>
-
-                    <!-- AON -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker"><i data-lucide="briefcase"></i></div>
-                        <div class="timeline-content">
-                            <div class="timeline-header">
-                                <div>
-                                    <div class="timeline-role">HR & Benefits Coordinator</div>
-                                    <div class="timeline-company">AON Hewitt</div>
-                                </div>
-                                <div class="timeline-duration">Apr 2011 - May 2014 (3 Years)</div>
-                            </div>
+                        </article>
+                        <article class="story-chapter" data-i="3">
                             <ul class="timeline-desc-list">
                                 <li class="mb-2">Maintained Vantive HR Portal for 15+ enterprise clients managing 500K+
                                     employee records</li>
@@ -409,16 +411,17 @@
                                 <li class="mb-2">Recognized with Gold Award for Client Value and Benefits Champ Award
                                     for excellence in benefits administration</li>
                             </ul>
-                        </div>
+                        </article>
                     </div>
                 </div>
             </div>
         </section>
 
+
         <!-- Education & Certifications -->
         <section class="section-padding">
             <div class="container education-container">
-                <h2 class="text-center mb-8">Education & Certifications</h2>
+                <h2 class="text-center mb-8" data-reveal>Education & Certifications</h2>
                 <div class="card text-center mb-8">
                     <div class="education-icon-wrapper">
                         <i data-lucide="graduation-cap" class="education-icon"></i>
@@ -557,9 +560,13 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>/* unpkg is a third party. If it is blocked or slow this must not throw,
+       and if it arrives late the icons still need drawing. */
+        (function () {
+            function icons() { if (window.lucide) window.lucide.createIcons(); }
+            icons();
+            window.addEventListener('load', icons);
+        })();</script>
     <script type="module" src="js/utils.js?v=garnet-v9"></script>
     <script type="module" src="js/navigation.js?v=garnet-v9"></script>
     <script type="module" src="js/main.js?v=garnet-v9"></script>
@@ -645,6 +652,8 @@
 
         </div>
     </div>
+    <!-- Career scrollytelling, count-ups and scroll reveal -->
+    <script src="js/about-story.js?v=garnet-v23" defer></script>
     <script src="js/profile-facts.js?v=garnet-v20"></script>
     <script src="js/answer-composer.js?v=garnet-v20"></script>
     <script src="js/assistant-reasoner.js?v=garnet-v20"></script>

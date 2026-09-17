@@ -334,3 +334,571 @@
     .cert-list { grid-template-columns: 1fr; }
     .cert-head { gap: var(--space-3); }
 }
+
+/* ============================================================================
+   PHASE 20 — About as a dark, cinematic career narrative
+   ----------------------------------------------------------------------------
+   Scoped to `.about-page`, which only about.html carries. Words are untouched;
+   the Career Journey's four role identities moved from the track into the
+   sticky stage so each one still exists exactly once on the page.
+   ========================================================================== */
+
+.about-page {
+    --ab-ink: #140F11;
+    --ab-ink-2: #0E0A0C;
+    --ab-line: rgba(255, 255, 255, 0.09);
+    --ab-dim: rgba(255, 255, 255, 0.6);
+    --ab-dimmer: rgba(255, 255, 255, 0.42);
+
+    /* Two-anchor ramp (390px / 1440px) so mobile genuinely shrinks. */
+    --ab-display: clamp(2.375rem, 1.66rem + 2.95vw, 4.5rem);
+    --ab-h2: clamp(1.75rem, 1.4rem + 1.43vw, 2.75rem);
+    --ab-lede: clamp(1.0625rem, 1rem + 0.29vw, 1.3125rem);
+
+    --ab-pace: clamp(4.5rem, 7.5vw, 7.5rem);
+    --ab-r: 18px;
+
+    background: var(--ab-ink);
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.about-page button,
+.about-page input,
+.about-page select,
+.about-page textarea {
+    font-family: inherit;
+}
+
+/* ---- Dark shell: repaint the light sections this page inherits ---- */
+
+.about-page main,
+.about-page .section-padding,
+.about-page .bg-white,
+.about-page .bg-light {
+    background: transparent;
+    color: inherit;
+}
+
+.about-page .section-padding {
+    padding: var(--ab-pace) 0;
+}
+
+.about-page h1,
+.about-page h2,
+.about-page h3 {
+    color: #fff;
+}
+
+.about-page h2 {
+    font-size: var(--ab-h2);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+.about-page p {
+    color: var(--ab-dim);
+}
+
+.about-page .section-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.about-page .card {
+    background: linear-gradient(168deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 100%);
+    border: 1px solid var(--ab-line);
+    border-radius: var(--ab-r);
+    box-shadow: none;
+}
+
+/* Header sits transparent over the dark hero, then solidifies. */
+.about-page .site-header {
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+
+.about-page.is-scrolled .site-header {
+    background: rgba(15, 11, 13, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.about-page .site-header .logo,
+.about-page .site-header .nav-link {
+    color: #fff;
+}
+
+.about-page .site-header .nav-link:hover {
+    color: var(--color-primary-light, #FF6B8F);
+}
+
+.about-page .mobile-menu-toggle {
+    color: #fff;
+    min-width: 44px;
+    min-height: 44px;
+}
+
+/* ---- Hero ---- */
+
+.about-page .about-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(7rem, 11vw, 10rem) 0 var(--ab-pace);
+    background: radial-gradient(120% 90% at 18% 0%, #241820 0%, #140F11 58%, #0E0A0C 100%);
+}
+
+.ab-atmos {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.ab-grid-lines {
+    position: absolute;
+    inset: -10%;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 68px 68px;
+    mask-image: radial-gradient(70% 65% at 40% 35%, #000 0%, transparent 100%);
+    -webkit-mask-image: radial-gradient(70% 65% at 40% 35%, #000 0%, transparent 100%);
+}
+
+.ab-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+}
+
+.ab-glow-a {
+    width: 44vw;
+    height: 44vw;
+    max-width: 620px;
+    max-height: 620px;
+    top: -16%;
+    left: -10%;
+    background: rgba(225, 29, 72, 0.2);
+}
+
+.ab-glow-b {
+    width: 34vw;
+    height: 34vw;
+    max-width: 480px;
+    max-height: 480px;
+    bottom: -18%;
+    right: -4%;
+    background: rgba(127, 16, 39, 0.26);
+}
+
+.ab-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.about-page .about-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.about-page .about-heading {
+    font-size: var(--ab-display);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+}
+
+.about-page .about-intro-text {
+    font-size: var(--ab-lede);
+    line-height: 1.6;
+    color: var(--ab-dim);
+    max-width: 32rem;
+}
+
+.about-page .badge {
+    background: rgba(225, 29, 72, 0.16);
+    border: 1px solid rgba(225, 29, 72, 0.4);
+    color: var(--color-primary-light, #FF6B8F);
+}
+
+.about-page .about-stat-number {
+    font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-primary-light, #FF6B8F);
+}
+
+.about-page .about-stat-label {
+    color: var(--ab-dimmer);
+}
+
+.about-page .stat-divider {
+    background: var(--ab-line);
+}
+
+.about-page .about-hero-img {
+    border-radius: var(--ab-r);
+    box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.95);
+}
+
+/* ---- Story + opportunities ---- */
+
+.about-page .story-content p {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+}
+
+.about-page .story-content strong {
+    color: #fff;
+}
+
+.about-page .opportunities-box {
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    border-radius: var(--ab-r);
+    border: 1px solid var(--ab-line);
+    border-left: 3px solid var(--color-primary, #E11D48);
+    background: linear-gradient(168deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 100%);
+}
+
+.about-page .opportunity-item {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+/* ---- Career Journey: sticky stage + scrolling track ---- */
+
+.about-page .story-section {
+    background:
+        radial-gradient(90% 60% at 50% 0%, rgba(225, 29, 72, 0.07) 0%, transparent 62%),
+        var(--ab-ink-2);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.story-scroll {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+}
+
+/* Centre the panel in the viewport rather than pinning it near the top, so
+   the space around it reads as composition instead of as a gap. */
+.story-stage {
+    position: sticky;
+    top: max(6rem, calc(50vh - 150px));
+}
+
+.story-index {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin: 0 0 var(--space-5);
+    font-variant-numeric: tabular-nums;
+}
+
+.story-index-now {
+    font-size: clamp(2.5rem, 2rem + 2vw, 4rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: #fff;
+}
+
+.story-index-of {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* Before the controller is alive, every role is listed in order: that is the
+   no-JS reading. Once it is live, they stack and cross-fade. */
+.story-ids {
+    display: grid;
+    gap: var(--space-5);
+}
+
+.story-scroll.is-live .story-ids {
+    display: grid;
+    gap: 0;
+    min-height: 8.5rem;
+}
+
+.story-scroll.is-live .story-id {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.story-scroll.is-live .story-id.is-on {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+.story-id-company {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.5rem, 1.2rem + 1.15vw, 2.375rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    color: #fff !important;
+}
+
+.story-id-role {
+    margin: 0 0 0.4rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-primary-light, #FF6B8F) !important;
+}
+
+.story-id-date {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.story-rail {
+    display: flex;
+    gap: 6px;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.story-rail li {
+    height: 3px;
+    width: 34px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    transition: background-color 0.45s ease, width 0.45s ease;
+}
+
+.story-rail li.is-past {
+    background: rgba(225, 29, 72, 0.45);
+}
+
+.story-rail li.is-on {
+    width: 52px;
+    background: var(--color-primary, #E11D48);
+}
+
+.story-track {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+}
+
+.story-chapter {
+    padding: clamp(1.5rem, 2.6vw, 2.25rem);
+    border-radius: var(--ab-r);
+    border: 1px solid var(--ab-line);
+    background: linear-gradient(168deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
+    transition: border-color 0.5s ease, background-color 0.5s ease, opacity 0.5s ease;
+}
+
+/* De-emphasise what you are not reading — but only as far as still-readable,
+   and not at all for a reader who asked for less movement. */
+.story-scroll.is-live .story-chapter.is-on {
+    border-color: rgba(225, 29, 72, 0.4);
+    background: linear-gradient(168deg, rgba(225, 29, 72, 0.09) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .story-scroll.is-live .story-chapter {
+        opacity: 0.72;
+    }
+
+    .story-scroll.is-live .story-chapter.is-on {
+        opacity: 1;
+    }
+}
+
+.about-page .timeline-desc-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.9rem;
+}
+
+.about-page .timeline-desc-list li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.about-page .timeline-desc-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-primary, #E11D48);
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.16);
+}
+
+/* ---- Education & certifications ---- */
+
+.about-page .education-icon-wrapper,
+.about-page .cert-head .education-icon {
+    color: var(--color-primary-light, #FF6B8F);
+}
+
+.about-page .education-title {
+    color: #fff;
+}
+
+.about-page .education-org,
+.about-page .cert-desc {
+    color: var(--ab-dimmer);
+}
+
+.about-page .cert-item {
+    border: 1px solid var(--ab-line);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease;
+}
+
+.about-page .cert-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(225, 29, 72, 0.4);
+}
+
+.about-page .cert-name {
+    color: #fff;
+}
+
+/* ---- CTA ---- */
+
+.about-page .about-cta-section {
+    background:
+        radial-gradient(80% 120% at 50% 0%, rgba(225, 29, 72, 0.25) 0%, transparent 70%),
+        #170F13;
+}
+
+.about-page .about-cta-subtitle {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* ---- Reveal ---- */
+
+@media (prefers-reduced-motion: no-preference) {
+    .js-reveal .about-page [data-reveal] {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .js-reveal .about-page [data-reveal].is-in {
+        opacity: 1;
+        transform: none;
+        transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 991px) {
+    .story-scroll {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-6);
+    }
+
+    /* The stage becomes a compact bar that rides above the chapter you are
+       reading, rather than a column beside it. */
+    /* The site header is fixed at 81px here (measured, not assumed), so the
+       bar parks just clear of it. */
+    .story-stage {
+        position: sticky;
+        top: 89px;
+        z-index: 5;
+        padding: 0.7rem 0.9rem;
+        border-radius: 14px;
+        border: 1px solid var(--ab-line);
+        background: rgba(14, 10, 12, 0.94);
+        backdrop-filter: blur(10px);
+    }
+
+    /* On a phone this bar is permanently on screen, so it has to stay small:
+       index beside the identity rather than above it, and tight type. */
+    .story-stage-inner {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        column-gap: 0.7rem;
+        align-items: start;
+    }
+
+    .story-index {
+        margin: 0;
+        padding-right: 0.7rem;
+        border-right: 1px solid var(--ab-line);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+    }
+
+    .story-index-now {
+        font-size: 1.375rem;
+    }
+
+    .story-index-of {
+        font-size: 0.6rem;
+    }
+
+    .story-scroll.is-live .story-ids {
+        min-height: 3.4rem;
+    }
+
+    .story-id-company {
+        font-size: 1.0625rem;
+        margin-bottom: 0.15rem;
+    }
+
+    .story-id-role {
+        font-size: 0.78rem;
+        margin-bottom: 0.15rem;
+    }
+
+    .story-id-date {
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+    }
+
+    .story-rail {
+        grid-column: 1 / -1;
+        margin-top: 0.6rem;
+    }
+
+    .story-rail li {
+        width: 100%;
+        height: 2px;
+    }
+
+    /* Anything scrolled to must clear the header and this bar. */
+    .story-chapter {
+        scroll-margin-top: 190px;
+    }
+}
+
+@media (max-width: 767px) {
+    .about-page .d-grid.grid-2 {
+        gap: var(--space-8);
+    }
+
+    .about-page .about-stats-container {
+        gap: var(--space-4);
+    }
+}
