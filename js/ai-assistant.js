@@ -22,7 +22,11 @@ class ProfileAssistant {
 
         if (!this.chatToggle || !this.chatWindow || !this.chatMessages) return;
 
+        this.container = document.getElementById('ai-assistant-container')
+            || this.chatWindow.parentElement;
         this.isOpen = false;
+        this.isExpanded = false;
+        this.workspaceBuilt = false;
         this.isProcessing = false;
         this.usesHiddenClass = this.chatWindow.classList.contains('hidden');
 
@@ -86,6 +90,7 @@ class ProfileAssistant {
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.isOpen) {
+                if (this.isExpanded) { this.toggleExpand(false); return; }
                 this.closeChat();
                 return;
             }
@@ -103,6 +108,217 @@ class ProfileAssistant {
         this.restoreTranscript();
         this.setupNudge();
         this.setupExport();
+        this.setupExpand();
+        this.setupSlashCommands();
+    }
+
+    /** Composer intents are internal ids; these are their human labels. */
+    prettyIntent(intent) {
+        const MAP = {
+            'computed-tenure': 'Computed from role dates',
+            'computed-year': 'Computed from role dates',
+            'computed-compare-roles': 'Side-by-side comparison',
+            'computed-compare-countries': 'Side-by-side comparison',
+            'computed-multi': 'Two answers combined',
+            'computed-country-carry': 'Following on from your last question'
+        };
+        if (!intent) return intent;
+        if (MAP[intent]) return MAP[intent];
+        return /^computed-/.test(intent)
+            ? intent.replace(/^computed-/, '').replace(/-/g, ' ')
+            : intent;
+    }
+
+    /* ================= Workspace (expanded) mode ================= */
+
+    setupExpand() {
+        const header = this.chatWindow.querySelector('.chat-header');
+        if (!header || header.querySelector('.chat-expand-btn')) return;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chat-expand-btn';
+        btn.setAttribute('aria-label', 'Expand to full screen');
+        btn.title = 'Expand (full screen)';
+        btn.innerHTML = this.expandIcon(false);
+        btn.addEventListener('click', () => this.toggleExpand());
+
+        const exportBtn = header.querySelector('.chat-export-btn');
+        header.insertBefore(btn, exportBtn || header.querySelector('.chat-close-btn'));
+
+        this.scrim = document.createElement('div');
+        this.scrim.className = 'chat-scrim';
+        this.scrim.addEventListener('click', () => this.toggleExpand(false));
+        this.container.appendChild(this.scrim);
+    }
+
+    expandIcon(expanded) {
+        return expanded
+            ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>'
+            : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>';
+    }
+
+    toggleExpand(force) {
+        const next = typeof force === 'boolean' ? force : !this.isExpanded;
+        this.isExpanded = next;
+        this.container.classList.toggle('is-expanded', next);
+        document.body.classList.toggle('chat-expanded', next);
+
+        const btn = this.chatWindow.querySelector('.chat-expand-btn');
+        if (btn) {
+            btn.innerHTML = this.expandIcon(next);
+            btn.setAttribute('aria-label', next ? 'Exit full screen' : 'Expand to full screen');
+            btn.title = next ? 'Exit full screen' : 'Expand (full screen)';
+        }
+
+        if (next) this.buildWorkspace();
+        this.scrollToBottom();
+        if (window.gtag) window.gtag('event', next ? 'chat_expand' : 'chat_collapse');
+    }
+
+    /** Side panels exist only in expanded mode; built once, on first expand. */
+    buildWorkspace() {
+        if (this.workspaceBuilt) return;
+        this.workspaceBuilt = true;
+
+        const rail = document.createElement('aside');
+        rail.className = 'chat-rail';
+        rail.innerHTML = `
+            <p class="rail-title">Start here</p>
+            <button type="button" class="rail-item" data-question="What is his experience?">Experience &amp; roles</button>
+            <button type="button" class="rail-item" data-question="Which countries has he worked with?">Countries &amp; compliance</button>
+            <button type="button" class="rail-item" data-question="Tell me about the Vertiv programme">Vertiv programme</button>
+            <button type="button" class="rail-item" data-question="What tools does he use?">Tools &amp; stack</button>
+            <button type="button" class="rail-item" data-question="What are his achievements?">Achievements</button>
+            <p class="rail-title">Do something</p>
+            <button type="button" class="rail-item" data-question="Match a job description">Match a job description</button>
+            <button type="button" class="rail-item" data-question="Book a meeting">Book a meeting</button>
+        `;
+        rail.addEventListener('click', (e) => {
+            const item = e.target.closest('.rail-item');
+            if (item) this.handleUserMessage(item.dataset.question);
+        });
+
+        const panel = document.createElement('aside');
+        panel.className = 'chat-eviscope';
+        panel.innerHTML = `
+            <p class="rail-title">How this answer was built</p>
+            <div class="evi-body"><p class="evi-empty">Ask something and the working behind the answer shows up here.</p></div>
+            <div class="evi-stats"></div>
+        `;
+
+        this.chatWindow.appendChild(rail);
+        this.chatWindow.appendChild(panel);
+        this.eviBody = panel.querySelector('.evi-body');
+        this.eviStats = panel.querySelector('.evi-stats');
+        this.renderKbStats();
+    }
+
+    /** Real counts from the loaded modules — nothing decorative. */
+    renderKbStats() {
+        if (!this.eviStats) return;
+        const cards = (window.AssistantKB && window.AssistantKB.KB) ? window.AssistantKB.KB.length : 0;
+        const facts = (window.AssistantReasoner && window.AssistantReasoner.EVIDENCE) ? window.AssistantReasoner.EVIDENCE.length : 0;
+        const roles = (window.ProfileFacts && window.ProfileFacts.ROLES) ? window.ProfileFacts.ROLES.length : 0;
+        const countries = (window.ProfileFacts && window.ProfileFacts.COUNTRIES) ? Object.keys(window.ProfileFacts.COUNTRIES).length : 0;
+        this.eviStats.innerHTML = `
+            <p class="rail-title">Knowledge base</p>
+            <ul class="evi-kb">
+                <li><strong>${cards}</strong> answer cards</li>
+                <li><strong>${facts}</strong> evidence facts</li>
+                <li><strong>${roles}</strong> roles &middot; <strong>${countries}</strong> countries documented</li>
+            </ul>
+            <p class="evi-note">Answers are composed from this record only. Nothing is generated.</p>
+        `;
+    }
+
+    updateEvidence(result) {
+        if (!this.eviBody) return;
+        const c = result.composed;
+        const label = c ? this.prettyIntent(c.intent) : (result.card ? result.card.intent : null);
+        const source = c ? c.source : null;
+        const text = c ? c.answer : (result.card ? result.card.answer : '');
+        const facts = (text.match(/^• .+$/gm) || []).map(l => l.replace(/^• /, ''));
+
+        if (!label) {
+            this.eviBody.innerHTML = '<p class="evi-empty">No confident match — the assistant offered options instead of guessing.</p>';
+            return;
+        }
+
+        const route = c ? (result.intent && /computed/.test(result.intent) ? 'Computed from the fact graph' : 'Composed from the fact graph')
+            : 'Matched a written answer card';
+
+        let html = `<p class="evi-route">${route}</p><p class="evi-label">${this.escapeHtml(label)}</p>`;
+        if (facts.length) {
+            html += '<ul class="evi-facts">' + facts.map(f =>
+                `<li>${this.formatMessage(f)}</li>`).join('') + '</ul>';
+        }
+        if (source && source.href) {
+            html += `<a class="evi-source" href="${source.href}">Source: ${this.escapeHtml(source.label)} &rarr;</a>`;
+        }
+        this.eviBody.innerHTML = html;
+    }
+
+    /* ================= Slash commands ================= */
+
+    setupSlashCommands() {
+        const COMMANDS = [
+            { cmd: '/experience', label: 'Career and roles', q: 'What is his experience?' },
+            { cmd: '/countries', label: 'Countries and compliance', q: 'Which countries has he worked with?' },
+            { cmd: '/vertiv', label: 'The Vertiv programme', q: 'Tell me about the Vertiv programme' },
+            { cmd: '/tools', label: 'Tools and stack', q: 'What tools does he use?' },
+            { cmd: '/compare', label: 'Compare two roles', q: 'Compare Deel vs Vertiv' },
+            { cmd: '/match', label: 'Match a job description', q: 'Match a job description' },
+            { cmd: '/book', label: 'Book a 30-minute call', q: 'Book a meeting' },
+            { cmd: '/why', label: 'The case for hiring him', q: 'Give me three reasons to interview him' }
+        ];
+
+        const menu = document.createElement('div');
+        menu.className = 'slash-menu';
+        menu.setAttribute('role', 'listbox');
+        this.chatInput.parentElement.appendChild(menu);
+        this.slashMenu = menu;
+
+        const render = (filter) => {
+            const hits = COMMANDS.filter(c => c.cmd.indexOf(filter) === 0);
+            if (!hits.length) { menu.classList.remove('open'); return; }
+            menu.innerHTML = hits.map((c, i) =>
+                `<button type="button" class="slash-item${i === 0 ? ' active' : ''}" data-q="${c.q}">
+                    <span class="slash-cmd">${c.cmd}</span><span class="slash-label">${c.label}</span>
+                 </button>`).join('');
+            menu.classList.add('open');
+        };
+
+        this.chatInput.addEventListener('input', () => {
+            const v = this.chatInput.value;
+            if (v.charAt(0) === '/') render(v.trim()); else menu.classList.remove('open');
+        });
+
+        menu.addEventListener('click', (e) => {
+            const item = e.target.closest('.slash-item');
+            if (!item) return;
+            this.chatInput.value = '';
+            menu.classList.remove('open');
+            this.handleUserMessage(item.dataset.q);
+        });
+
+        this.chatInput.addEventListener('keydown', (e) => {
+            if (!menu.classList.contains('open')) return;
+            const items = [...menu.querySelectorAll('.slash-item')];
+            const idx = items.findIndex(i => i.classList.contains('active'));
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                const next = e.key === 'ArrowDown'
+                    ? Math.min(idx + 1, items.length - 1) : Math.max(idx - 1, 0);
+                items.forEach(i => i.classList.remove('active'));
+                items[next].classList.add('active');
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                items[Math.max(idx, 0)].click();
+            } else if (e.key === 'Escape') {
+                menu.classList.remove('open');
+            }
+        });
     }
 
     /* ================= Guided journeys ================= */
@@ -398,8 +614,12 @@ class ProfileAssistant {
 
     /* ================= Message flow ================= */
 
-    handleUserMessage() {
-        const message = this.chatInput.value.trim();
+    /** `preset` lets the side rail and slash menu send a question directly;
+        every existing caller passes nothing and reads the input as before. */
+    handleUserMessage(preset) {
+        const message = (typeof preset === 'string' && preset.trim())
+            ? preset.trim()
+            : this.chatInput.value.trim();
         if (!message || this.isProcessing) return;
 
         this.addMessage(message, 'user');
@@ -410,16 +630,18 @@ class ProfileAssistant {
         if (quickActions) quickActions.style.display = 'none';
         this.clearSuggestions();
 
-        this.showTyping();
         this.isProcessing = true;
 
         const result = this.engine.match(message);
         this.trackQuery(message, result);
 
+        this.showTyping(result);
+
         const delay = this.reduceMotion ? 200 : 500 + Math.random() * 400;
         setTimeout(() => {
             this.hideTyping();
             this.renderResult(result);
+            this.updateEvidence(result);
             this.isProcessing = false;
         }, delay);
     }
@@ -435,7 +657,7 @@ class ProfileAssistant {
                 htmlExtra: c.htmlExtra,
                 source: c.source,
                 followUps: c.followUps,
-                reasoning: c.intent
+                reasoning: this.prettyIntent(c.intent)
             });
             return;
         }
@@ -657,7 +879,23 @@ class ProfileAssistant {
             .replace(/\n/g, '</p><p>');
     }
 
-    showTyping() {
+    /**
+     * The indicator names the work that actually happened for this answer
+     * instead of showing three meaningless dots. The wait itself is the same
+     * as before — this only labels it.
+     */
+    showTyping(result) {
+        const cards = (window.AssistantKB && window.AssistantKB.KB) ? window.AssistantKB.KB.length : 0;
+        const facts = (window.AssistantReasoner && window.AssistantReasoner.EVIDENCE)
+            ? window.AssistantReasoner.EVIDENCE.length : 0;
+
+        let stage = 'Searching the record';
+        if (result) {
+            if (result.composed) stage = 'Composing from ' + facts + ' evidence facts';
+            else if (result.card) stage = 'Matched against ' + cards + ' answer cards';
+            else stage = 'No confident match — checking alternatives';
+        }
+
         const typingDiv = document.createElement('div');
         typingDiv.className = 'message assistant-message';
         typingDiv.id = 'typing-indicator';
@@ -666,6 +904,7 @@ class ProfileAssistant {
                 <div class="typing-dot"></div>
                 <div class="typing-dot"></div>
                 <div class="typing-dot"></div>
+                <span class="typing-stage">${this.escapeHtml(stage)}</span>
             </div>
         `;
         this.chatMessages.appendChild(typingDiv);
