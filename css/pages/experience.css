@@ -345,3 +345,449 @@
     background: #ea580c;
     border-color: #ea580c;
 }
+/* ============================================================================
+   PHASE 22 — Experience as an interrogable record
+   ----------------------------------------------------------------------------
+   Scoped to `.experience-page`, which only experience.html carries. Three
+   constraints borrowed from Apple's HIG and treated as testable, not as mood:
+   clarity (one accent, real hierarchy), deference (chrome recedes behind the
+   record), depth (distinct material layers, motion that explains what changed).
+   Words are untouched.
+   ========================================================================== */
+
+.experience-page {
+    --xr-ink: #140F11;
+    --xr-ink-2: #0E0A0C;
+    --xr-line: rgba(255, 255, 255, 0.09);
+    --xr-dim: rgba(255, 255, 255, 0.62);
+    --xr-dimmer: rgba(255, 255, 255, 0.44);
+
+    /* Two-anchor ramp (390px / 1440px) so the small end genuinely shrinks. */
+    --xr-display: clamp(2.25rem, 1.57rem + 2.8vw, 4.25rem);
+    --xr-h2: clamp(1.75rem, 1.4rem + 1.43vw, 2.75rem);
+    --xr-lede: clamp(1.0625rem, 1rem + 0.29vw, 1.25rem);
+
+    --xr-pace: clamp(4.5rem, 7.5vw, 7.5rem);
+    --xr-r: 18px;
+    --xr-r-sm: 10px;
+
+    /* Apple's own minimum, not a guess. */
+    --xr-tap: 44px;
+
+    background: var(--xr-ink);
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.experience-page button,
+.experience-page input,
+.experience-page select,
+.experience-page textarea {
+    font-family: inherit;
+}
+
+/* ---- Repaint the light-locked shell ---- */
+
+.experience-page main,
+.experience-page .section-padding {
+    background: transparent;
+    padding-top: var(--xr-pace);
+    padding-bottom: var(--xr-pace);
+}
+
+.experience-page h1,
+.experience-page h2,
+.experience-page h3 {
+    color: #fff;
+}
+
+.experience-page h2 {
+    font-size: var(--xr-h2);
+    line-height: 1.1;
+    /* Optical scale: tracking tightens as size grows. */
+    letter-spacing: -0.03em;
+}
+
+.experience-page .experience-hero {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(120% 90% at 18% 0%, #241820 0%, #140F11 58%, #0E0A0C 100%);
+    padding: clamp(7rem, 11vw, 10rem) 0 clamp(3rem, 5vw, 4.5rem);
+}
+
+.experience-page .experience-hero h1 {
+    font-size: var(--xr-display);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+}
+
+.experience-page .experience-hero p {
+    font-size: var(--xr-lede);
+    line-height: 1.6;
+    color: var(--xr-dim);
+}
+
+.experience-page .site-header {
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+
+.experience-page.is-scrolled .site-header {
+    background: rgba(15, 11, 13, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.experience-page .site-header .logo,
+.experience-page .site-header .nav-link {
+    color: #fff;
+}
+
+/* The shared .badge is a light chip (#F3EFEF on #3A3032) — invisible language
+   on a dark hero. Same garnet treatment the other pages use. */
+.experience-page .experience-hero .badge {
+    background: rgba(225, 29, 72, 0.16);
+    border: 1px solid rgba(225, 29, 72, 0.4);
+    color: var(--color-primary-light, #FF6B8F);
+}
+
+.experience-page .mobile-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--xr-tap);
+    min-height: var(--xr-tap);
+    color: #fff;
+}
+
+/* ---- Capability filter ---- */
+
+.xr-filter {
+    position: sticky;
+    /* The site header is fixed at 81px (measured). Safe-area inset only
+       resolves because this page sets viewport-fit=cover. */
+    top: calc(81px + env(safe-area-inset-top, 0px));
+    z-index: 20;
+    padding: 0.75rem 0;
+    /* Deference: a material the record shows through, not a painted band. */
+    background: rgba(14, 10, 12, 0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--xr-line);
+}
+
+.xr-filter[hidden] { display: none; }
+
+.xr-filter-label {
+    margin: 0 0 0.5rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--xr-dimmer);
+}
+
+.xr-chips {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+}
+
+.xr-chips::-webkit-scrollbar { display: none; }
+
+.xr-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: none;
+    scroll-snap-align: start;
+    min-height: var(--xr-tap);
+    padding: 0 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--xr-line);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.xr-chip:hover:not(:disabled),
+.xr-chip:focus-visible {
+    border-color: rgba(225, 29, 72, 0.5);
+    color: #fff;
+}
+
+/* Clarity: one accent, and it marks exactly one thing — the active filter. */
+.xr-chip.is-on {
+    background: var(--color-primary, #E11D48);
+    border-color: var(--color-primary, #E11D48);
+    color: #fff;
+}
+
+.xr-chip:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.xr-chip-count {
+    font-variant-numeric: tabular-nums;
+    font-size: 0.72rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.xr-chip.is-on .xr-chip-count {
+    background: rgba(0, 0, 0, 0.22);
+    color: #fff;
+}
+
+.xr-count {
+    margin: 0.6rem 0 0;
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--xr-dimmer);
+}
+
+/* ---- The record ---- */
+
+.experience-page .timeline::before {
+    background: linear-gradient(180deg, transparent, var(--xr-line) 12%,
+                var(--xr-line) 88%, transparent);
+}
+
+.experience-page .timeline-marker {
+    background: var(--xr-ink);
+    border-color: rgba(225, 29, 72, 0.55);
+}
+
+.experience-page .timeline-content {
+    background: linear-gradient(168deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 100%);
+    border: 1px solid var(--xr-line);
+    border-radius: var(--xr-r);
+    box-shadow: none;
+    transition: opacity 0.45s ease, border-color 0.45s ease;
+}
+
+.experience-page .role-header {
+    border-bottom-color: var(--xr-line);
+}
+
+.experience-page .role-title { color: #fff; }
+.experience-page .role-company { color: var(--color-primary-light, #FF6B8F); }
+.experience-page .role-meta { color: var(--xr-dimmer); }
+
+.experience-page .role-achievements li {
+    color: rgba(255, 255, 255, 0.78);
+    /* Depth: entries leave, and you see them leave. */
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* A record dense enough to scan, not to read — two columns where there is room.
+   This is what keeps it from being About's page a second time. */
+@media (min-width: 1100px) {
+    .experience-page .role-achievements {
+        columns: 2;
+        column-gap: 2.25rem;
+    }
+
+    .experience-page .role-achievements li {
+        break-inside: avoid;
+        -webkit-column-break-inside: avoid;
+    }
+}
+
+.experience-page .role-achievements li.is-out {
+    display: none;
+}
+
+.experience-page .timeline-item.is-empty .timeline-content {
+    opacity: 0.32;
+}
+
+.experience-page .timeline-item.is-empty .role-achievements {
+    display: none;
+}
+
+/* ---- Skills, as the filter's legend ---- */
+
+.experience-page .skills-section {
+    background: var(--xr-ink-2);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: var(--xr-pace) 0;
+}
+
+.experience-page .section-title { color: #fff; }
+.experience-page .section-subtitle { color: var(--xr-dim); }
+
+.experience-page .section-icon {
+    background: rgba(225, 29, 72, 0.16);
+    border: 1px solid rgba(225, 29, 72, 0.3);
+}
+
+.experience-page .skill-card {
+    background: linear-gradient(168deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 100%);
+    border: 1px solid var(--xr-line);
+    border-radius: var(--xr-r);
+    box-shadow: none;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.4s ease, background-color 0.4s ease;
+}
+
+.experience-page .skill-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(225, 29, 72, 0.42);
+}
+
+.experience-page .skill-card.is-on {
+    border-color: var(--color-primary, #E11D48);
+    background: linear-gradient(168deg, rgba(225, 29, 72, 0.14) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+/* Clarity: six competing pastel hues collapse to one accent. The cards are
+   told apart by their icon and their name, which is what actually reads. */
+.experience-page .skill-icon {
+    background: linear-gradient(140deg, rgba(225, 29, 72, 0.9), rgba(127, 16, 39, 0.75));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.experience-page .skill-icon svg {
+    stroke: #fff;
+}
+
+.experience-page .skill-card-title { color: #fff; }
+.experience-page .skill-accent { color: var(--color-primary-light, #FF6B8F); }
+
+.experience-page .skill-tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--xr-line);
+    color: rgba(255, 255, 255, 0.74);
+    border-radius: var(--xr-r-sm);
+}
+
+.experience-page .skill-card:nth-child(n) .skill-tag:hover {
+    border-color: rgba(225, 29, 72, 0.5);
+    background: rgba(225, 29, 72, 0.12);
+    color: #fff;
+}
+
+/* ---- Looking for next ---- */
+
+.experience-page .card-light {
+    background: linear-gradient(168deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 100%);
+    border: 1px solid var(--xr-line);
+    border-radius: var(--xr-r);
+}
+
+.experience-page .card-light h3 { color: #fff; }
+.experience-page .target-list { color: rgba(255, 255, 255, 0.78); }
+
+/* ---- CTA (already dark; only the heading level changed) ---- */
+
+.experience-page .experience-cta h2 {
+    font-size: var(--xr-h2);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #fff;
+}
+
+/* ---- Reveal ---- */
+
+@media (prefers-reduced-motion: no-preference) {
+    .js-reveal .experience-page [data-reveal] {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .js-reveal .experience-page [data-reveal].is-in {
+        opacity: 1;
+        transform: none;
+        transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+}
+
+/* ---- Honouring the user's own settings ----
+   The design leans on vibrancy, so reduced-transparency gets a real opaque
+   fallback rather than a blurred surface it asked not to see. */
+
+@media (prefers-reduced-transparency: reduce) {
+    .xr-filter {
+        background: #0E0A0C;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .experience-page.is-scrolled .site-header {
+        background: #0F0B0D;
+        backdrop-filter: none;
+    }
+}
+
+@media (prefers-contrast: more) {
+    .experience-page {
+        --xr-line: rgba(255, 255, 255, 0.28);
+        --xr-dim: rgba(255, 255, 255, 0.82);
+        --xr-dimmer: rgba(255, 255, 255, 0.7);
+    }
+
+    .experience-page .role-achievements li {
+        color: rgba(255, 255, 255, 0.95);
+    }
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 991px) {
+    .xr-filter {
+        top: calc(81px + env(safe-area-inset-top, 0px));
+    }
+}
+
+@media (max-width: 640px) {
+    .xr-filter {
+        padding: 0.55rem 0;
+    }
+
+    /* The bar is permanently on screen here, so the label and the count share
+       one line instead of costing two. */
+    .xr-filter-inner {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: baseline;
+        column-gap: 0.6rem;
+    }
+
+    .xr-filter-label {
+        margin-bottom: 0.4rem;
+    }
+
+    .xr-count {
+        margin: 0 0 0.4rem;
+        text-align: right;
+    }
+
+    .xr-chips {
+        grid-column: 1 / -1;
+    }
+
+    .xr-chips {
+        /* Let the row bleed to the screen edge so it reads as scrollable. */
+        margin: 0 calc(var(--space-4) * -1);
+        padding: 0 var(--space-4) 2px;
+    }
+
+    .xr-count {
+        margin-top: 0.45rem;
+    }
+}

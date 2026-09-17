@@ -14,8 +14,16 @@
     <!-- ============================================
          CHARACTER SET & VIEWPORT
          ============================================ -->
+    <script>/* Hide-before-reveal is only safe while a controller is alive to undo it:
+       if none reports ready, drop the flag so nothing can stay invisible. */
+        (function (d) {
+            d.classList.add('js-reveal');
+            setTimeout(function () {
+                if (!d.hasAttribute('data-reveal-ready')) d.classList.remove('js-reveal');
+            }, 2500);
+        })(document.documentElement);</script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- PRIMARY META TAGS -->
@@ -152,12 +160,12 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/main.css?v=garnet-v9">
-    <link rel="stylesheet" href="css/pages/experience.css?v=garnet-v9">
+    <link rel="stylesheet" href="css/pages/experience.css?v=garnet-v24">
 
     <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v21">
 </head>
 
-<body>
+<body class="experience-page">
 
 
     <!-- Navigation -->
@@ -208,11 +216,32 @@
         </section>
 
         <!-- Detailed Timeline -->
+
+        <!-- Capability filter. Single-select, so the correct ARIA is a radio group
+             rather than toggle buttons. Inert and invisible without JS: the record
+             below is complete either way. -->
+        <div class="xr-filter" id="xrFilter" hidden>
+            <div class="container">
+                <div class="xr-filter-inner">
+                    <p class="xr-filter-label" id="xrFilterLabel">Filter the record</p>
+                    <div class="xr-chips" role="radiogroup" aria-labelledby="xrFilterLabel">
+                        <button type="button" class="xr-chip is-on" role="radio" aria-checked="true" tabindex="0" data-cat="all"><span class="xr-chip-label">All</span><span class="xr-chip-count" aria-hidden="true"></span></button>
+                        <button type="button" class="xr-chip" role="radio" aria-checked="false" tabindex="-1" data-cat="payroll"><span class="xr-chip-label">Payroll &amp; Compliance</span><span class="xr-chip-count" aria-hidden="true"></span></button>
+                        <button type="button" class="xr-chip" role="radio" aria-checked="false" tabindex="-1" data-cat="systems"><span class="xr-chip-label">Systems &amp; Vendors</span><span class="xr-chip-count" aria-hidden="true"></span></button>
+                        <button type="button" class="xr-chip" role="radio" aria-checked="false" tabindex="-1" data-cat="global"><span class="xr-chip-label">Global Compliance</span><span class="xr-chip-count" aria-hidden="true"></span></button>
+                        <button type="button" class="xr-chip" role="radio" aria-checked="false" tabindex="-1" data-cat="automation"><span class="xr-chip-label">Automation &amp; AI</span><span class="xr-chip-count" aria-hidden="true"></span></button>
+                        <button type="button" class="xr-chip" role="radio" aria-checked="false" tabindex="-1" data-cat="leadership"><span class="xr-chip-label">Leadership</span><span class="xr-chip-count" aria-hidden="true"></span></button>
+                        <button type="button" class="xr-chip" role="radio" aria-checked="false" tabindex="-1" data-cat="tools"><span class="xr-chip-label">Tools &amp; Platforms</span><span class="xr-chip-count" aria-hidden="true"></span></button>
+                    </div>
+                    <p class="xr-count" role="status" aria-live="polite"></p>
+                </div>
+            </div>
+        </div>
         <section class="section-padding">
             <div class="container">
                 <div class="timeline">
                     <!-- Vertiv (Current) -->
-                    <div class="timeline-item">
+                    <div class="timeline-item" data-reveal>
                         <div class="timeline-marker promotion"><i data-lucide="briefcase"></i>
                         </div>
                         <div class="timeline-content">
@@ -227,24 +256,24 @@
                             </div>
                             <div class="mb-6">
                                 <ul class="role-achievements">
-                                    <li>Leading enterprise global payroll transformation across 54 countries and 179 legal
+                                    <li data-cap="payroll leadership global">Leading enterprise global payroll transformation across 54 countries and 179 legal
                                         entities, covering 36,720 employees for a NYSE-listed Fortune 500 organization,
                                         within a 21-month accelerated programme structured into 4 strategic batches and 11 tactical waves</li>
-                                    <li>Driving vendor consolidation from 54 vendors to 4 strategic partners (ADP GlobalView,
+                                    <li data-cap="systems payroll tools">Driving vendor consolidation from 54 vendors to 4 strategic partners (ADP GlobalView,
                                         ADP Celergo, SD Worx, Neeyamo) and system rationalization from 58 systems to under 5,
                                         reducing PEPM from $12.92 to $10.73 and delivering $964K in annual savings</li>
-                                    <li>Owning end-to-end programme governance, RACI design, RAID management and tollgate
+                                    <li data-cap="leadership automation tools">Owning end-to-end programme governance, RACI design, RAID management and tollgate
                                         decision control; established a 35-tab self-validating Control Tower on SharePoint as the
                                         single source of truth for delivery execution, risk and decision tracking</li>
-                                    <li>Governing Oracle Fusion HCM integration as system of record in a pass-through model
+                                    <li data-cap="systems tools">Governing Oracle Fusion HCM integration as system of record in a pass-through model
                                         across a confirmed 5-point integration (HRIS, Time, Absence, Finance, Outbound)</li>
-                                    <li>Defining wave planning and country sequencing, data migration readiness, and parallel-run
+                                    <li data-cap="payroll automation global">Defining wave planning and country sequencing, data migration readiness, and parallel-run
                                         strategy with a locked 0.5% variance go/no-go gate across element-by-element reconciliation</li>
-                                    <li>Managing SOX-aligned governance for a publicly listed entity, including segregation-of-duties
+                                    <li data-cap="global payroll">Managing SOX-aligned governance for a publicly listed entity, including segregation-of-duties
                                         remediation, secure bank-file controls and statutory compliance across 54 jurisdictions</li>
-                                    <li>Delivering executive and Steering Committee reporting to CHRO and senior leadership; built an
+                                    <li data-cap="leadership automation tools">Delivering executive and Steering Committee reporting to CHRO and senior leadership; built an
                                         AI-driven programme intelligence layer on Amazon Bedrock and QuickSight for live status, risks and decisions</li>
-                                    <li>Leading organizational change management on the ADKAR framework with a stair-step
+                                    <li data-cap="leadership">Leading organizational change management on the ADKAR framework with a stair-step
                                         communication cascade across 70+ stakeholders spanning IT, HR, Finance, Procurement and Operations</li>
                                 </ul>
                             </div>
@@ -252,7 +281,7 @@
                     </div>
 
                     <!-- Deel (Consolidated) -->
-                    <div class="timeline-item">
+                    <div class="timeline-item" data-reveal>
                         <div class="timeline-marker"><i data-lucide="briefcase"></i>
                         </div>
                         <div class="timeline-content">
@@ -267,42 +296,42 @@
                             </div>
                             <div class="mb-6">
                                 <ul class="role-achievements">
-                                    <li>Led 12+ multi-country payroll implementations (Hong Kong, Singapore,
+                                    <li data-cap="payroll global leadership">Led 12+ multi-country payroll implementations (Hong Kong, Singapore,
                                         Indonesia, UAE, Egypt, Israel, United Kingdom), completing 100% within SLA at
                                         99.8% accuracy and reducing cutover cycle by 25%</li>
-                                    <li>Orchestrated end-to-end payroll processing for APAC and EMEA regions;
+                                    <li data-cap="systems payroll global">Orchestrated end-to-end payroll processing for APAC and EMEA regions;
                                         spearheaded strategic vendor selection and contract negotiation</li>
-                                    <li>Coordinated international payroll vendor transitions; ensured 100% statutory
+                                    <li data-cap="systems global">Coordinated international payroll vendor transitions; ensured 100% statutory
                                         compliance</li>
-                                    <li>Country Expertise: Hong Kong (MPF/ORSO/IR56B) | Singapore (CPF/SDL/SHG) |
+                                    <li data-cap="global payroll">Country Expertise: Hong Kong (MPF/ORSO/IR56B) | Singapore (CPF/SDL/SHG) |
                                         UAE (Gratuity/WPS) | Indonesia (BPJS/THR/PPh 21) | Egypt | Israel &mdash; 100% audit pass rate</li>
-                                    <li>Acted as key client point of contact; managed weekly communications; driving
+                                    <li data-cap="leadership">Acted as key client point of contact; managed weekly communications; driving
                                         95%+ satisfaction</li>
-                                    <li>Reconciled parallel + live payroll runs; identified & resolved 100+ critical
+                                    <li data-cap="payroll">Reconciled parallel + live payroll runs; identified & resolved 100+ critical
                                         data gaps</li>
-                                    <li>Delivered comprehensive training on payroll platforms & global compliance
+                                    <li data-cap="leadership global">Delivered comprehensive training on payroll platforms & global compliance
                                         practices (50+ users)</li>
-                                    <li>Ensured SOC 1 audit compliance; responded to 100% of auditor queries within SLA
+                                    <li data-cap="payroll leadership">Ensured SOC 1 audit compliance; responded to 100% of auditor queries within SLA
                                     </li>
-                                    <li>Maintained RCA tracker; recorded payroll errors; implemented
+                                    <li data-cap="payroll">Maintained RCA tracker; recorded payroll errors; implemented
                                         corrective/preventive plans (35% defect reduction)</li>
-                                    <li>Managed & mentored 8+ Implementation Consultants; 3 promoted within 18 months
+                                    <li data-cap="leadership">Managed & mentored 8+ Implementation Consultants; 3 promoted within 18 months
                                     </li>
-                                    <li>Built enterprise automation dashboards eliminating 15+ manual hours/week using
+                                    <li data-cap="automation">Built enterprise automation dashboards eliminating 15+ manual hours/week using
                                         AI-powered solutions</li>
-                                    <li>Led "Project Unity" migration initiative for 2,000+ employees across 18+
+                                    <li data-cap="automation leadership global payroll">Led "Project Unity" migration initiative for 2,000+ employees across 18+
                                         countries with zero payroll disruption</li>
-                                    <li>Configured end-to-end payroll modules in HRM systems including employee master
+                                    <li data-cap="payroll systems tools">Configured end-to-end payroll modules in HRM systems including employee master
                                         data, salary structures, tax calculations, and statutory deductions</li>
-                                    <li>Set up complete payroll processing workflows from scratch: time attendance
+                                    <li data-cap="payroll automation">Set up complete payroll processing workflows from scratch: time attendance
                                         integration, leave management linkage, bonus computations, and final settlement
                                         calculations</li>
-                                    <li>Designed & implemented custom payroll formulas for earnings, deductions,
+                                    <li data-cap="payroll automation global">Designed & implemented custom payroll formulas for earnings, deductions,
                                         reimbursements, and compliance specific components across multiple countries
                                     </li>
-                                    <li>Built comprehensive payroll reporting architecture including payslip generation,
+                                    <li data-cap="payroll automation">Built comprehensive payroll reporting architecture including payslip generation,
                                         tax reports, provident fund statements, and management dashboards</li>
-                                    <li>Established seamless integrations between payroll modules and GL/finance
+                                    <li data-cap="systems automation tools">Established seamless integrations between payroll modules and GL/finance
                                         systems, banking platforms, and government portals for automated filings</li>
                                 </ul>
                             </div>
@@ -310,7 +339,7 @@
                     </div>
 
                     <!-- Xerex -->
-                    <div class="timeline-item">
+                    <div class="timeline-item" data-reveal>
                         <div class="timeline-marker"><i data-lucide="briefcase"></i></div>
                         <div class="timeline-content">
                             <div class="role-header">
@@ -324,22 +353,22 @@
                             </div>
                             <div class="mb-6">
                                 <ul class="role-achievements">
-                                    <li>Performed complex benefit processes and calculations on legacy systems with 99%+
+                                    <li data-cap="payroll">Performed complex benefit processes and calculations on legacy systems with 99%+
                                         accuracy</li>
-                                    <li>Prepared eligibility files for vendor submission maintaining zero compliance
+                                    <li data-cap="payroll systems">Prepared eligibility files for vendor submission maintaining zero compliance
                                         violations</li>
-                                    <li>Administered COBRA and QMCSO compliance for 500+ employees across terminated and
+                                    <li data-cap="payroll">Administered COBRA and QMCSO compliance for 500+ employees across terminated and
                                         retired employee categories</li>
-                                    <li>Managed health and welfare benefit categories including DBP, HIPAA, LOA,
+                                    <li data-cap="payroll">Managed health and welfare benefit categories including DBP, HIPAA, LOA,
                                         enrollment, and Medicare eligibility</li>
-                                    <li>Processed data for 500+ employees with zero compliance violations</li>
+                                    <li data-cap="payroll">Processed data for 500+ employees with zero compliance violations</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
                     <!-- AON -->
-                    <div class="timeline-item">
+                    <div class="timeline-item" data-reveal>
                         <div class="timeline-marker"><i data-lucide="briefcase"></i></div>
                         <div class="timeline-content">
                             <div class="role-header">
@@ -353,15 +382,15 @@
                             </div>
                             <div class="mb-6">
                                 <ul class="role-achievements">
-                                    <li>Maintained Vantive HR Portal for 15+ enterprise clients managing 500K+ employee
+                                    <li data-cap="tools systems">Maintained Vantive HR Portal for 15+ enterprise clients managing 500K+ employee
                                         records</li>
-                                    <li>Loaded, added, updated, and removed employee coverage data with precision and
+                                    <li data-cap="payroll">Loaded, added, updated, and removed employee coverage data with precision and
                                         accuracy</li>
-                                    <li>Coordinated with onshore teams via real-time updates ensuring data consistency
+                                    <li data-cap="leadership payroll">Coordinated with onshore teams via real-time updates ensuring data consistency
                                         across systems</li>
-                                    <li>Created processing guides tailored to individual client requirements</li>
-                                    <li>Mentored new hires in HR and benefits processing procedures</li>
-                                    <li>Recognized with Gold Award for Client Value and Benefits Champ Award for
+                                    <li data-cap="leadership">Created processing guides tailored to individual client requirements</li>
+                                    <li data-cap="leadership">Mentored new hires in HR and benefits processing procedures</li>
+                                    <li data-cap="payroll">Recognized with Gold Award for Client Value and Benefits Champ Award for
                                         excellence in benefits administration</li>
                                 </ul>
                             </div>
@@ -388,7 +417,7 @@
                         </svg>
                     </div>
                     <h2 class="section-title">Skills & Expertise</h2>
-                    <p class="section-subtitle" style="color: var(--color-gray-600); max-width: 600px; margin: 0 auto;">
+                    <p class="section-subtitle" style="max-width: 600px; margin: 0 auto;">
                         Specialized Knowledge & Technical Proficiencies
                     </p>
                 </div>
@@ -397,10 +426,9 @@
                 <div class="skills-grid">
 
                     <!-- Card 1: Payroll & Compliance -->
-                    <div class="skill-card">
+                    <div class="skill-card" data-cat="payroll" data-reveal>
                         <div class="skill-card-header">
-                            <div class="skill-icon"
-                                style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
+                            <div class="skill-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d97706"
                                     stroke-width="2">
                                     <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
@@ -409,7 +437,7 @@
                                 </svg>
                             </div>
                             <h3 class="skill-card-title">
-                                <span style="color: #d97706;">Payroll</span> & Compliance
+                                <span class="skill-accent">Payroll</span> & Compliance
                             </h3>
                         </div>
                         <div class="skill-tags-container">
@@ -424,10 +452,9 @@
                     </div>
 
                     <!-- Card 2: Systems & Vendors -->
-                    <div class="skill-card">
+                    <div class="skill-card" data-cat="systems" data-reveal>
                         <div class="skill-card-header">
-                            <div class="skill-icon"
-                                style="background: linear-gradient(135deg, #FDF0D3 0%, #FBE3AC 100%);">
+                            <div class="skill-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A317"
                                     stroke-width="2">
                                     <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
@@ -439,7 +466,7 @@
                                 </svg>
                             </div>
                             <h3 class="skill-card-title">
-                                <span style="color: #E8A317;">Systems</span> & Vendors
+                                <span class="skill-accent">Systems</span> & Vendors
                             </h3>
                         </div>
                         <div class="skill-tags-container">
@@ -453,10 +480,9 @@
                     </div>
 
                     <!-- Card 3: Global Compliance -->
-                    <div class="skill-card">
+                    <div class="skill-card" data-cat="global" data-reveal>
                         <div class="skill-card-header">
-                            <div class="skill-icon"
-                                style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);">
+                            <div class="skill-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669"
                                     stroke-width="2">
                                     <circle cx="12" cy="12" r="10"></circle>
@@ -467,7 +493,7 @@
                                 </svg>
                             </div>
                             <h3 class="skill-card-title">
-                                <span style="color: #059669;">Global</span> Compliance
+                                <span class="skill-accent">Global</span> Compliance
                             </h3>
                         </div>
                         <div class="skill-tags-container">
@@ -483,10 +509,9 @@
                     </div>
 
                     <!-- Card 4: Automation & AI -->
-                    <div class="skill-card">
+                    <div class="skill-card" data-cat="automation" data-reveal>
                         <div class="skill-card-header">
-                            <div class="skill-icon"
-                                style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);">
+                            <div class="skill-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#db2777"
                                     stroke-width="2">
                                     <path
@@ -496,7 +521,7 @@
                                 </svg>
                             </div>
                             <h3 class="skill-card-title">
-                                <span style="color: #db2777;">Automation</span> & AI
+                                <span class="skill-accent">Automation</span> & AI
                             </h3>
                         </div>
                         <div class="skill-tags-container">
@@ -510,10 +535,9 @@
                     </div>
 
                     <!-- Card 5: Leadership -->
-                    <div class="skill-card">
+                    <div class="skill-card" data-cat="leadership" data-reveal>
                         <div class="skill-card-header">
-                            <div class="skill-icon"
-                                style="background: linear-gradient(135deg, #FFE4EC 0%, #FFC9D9 100%);">
+                            <div class="skill-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D11149"
                                     stroke-width="2">
                                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -523,7 +547,7 @@
                                 </svg>
                             </div>
                             <h3 class="skill-card-title">
-                                <span style="color: #D11149;">Leadership</span>
+                                <span class="skill-accent">Leadership</span>
                             </h3>
                         </div>
                         <div class="skill-tags-container">
@@ -537,10 +561,9 @@
                     </div>
 
                     <!-- Card 6: Tools & Platforms -->
-                    <div class="skill-card">
+                    <div class="skill-card" data-cat="tools" data-reveal>
                         <div class="skill-card-header">
-                            <div class="skill-icon"
-                                style="background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);">
+                            <div class="skill-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ea580c"
                                     stroke-width="2">
                                     <path
@@ -549,7 +572,7 @@
                                 </svg>
                             </div>
                             <h3 class="skill-card-title">
-                                <span style="color: #ea580c;">Tools</span> & Platforms
+                                <span class="skill-accent">Tools</span> & Platforms
                             </h3>
                         </div>
                         <div class="skill-tags-container">
@@ -576,19 +599,19 @@
                     implementation and transformation.
                 </p>
                 <div class="d-grid grid-2 gap-8">
-                    <div class="card-light">
+                    <div class="card-light" data-reveal>
                         <div class="d-flex align-center gap-4 mb-4">
                             <i data-lucide="target" class="icon-primary"></i>
                             <h3 class="mb-0">Target Roles</h3>
                         </div>
                         <ul class="target-list">
                             <li>Global Payroll Manager</li>
-                            <li>Implementation Direction</li>
+                            <li>Implementation Director</li>
                             <li>Payroll Transformation Lead</li>
                             <li>Head of Payroll Operations</li>
                         </ul>
                     </div>
-                    <div class="card-light">
+                    <div class="card-light" data-reveal>
                         <div class="d-flex align-center gap-4 mb-4">
                             <i data-lucide="building-2" class="icon-primary"></i>
                             <h3 class="mb-0">Organization Type</h3>
@@ -607,7 +630,7 @@
         <!-- CTA -->
         <section class="section-padding experience-cta">
             <div class="container">
-                <h1>Professional Experience</h1>
+                <h2>Professional Experience</h2>
                 <p>A timeline of impactful roles and projects delivering value for global organizations.</p>
                 <div class="btn-group">
                     <a href="/case-studies" class="btn btn-outline-white">View Project Portfolio</a>
@@ -699,6 +722,8 @@
             icons();
             window.addEventListener('load', icons);
         })();</script>
+    <!-- Capability filter, counts and scroll reveal -->
+    <script src="js/experience-record.js?v=garnet-v24" defer></script>
     <script type="module" src="js/utils.js?v=garnet-v9"></script>
     <script type="module" src="js/navigation.js?v=garnet-v9"></script>
     <script type="module" src="js/main.js?v=garnet-v9"></script>
