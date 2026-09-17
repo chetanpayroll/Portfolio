@@ -143,8 +143,6 @@
     <link rel="stylesheet" href="css/main.css?v=garnet-v9">
     <link rel="stylesheet" href="css/pages/case-studies.css?v=garnet-v9">
 
-    <!-- Icons -->
-    <script src="https://unpkg.com/lucide@latest" defer></script>
     <link rel="stylesheet" href="css/ai-assistant.css?v=garnet-v21">
 </head>
 
@@ -457,9 +455,13 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>/* unpkg is a third party. If it is blocked or slow this must not throw,
+       and if it arrives late the icons still need drawing. */
+        (function () {
+            function icons() { if (window.lucide) window.lucide.createIcons(); }
+            icons();
+            window.addEventListener('load', icons);
+        })();</script>
     <script type="module" src="js/utils.js?v=garnet-v9"></script>
     <script type="module" src="js/navigation.js?v=garnet-v9"></script>
     <script type="module" src="js/main.js?v=garnet-v9"></script>

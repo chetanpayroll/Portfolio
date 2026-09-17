@@ -1307,18 +1307,22 @@
     <script src="../../js/calendar-utils.js?v=garnet-v9"></script>
     <script src="../../js/ai-assistant.js?v=garnet-v21"></script>
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
+        // Initialize Lucide icons. unpkg is a third party: if it is blocked or slow
+        // this must not throw, and if it arrives late the icons still need drawing.
+        // The copy button redraws through the same helper after it swaps its markup.
+        function drawIcons() { if (window.lucide) window.lucide.createIcons(); }
+        drawIcons();
+        window.addEventListener('load', drawIcons);
 
         // Copy code function
         function copyCode(button) {
             const codeBlock = button.closest('.code-block').querySelector('code');
             navigator.clipboard.writeText(codeBlock.textContent).then(() => {
                 button.innerHTML = '<i data-lucide="check" style="width: 14px; height: 14px;"></i> Copied!';
-                lucide.createIcons();
+                drawIcons();
                 setTimeout(() => {
                     button.innerHTML = '<i data-lucide="copy" style="width: 14px; height: 14px;"></i> Copy';
-                    lucide.createIcons();
+                    drawIcons();
                 }, 2000);
             });
         }
