@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+    <!-- viewport-fit=cover for the notch. maximum-scale/user-scalable are NOT set:
+         blocking pinch zoom fails WCAG 1.4.4 and this is a public page. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0a0a0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2243,6 +2244,214 @@
                 justify-self: start;
             }
         }
+
+        .intro-localtime {
+            font-family: var(--font-mono); font-size: var(--text-xs);
+            letter-spacing: 0.06em; color: #6E6E85;
+            margin: 14px 0 0; min-height: 1.2em;
+        }
+        .intro-localtime b { color: var(--accent-primary); font-weight: var(--weight-semibold); }
+
+        /* =========================================
+           DECISION LAYER — you work the shift
+           ========================================= */
+
+        .noscript-note {
+            max-width: 40rem; margin: 18vh auto; padding: 0 24px;
+            font-family: var(--font-primary); color: #E6E6F0; text-align: center;
+        }
+        .noscript-note h1 { font-size: var(--text-3xl); margin-bottom: 12px; }
+        .noscript-note p { line-height: var(--leading-relaxed); color: #9C9CB0; }
+        .noscript-note a { color: var(--accent-primary); }
+
+        .decision-layer {
+            position: fixed; inset: 0; z-index: 900;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+            background: rgba(6, 6, 10, 0.72);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.28s ease;
+        }
+        .decision-layer[hidden] { display: none; }
+        .decision-layer.active { opacity: 1; pointer-events: auto; }
+
+        .decision-card {
+            width: min(560px, 100%);
+            max-height: calc(100dvh - 40px);
+            overflow-y: auto;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid var(--accent-primary);
+            border-radius: 16px;
+            padding: clamp(18px, 3.4vw, 28px);
+            box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.9);
+            transform: translateY(14px) scale(0.985);
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .decision-layer.active .decision-card { transform: none; }
+
+        .decision-head {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 12px; margin-bottom: 14px;
+        }
+
+        .decision-tag {
+            font-family: var(--font-mono); font-size: var(--text-xs);
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--accent-primary);
+        }
+
+        .decision-timer { position: relative; width: 44px; height: 44px; flex: none; }
+        .decision-ring { width: 44px; height: 44px; transform: rotate(-90deg); }
+        .ring-track { fill: none; stroke: rgba(255,255,255,0.12); stroke-width: 3; }
+        .ring-fill {
+            fill: none; stroke: var(--accent-primary); stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 119.4; stroke-dashoffset: 0;
+        }
+        .decision-timer.is-urgent .ring-fill { stroke: var(--warning, #f59e0b); }
+        .decision-secs {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono); font-size: var(--text-sm);
+            font-weight: var(--weight-semibold); color: #fff;
+        }
+
+        .decision-context {
+            font-family: var(--font-mono); font-size: var(--text-xs);
+            color: #8A8AA0; margin-bottom: 8px; letter-spacing: 0.02em;
+        }
+
+        .decision-prompt {
+            font-size: clamp(var(--text-lg), 2.2vw, var(--text-xl));
+            line-height: var(--leading-snug); font-weight: var(--weight-semibold);
+            color: #fff; margin-bottom: 18px;
+        }
+
+        .decision-options { display: grid; gap: 10px; }
+
+        .decision-option {
+            display: flex; align-items: flex-start; gap: 12px;
+            width: 100%; min-height: 44px; padding: 13px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            color: #E6E6F0; font-family: inherit;
+            font-size: var(--text-base); line-height: var(--leading-snug);
+            text-align: left; cursor: pointer;
+            transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+        }
+        .decision-option:hover, .decision-option:focus-visible {
+            border-color: var(--accent-primary);
+            background: rgba(209, 17, 73, 0.14);
+            transform: translateX(2px);
+        }
+        .decision-option:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+        .decision-key {
+            flex: none;
+            width: 22px; height: 22px; border-radius: 6px;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.1);
+            font-family: var(--font-mono); font-size: 11px; color: #C8C8D8;
+        }
+
+        .decision-hint {
+            margin-top: 14px; font-size: var(--text-xs); color: #6E6E85;
+        }
+        .decision-hint kbd {
+            font-family: var(--font-mono); background: rgba(255,255,255,0.08);
+            border-radius: 4px; padding: 1px 5px; color: #A8A8BC;
+        }
+
+        /* Focus pull: the panel a decision concerns comes forward, the rest recede. */
+        .workspace-container.has-focus .window-panel { filter: blur(2px) saturate(0.7); opacity: 0.5; }
+        .workspace-container.has-focus .window-panel.is-focus {
+            filter: none; opacity: 1;
+            box-shadow: 0 0 0 1px var(--accent-primary), 0 30px 60px -30px rgba(209,17,73,0.6);
+        }
+        .window-panel { transition: filter 0.5s ease, opacity 0.5s ease, box-shadow 0.5s ease; }
+
+        /* =========================================
+           VERDICT SCORECARD
+           ========================================= */
+
+        .verdict { width: min(720px, 100%); margin: 0 auto 32px; text-align: left; }
+
+        .verdict-line {
+            font-size: clamp(var(--text-lg), 2.4vw, var(--text-2xl));
+            line-height: var(--leading-snug); font-weight: var(--weight-bold);
+            color: #fff; margin-bottom: 22px; text-align: center;
+        }
+        .verdict-line .vs-hit { color: var(--success, #10b981); }
+        .verdict-line .vs-miss { color: var(--accent-primary); }
+
+        .verdict-item {
+            padding: 16px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .verdict-item:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+
+        .verdict-q {
+            font-size: var(--text-sm); color: #8A8AA0; margin-bottom: 8px;
+            font-family: var(--font-mono);
+        }
+
+        .verdict-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+
+        .verdict-badge {
+            font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+            text-transform: uppercase; padding: 3px 8px; border-radius: 999px; flex: none;
+        }
+        .verdict-badge.is-hit { background: rgba(16,185,129,0.16); color: #34d399; }
+        .verdict-badge.is-miss { background: rgba(209,17,73,0.18); color: #ff6b8f; }
+        .verdict-badge.is-timeout { background: rgba(245,158,11,0.16); color: #fbbf24; }
+
+        .verdict-choice { font-size: var(--text-base); color: #E6E6F0; }
+
+        .verdict-rule {
+            font-size: var(--text-base); line-height: var(--leading-relaxed);
+            color: #A8A8BC; margin-top: 6px;
+        }
+        .verdict-rule strong { color: #fff; font-weight: var(--weight-semibold); }
+
+        .verdict-cost {
+            margin-top: 8px; padding: 10px 12px; border-radius: 10px;
+            background: rgba(209, 17, 73, 0.1);
+            border-left: 2px solid var(--accent-primary);
+            font-family: var(--font-mono); font-size: var(--text-sm);
+            color: #ffb3c6; line-height: var(--leading-normal);
+        }
+
+        .verdict-replay {
+            display: inline-flex; align-items: center; gap: 8px;
+            min-height: 44px; padding: 0 20px; margin-top: 8px;
+            border-radius: 999px; border: 1px solid rgba(255,255,255,0.18);
+            background: transparent; color: #fff; font-family: inherit;
+            font-size: var(--text-base); font-weight: var(--weight-semibold); cursor: pointer;
+            transition: border-color 0.25s ease, background-color 0.25s ease;
+        }
+        .verdict-replay:hover, .verdict-replay:focus-visible {
+            border-color: var(--accent-primary); background: rgba(209,17,73,0.14);
+        }
+
+        @media (max-width: 600px) {
+            .decision-card { border-radius: 14px; }
+            .verdict { margin-bottom: 24px; }
+        }
+
+        /* Motion is the flourish, not the mechanism: with it off the decisions,
+           the countdown and the verdict all still work exactly the same. */
+        @media (prefers-reduced-motion: reduce) {
+            .decision-layer, .decision-card, .window-panel, .decision-option {
+                transition: none !important;
+            }
+            .workspace-container.has-focus .window-panel { filter: none; opacity: 0.75; }
+            .ghost-cursor { display: none !important; }
+        }
+
     </style>
 
     <!-- AEO: invisible discoverability metadata (additive, no visible change) -->
@@ -2318,6 +2527,15 @@
 </head>
 
 <body>
+    <noscript>
+        <div class="noscript-note">
+            <h1>Step Into My World</h1>
+            <p>This is a live simulation of a payroll transformation shift &mdash; it needs JavaScript to run.
+                Enable it and reload, or read the same story as text on the
+                <a href="/experience">Journey</a> page.</p>
+        </div>
+    </noscript>
+
 
     <!-- AURORA BACKGROUND -->
     <div class="aurora-bg">
@@ -2337,10 +2555,12 @@
     <div id="intro-screen" class="screen-overlay">
         <div id="landing-content">
             <h1 class="intro-title">Step Into My World</h1>
-            <p class="intro-subtitle">Experience 60 seconds of a Global Payroll Transformation Manager's day. Live the
-                job instead of just reading a resume.</p>
+            <p class="intro-subtitle">Sixty seconds of a Global Payroll Transformation Manager's day &mdash; except
+                you are the one making the calls. Three decisions, a clock that does not stop, and a scorecard
+                against how I actually decide.</p>
+            <p class="intro-localtime" id="intro-localtime"></p>
             <div class="intro-actions">
-                <button id="start-btn" class="btn-primary" aria-label="Begin Experience">Begin Experience</button>
+                <button id="start-btn" class="btn-primary" aria-label="Start the shift">Start the Shift</button>
                 <button id="build-jump-btn" class="btn-primary btn-outline" type="button" aria-label="See how I build it">See How I Build It &rarr;</button>
             </div>
         </div>
@@ -2356,6 +2576,30 @@
     </div>
 
     <!-- MAIN WORKSPACE -->
+
+    <!-- Decision card. The shift clock keeps running behind this: hesitating is
+         itself an outcome, which is the whole point of the exercise. -->
+    <div id="decision-layer" class="decision-layer" aria-live="assertive" role="dialog"
+        aria-modal="false" aria-labelledby="decision-prompt" hidden>
+        <div class="decision-card">
+            <div class="decision-head">
+                <span class="decision-tag" id="decision-tag">Your call</span>
+                <div class="decision-timer" aria-hidden="true">
+                    <svg viewBox="0 0 44 44" class="decision-ring">
+                        <circle class="ring-track" cx="22" cy="22" r="19"></circle>
+                        <circle class="ring-fill" id="decision-ring-fill" cx="22" cy="22" r="19"></circle>
+                    </svg>
+                    <span class="decision-secs" id="decision-secs">8</span>
+                </div>
+            </div>
+            <p class="decision-context" id="decision-context"></p>
+            <p class="decision-prompt" id="decision-prompt"></p>
+            <div class="decision-options" id="decision-options" role="group"
+                aria-labelledby="decision-prompt"></div>
+            <p class="decision-hint">Press <kbd>1</kbd>&ndash;<kbd>3</kbd> or tap. The clock does not stop.</p>
+        </div>
+    </div>
+
     <div id="workspace" class="workspace-container" role="main" aria-label="Interactive work simulation">
 
         <!-- CONTROL BAR -->
@@ -2552,23 +2796,26 @@
 
     <!-- FINAL REVEAL -->
     <div id="final-screen" class="final-screen">
-        <h2 class="intro-title mb-2">Experience Complete</h2>
-        <p class="intro-subtitle mb-8">You just lived 60 seconds of my day.</p>
+        <h2 class="intro-title mb-2">Shift Complete</h2>
+        <p class="intro-subtitle mb-8">You just worked 60 seconds of my day.</p>
 
         <div class="final-stats-grid">
             <div class="stat-item">
-                <h4>60s</h4>
+                <h4 id="final-stat-1">60s</h4>
                 <p>Time Elapsed</p>
             </div>
             <div class="stat-item">
-                <h4>4</h4>
-                <p>Problems Solved</p>
+                <h4 id="final-stat-2">3</h4>
+                <p>Calls Made</p>
             </div>
             <div class="stat-item">
-                <h4>100%</h4>
-                <p>Focus</p>
+                <h4 id="final-stat-3">&mdash;</h4>
+                <p>Matched My Call</p>
             </div>
         </div>
+
+        <!-- Scorecard. Rendered from the calls actually made this run. -->
+        <div class="verdict" id="verdict"></div>
 
         <!-- TECH STACK SHOWCASE -->
         <div class="stack-showcase">
@@ -3083,6 +3330,272 @@
             setTimeout(() => el.classList.remove('visible'), 4000);
         }
 
+
+        // =========================================
+        // THE SHIFT — decisions, consequences, verdict
+        // =========================================
+        //
+        // Scenarios are fiction, and stay anonymised the way the rest of this
+        // page already is (Client A, EMP-1042). What is NOT fiction is the rule
+        // each verdict cites: every figure below is published elsewhere on this
+        // site and in js/profile-facts.js. The verdict states how Chetan decides,
+        // never that he personally lived the incident you just played.
+
+        const FACTS = {
+            employees: 36720,        // Vertiv programme headcount
+            countries: 54,
+            entities: 179,
+            varianceGate: 0.5,       // % locked go/no-go gate on parallel run
+            vendorsFrom: 54,
+            vendorsTo: 4,
+            pepmFrom: 12.92,
+            pepmTo: 10.73,
+            annualSaving: 964000,
+            accuracy: 99.8
+        };
+
+        const SCENARIOS = [
+            {
+                id: 'variance',
+                focus: '#spreadsheet-panel',
+                context: 'PARALLEL RUN — CYCLE 2 CLOSED',
+                prompt: 'Gross-to-net variance lands at 0.68%. Go-live is tomorrow and the client wants to ship. Your call.',
+                options: [
+                    { text: 'Ship it — 0.68% is a rounding error at this scale', verdict: 'miss',
+                      consequence: 'errors' },
+                    { text: 'Hold the gate. Reconcile element by element first', verdict: 'hit',
+                      consequence: 'slip' },
+                    { text: 'Ship the clean countries, hold the rest', verdict: 'partial',
+                      consequence: 'partial' }
+                ],
+                rule: 'The gate is <strong>' + FACTS.varianceGate + '% variance, element by element</strong>. Under it you ship. Over it you do not, however small the delta looks — because the delta is not the point, the unexplained delta is.',
+                cost: function (choice) {
+                    if (choice === 1) return null;
+                    var affected = Math.round(FACTS.employees * 0.0068);
+                    return 'At 0.68% across ' + FACTS.employees.toLocaleString() + ' employees, that is roughly ' +
+                        affected.toLocaleString() + ' people paid the wrong amount — and recovery is a harder conversation than a delay.';
+                }
+            },
+            {
+                id: 'escalation',
+                focus: '#slack-panel',
+                context: '09:14 — TWO THINGS LAND AT ONCE',
+                prompt: 'A vendor reports 3 employees with wrong social insurance deductions. The same minute, the CHRO asks for the steering pack in 20 minutes.',
+                options: [
+                    { text: 'Steering pack first — leadership is waiting', verdict: 'miss',
+                      consequence: 'errors' },
+                    { text: 'Hand the pack to a consultant, take the payroll issue yourself', verdict: 'hit',
+                      consequence: 'resolve' },
+                    { text: 'Fix the three yourself, tell the CHRO it will be thirty minutes', verdict: 'partial',
+                      consequence: 'slip' }
+                ],
+                rule: 'Money movement outranks reporting, and a lead who cannot delegate a pack is a bottleneck. <strong>Eight-plus implementation consultants, three promoted inside eighteen months</strong> — that bench exists precisely so the escalation gets the senior pair of hands.',
+                cost: function (choice) {
+                    if (choice === 1) return null;
+                    return 'A pack can slip twenty minutes without consequence. A wrong deduction that reaches a bank account becomes recovery, not correction.';
+                }
+            },
+            {
+                id: 'statutory',
+                focus: '#email-panel',
+                context: 'STATUTORY FILING — 4 HOURS TO CUT-OFF',
+                prompt: 'The client\'s variable pay file is missing 40 of 900 employees. The filing window closes in four hours.',
+                options: [
+                    { text: 'File what you have now, amend next cycle', verdict: 'miss',
+                      consequence: 'errors' },
+                    { text: 'Chase the 40. Use the whole window and file complete', verdict: 'hit',
+                      consequence: 'resolve' },
+                    { text: 'File the 40 at last month\'s values to stay on time', verdict: 'miss',
+                      consequence: 'errors' }
+                ],
+                rule: '<strong>Zero non-compliance penalties in five years</strong> comes from filing complete, not from filing early. An amendment is not a neutral act — in most jurisdictions it is the thing that triggers the look.',
+                cost: function (choice) {
+                    if (choice === 1) return null;
+                    return 'Forty employees filed wrong is forty statutory records to unwind, across a jurisdiction that now has a reason to audit the other 860.';
+                }
+            },
+            {
+                id: 'vendor',
+                focus: '#dashboard-panel',
+                context: 'CONSOLIDATION — FINANCE PUSHES BACK',
+                prompt: 'Finance wants one country kept with its incumbent vendor. They are 20% cheaper in that country alone.',
+                options: [
+                    { text: 'Keep them. A 20% saving is a real saving', verdict: 'miss',
+                      consequence: 'slip' },
+                    { text: 'Consolidate. One country\'s discount does not beat platform cost', verdict: 'hit',
+                      consequence: 'resolve' },
+                    { text: 'Keep them six months, migrate in a later wave', verdict: 'partial',
+                      consequence: 'partial' }
+                ],
+                rule: '<strong>' + FACTS.vendorsFrom + ' vendors became ' + FACTS.vendorsTo + '</strong>. PEPM went $' + FACTS.pepmFrom + ' to $' + FACTS.pepmTo + ' and $' + (FACTS.annualSaving / 1000) + 'K a year came out. That arithmetic only works if the exception list stays empty.',
+                cost: function (choice) {
+                    if (choice === 1) return null;
+                    var delta = (FACTS.pepmFrom - FACTS.pepmTo).toFixed(2);
+                    return 'One retained vendor is one more interface, one more control set and one more audit trail — against a programme that took $' + delta + ' per employee per month out by removing exactly that.';
+                }
+            },
+            {
+                id: 'sox',
+                focus: '#spreadsheet-panel',
+                context: 'BANK FILE — 30 MINUTES TO CUT-OFF',
+                prompt: 'The analyst who prepared the bank file is the only approver still online. Cut-off is in thirty minutes.',
+                options: [
+                    { text: 'Let them release it and note the exception in the log', verdict: 'miss',
+                      consequence: 'errors' },
+                    { text: 'Hold. Find a second approver even if you miss cut-off', verdict: 'hit',
+                      consequence: 'slip' },
+                    { text: 'Release now, get approval retrospectively', verdict: 'miss',
+                      consequence: 'errors' }
+                ],
+                rule: 'Preparer and releaser are never the same person. Under <strong>SOX-aligned governance with segregation-of-duties remediation</strong>, a missed cut-off is recoverable and a broken control is a finding that outlives the cycle.',
+                cost: function (choice) {
+                    if (choice === 1) return null;
+                    return 'A logged exception is still a control failure. It reads the same to an auditor whether you documented it or not.';
+                }
+            }
+        ];
+
+        // Three of five per run, so a second visit is a different shift.
+        function pickScenarios() {
+            var pool = SCENARIOS.slice();
+            for (var i = pool.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
+            }
+            return pool.slice(0, 3);
+        }
+
+        var shiftScenarios = [];
+        var choices = [];
+        var activeDecision = null;
+        var decisionTimer = null;
+        var decisionRaf = null;
+
+        const DECISION_WINDOW = 9;   // seconds to decide
+
+        const decisionLayer = document.getElementById('decision-layer');
+        const decisionOptions = document.getElementById('decision-options');
+
+        function applyConsequence(kind) {
+            if (kind === 'errors') {
+                // The sheet fills with what you just let through.
+                var rows = document.querySelectorAll('#spreadsheet-rows tr');
+                rows.forEach(function (tr, i) {
+                    setTimeout(function () {
+                        tr.classList.add('flagged');
+                        var cell = tr.querySelector('td:last-child span');
+                        if (cell) { cell.className = 'status-error'; cell.textContent = '❌ MISMATCH'; }
+                    }, i * 140);
+                });
+                bumpProject(-14);
+            } else if (kind === 'slip') {
+                bumpProject(-4);
+            } else if (kind === 'partial') {
+                bumpProject(-7);
+            } else if (kind === 'resolve') {
+                showToast();
+            }
+        }
+
+        function bumpProject(delta) {
+            var row = document.querySelector('#project-list .project-row');
+            if (!row) return;
+            var pctEl = row.querySelector('.project-percent');
+            var fill = row.querySelector('.project-fill');
+            if (!pctEl || !fill) return;
+            var now = parseInt(pctEl.textContent, 10);
+            if (isNaN(now)) return;
+            var next = Math.max(0, Math.min(100, now + delta));
+            pctEl.textContent = next + '%';
+            fill.style.width = next + '%';
+        }
+
+        function setFocus(selector) {
+            var ws = document.getElementById('workspace');
+            document.querySelectorAll('.window-panel').forEach(function (el) {
+                el.classList.remove('is-focus');
+            });
+            if (!selector) { ws.classList.remove('has-focus'); return; }
+            var el = document.querySelector(selector);
+            if (!el) { ws.classList.remove('has-focus'); return; }
+            el.classList.add('is-focus');
+            ws.classList.add('has-focus');
+        }
+
+        function openDecision(scenario) {
+            activeDecision = scenario;
+            setFocus(scenario.focus);
+
+            document.getElementById('decision-context').textContent = scenario.context;
+            document.getElementById('decision-prompt').textContent = scenario.prompt;
+
+            decisionOptions.innerHTML = '';
+            scenario.options.forEach(function (opt, i) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'decision-option';
+                b.setAttribute('data-index', String(i));
+                b.innerHTML = '<span class="decision-key" aria-hidden="true">' + (i + 1) + '</span>' +
+                    '<span>' + opt.text + '</span>';
+                b.addEventListener('click', function () { resolveDecision(i); });
+                decisionOptions.appendChild(b);
+            });
+
+            decisionLayer.hidden = false;
+            requestAnimationFrame(function () { decisionLayer.classList.add('active'); });
+            var first = decisionOptions.querySelector('.decision-option');
+            if (first) first.focus();
+
+            var ring = document.getElementById('decision-ring-fill');
+            var secsEl = document.getElementById('decision-secs');
+            var timerBox = document.querySelector('.decision-timer');
+            var CIRC = 119.4;
+            var t0 = performance.now();
+
+            function tick(now) {
+                var gone = (now - t0) / 1000;
+                var left = Math.max(0, DECISION_WINDOW - gone);
+                secsEl.textContent = String(Math.ceil(left));
+                ring.style.strokeDashoffset = String(CIRC * (1 - left / DECISION_WINDOW));
+                timerBox.classList.toggle('is-urgent', left <= 3);
+                if (left <= 0) { resolveDecision(-1); return; }
+                decisionRaf = requestAnimationFrame(tick);
+            }
+            decisionRaf = requestAnimationFrame(tick);
+        }
+
+        function resolveDecision(index) {
+            if (!activeDecision) return;
+            var scenario = activeDecision;
+            activeDecision = null;
+            if (decisionRaf) { cancelAnimationFrame(decisionRaf); decisionRaf = null; }
+
+            var picked = index >= 0 ? scenario.options[index] : null;
+            choices.push({
+                id: scenario.id,
+                scenario: scenario,
+                index: index,
+                text: picked ? picked.text : 'No call made in time',
+                verdict: picked ? picked.verdict : 'timeout'
+            });
+
+            decisionLayer.classList.remove('active');
+            setTimeout(function () { decisionLayer.hidden = true; }, 300);
+            setFocus(null);
+
+            // A decision nobody made still has a consequence. That is the job.
+            applyConsequence(picked ? picked.consequence : 'errors');
+        }
+
+        // Keyboard: this is a timed call, so the keys have to be immediate.
+        document.addEventListener('keydown', function (e) {
+            if (!activeDecision) return;
+            if (e.key >= '1' && e.key <= '3') {
+                var i = parseInt(e.key, 10) - 1;
+                if (i < activeDecision.options.length) { e.preventDefault(); resolveDecision(i); }
+            }
+        });
+
         // =========================================
         // GHOST CURSOR ENGINE
         // =========================================
@@ -3137,6 +3650,7 @@
             14.0: () => { setTyping(false); showMessage(1); mouseClick(); }, // Chetan Type
             14.5: () => { moveCursorTo('#spreadsheet-panel h3'); },
             15.0: () => { loadSpreadsheetRows(); },
+            16.5: () => { openDecision(shiftScenarios[0]); },
             16.0: () => { moveCursorTo('#formula-bar'); },
             17.0: () => { document.getElementById('formula-bar').classList.add('visible'); },
             18.5: () => { moveCursorTo('#email-panel', 20, 20); }, // Check email
@@ -3154,7 +3668,9 @@
             35.0: () => { showMessage(3); }, // Thanks
             37.0: () => { moveCursorTo('#project-list'); },
             38.0: () => { loadProjects(); },
+            33.5: () => { openDecision(shiftScenarios[1]); },
             43.0: () => { showToast(); moveCursorTo('#success-toast'); },
+            46.5: () => { openDecision(shiftScenarios[2]); },
             48.0: () => { showMessage(4); }, // APAC Lead
             49.0: () => { moveCursorTo('.chat-message:last-child'); },
             52.0: () => { setTyping(true); },
@@ -3193,6 +3709,7 @@
         }
 
         function startExperience() {
+            shiftScenarios = pickScenarios();
             // Intro Animation
             landingContent.style.display = 'none';
             loadingContent.style.display = 'flex';
@@ -3213,9 +3730,85 @@
             }, 3000);
         }
 
+
+        function renderVerdict() {
+            var host = document.getElementById('verdict');
+            if (!host) return;
+
+            var hits = choices.filter(function (c) { return c.verdict === 'hit'; }).length;
+            var timeouts = choices.filter(function (c) { return c.verdict === 'timeout'; }).length;
+            var total = choices.length;
+
+            var lead;
+            if (!total) {
+                lead = 'You skipped the shift. The calls below are the ones that were waiting.';
+            } else if (hits === total) {
+                lead = 'You made <span class="vs-hit">' + hits + ' of ' + total +
+                    '</span> calls the way Chetan makes them.';
+            } else if (hits === 0) {
+                lead = 'You matched <span class="vs-miss">' + hits + ' of ' + total +
+                    '</span>. That is the gap between knowing payroll and running it.';
+            } else {
+                lead = 'You matched <span class="vs-hit">' + hits + '</span> of ' + total +
+                    ' calls' + (timeouts ? ', and let ' + timeouts + ' run out of clock' : '') + '.';
+            }
+
+            var html = '<p class="verdict-line">' + lead + '</p>';
+
+            var list = total ? choices : shiftScenarios.map(function (sc) {
+                return { scenario: sc, index: -1, text: 'Not played', verdict: 'timeout' };
+            });
+
+            list.forEach(function (c, n) {
+                var sc = c.scenario;
+                var badge = c.verdict === 'hit' ? 'is-hit'
+                    : c.verdict === 'timeout' ? 'is-timeout' : 'is-miss';
+                var label = c.verdict === 'hit' ? 'Aligned'
+                    : c.verdict === 'timeout' ? 'No call'
+                    : c.verdict === 'partial' ? 'Half measure' : 'Diverged';
+
+                html += '<div class="verdict-item">' +
+                    '<p class="verdict-q">' + (n + 1) + ' — ' + sc.context + '</p>' +
+                    '<div class="verdict-row">' +
+                        '<span class="verdict-badge ' + badge + '">' + label + '</span>' +
+                        '<span class="verdict-choice">' + c.text + '</span>' +
+                    '</div>' +
+                    '<p class="verdict-rule">' + sc.rule + '</p>';
+
+                var cost = sc.cost ? sc.cost(c.index) : null;
+                if (cost) html += '<p class="verdict-cost">' + cost + '</p>';
+                html += '</div>';
+            });
+
+            html += '<div style="text-align:center;margin-top:22px;">' +
+                '<button type="button" class="verdict-replay" id="replay-btn">Work it again — different calls</button>' +
+                '</div>';
+
+            host.innerHTML = html;
+
+            var replay = document.getElementById('replay-btn');
+            if (replay) replay.addEventListener('click', function () { window.location.reload(); });
+
+            // The headline stats now report the shift that was actually worked.
+            var s1 = document.getElementById('final-stat-1');
+            var s2 = document.getElementById('final-stat-2');
+            var s3 = document.getElementById('final-stat-3');
+            if (s1) s1.textContent = Math.round(elaspedSeconds) + 's';
+            if (s2) s2.textContent = String(total);
+            if (s3) s3.textContent = total ? hits + '/' + total : '—';
+        }
+
         function endExperience() {
+            if (!isRunning && finalScreen.classList.contains('active')) return;
             isRunning = false;
             cancelAnimationFrame(animationFrameId);
+            // A decision still open when the shift ends counts as a call not made.
+            if (activeDecision) resolveDecision(-1);
+            if (decisionRaf) { cancelAnimationFrame(decisionRaf); decisionRaf = null; }
+            decisionLayer.classList.remove('active');
+            decisionLayer.hidden = true;
+            setFocus(null);
+            renderVerdict();
             finalScreen.classList.add('active');
         }
 
@@ -3238,6 +3831,42 @@
             }, 80);
         }
         document.getElementById('build-jump-btn').addEventListener('click', goToBuild);
+
+        // Switching tabs must not silently burn the shift clock.
+        var pausedAt = null;
+        document.addEventListener('visibilitychange', function () {
+            if (!isRunning) return;
+            if (document.hidden) {
+                pausedAt = performance.now();
+                cancelAnimationFrame(animationFrameId);
+            } else if (pausedAt !== null) {
+                startTime += performance.now() - pausedAt;
+                pausedAt = null;
+                animationFrameId = requestAnimationFrame(updateLoop);
+            }
+        });
+
+        // The workstation clock has always run on the visitor's own machine.
+        // Naming the timezone is what turns that from a detail into a moment.
+        (function () {
+            var el = document.getElementById('intro-localtime');
+            if (!el) return;
+            var zone = '';
+            try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { zone = ''; }
+            var now = new Date();
+            var t = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+            // Browsers still report legacy zone aliases, and 'Europe/Berlin'
+            // reads worse than 'Berlin'. Show the city, spelled the modern way.
+            var LEGACY = { Calcutta: 'Kolkata', Saigon: 'Ho Chi Minh City',
+                           Katmandu: 'Kathmandu', Rangoon: 'Yangon', Ulan_Bator: 'Ulaanbaatar' };
+            var city = zone ? zone.split('/').pop() : '';
+            city = (LEGACY[city] || city).replace(/_/g, ' ');
+
+            el.innerHTML = city
+                ? 'This shift runs on your clock \u2014 <b>' + t + '</b> in ' + city + '.'
+                : 'This shift runs on your clock \u2014 <b>' + t + '</b>.';
+        })();
 
         // Current time clock
         setInterval(() => {
